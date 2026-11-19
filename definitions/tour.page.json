@@ -1,0 +1,1423 @@
+{
+  "schema_version": 1,
+  "name": "LumiereTourPage",
+  "type": "tool",
+  "description": "由本機場景 JSON 生成的 3D 實境導覽，提供平面定位、物件功能與可保存的場景調整。",
+  "root": {
+    "type": "group",
+    "id": "tour",
+    "class_names": [
+      "tour-shell"
+    ],
+    "children": [
+      {
+        "type": "group",
+        "id": "tour-workspace",
+        "class_names": [
+          "tour-workspace"
+        ],
+        "children": [
+          {
+            "type": "group",
+            "id": "tour-scene-pane",
+            "class_names": [
+              "tour-scene-pane"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-scene-heading",
+                "class_names": [
+                  "tour-pane-heading"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-scene-title",
+                    "component": "Heading",
+                    "options": {
+                      "text": "3D 場景",
+                      "level": 2
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-mode",
+                    "component": "Text",
+                    "options": {
+                      "text": "環繞檢視",
+                      "variant": "caption"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "component",
+                "id": "tour-scene",
+                "component": "TourViewport",
+                "options": {
+                  "mode": "scene"
+                }
+              },
+              {
+                "type": "group",
+                "id": "tour-touch-controls",
+                "class_names": [
+                  "tour-touch-controls"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-touch-help",
+                    "component": "Text",
+                    "options": {
+                      "text": "按住移動／轉向；拖曳畫面抬頭、低頭",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "group",
+                    "id": "tour-touch-buttons",
+                    "class_names": [
+                      "tour-touch-buttons"
+                    ],
+                    "children": [
+                      {
+                        "type": "component",
+                        "id": "tour-touch-forward",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "前進",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-touch-backward",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "後退",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-touch-left",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "左移",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-touch-right",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "右移",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-touch-turn-left",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "左轉",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-touch-turn-right",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "右轉",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "plain"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-plan-pane",
+            "class_names": [
+              "tour-plan-pane"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-plan-heading",
+                "class_names": [
+                  "tour-pane-heading"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-plan-title",
+                    "component": "Heading",
+                    "options": {
+                      "text": "平面定位",
+                      "level": 2
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-plan-hint",
+                    "component": "Text",
+                    "options": {
+                      "text": "雙擊定位",
+                      "variant": "caption"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-floor-control",
+                "class_names": [
+                  "tour-control"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-floor-label",
+                    "component": "Text",
+                    "options": {
+                      "text": "平面樓層",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-floor",
+                    "component": "Dropdown",
+                    "options": {
+                      "items": [],
+                      "value": null,
+                      "placeholder": "載入後選擇樓層",
+                      "size": "small",
+                      "clearable": false
+                    },
+                    "events": {
+                      "onChange": "floor.choose"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "component",
+                "id": "tour-plan",
+                "component": "TourViewport",
+                "options": {
+                  "mode": "plan"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-position",
+                "component": "Text",
+                "options": {
+                  "text": "位置：尚未定位",
+                  "variant": "caption"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-facing",
+                "component": "Text",
+                "options": {
+                  "text": "面向：尚未定位",
+                  "variant": "caption"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "tour-empty",
+        "class_names": [
+          "tour-empty"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "tour-empty-title",
+            "component": "Heading",
+            "options": {
+              "text": "先載入一個場景",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-empty-copy",
+            "component": "Text",
+            "options": {
+              "text": "選擇設計器匯出的場景 JSON，或含素材與底圖的 .lumiere 完整專案。",
+              "variant": "body"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-empty-note",
+            "component": "Text",
+            "options": {
+              "text": "檔案只在本機讀取。載入後可用平面圖定位，再以 WASD／方向鍵自由走動。",
+              "variant": "caption"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "tour-hud-actions",
+        "class_names": [
+          "tour-hud-actions"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "tour-editor",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "離開",
+              "showIcon": false,
+              "size": "small",
+              "variant": "plain"
+            },
+            "events": {
+              "onClick": "go.design"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-object-panel-toggle",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "物件功能",
+              "showIcon": false,
+              "size": "small",
+              "variant": "plain"
+            },
+            "events": {
+              "onClick": "object.panel"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-menu-toggle",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "功能",
+              "showIcon": false,
+              "size": "small",
+              "variant": "plain"
+            },
+            "events": {
+              "onClick": "menu.toggle"
+            }
+          }
+        ],
+        "aria_label": "導覽功能"
+      },
+      {
+        "type": "group",
+        "id": "tour-functions",
+        "class_names": [
+          "tour-functions"
+        ],
+        "children": [
+          {
+            "type": "group",
+            "id": "tour-header",
+            "class_names": [
+              "tour-header"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-brand",
+                "class_names": [
+                  "tour-brand"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-title",
+                    "component": "Heading",
+                    "options": {
+                      "text": "3D實境導覽",
+                      "level": 1
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-intro",
+                    "component": "Text",
+                    "options": {
+                      "text": "載入場景，巡覽並調整空間。",
+                      "variant": "caption"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-actions",
+                "class_names": [
+                  "tour-actions"
+                ],
+                "children": [
+                  {
+                    "type": "group",
+                    "id": "tour-file-control",
+                    "class_names": [
+                      "tour-file-control"
+                    ],
+                    "children": [
+                      {
+                        "type": "component",
+                        "id": "tour-load-button",
+                        "component": "BasicButton",
+                        "options": {
+                          "type": "custom",
+                          "customLabel": "載入場景",
+                          "showIcon": false,
+                          "size": "small",
+                          "variant": "primary"
+                        },
+                        "events": {
+                          "onClick": "source.choose"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-file-label",
+                        "component": "Text",
+                        "options": {
+                          "text": "JSON／.lumiere",
+                          "variant": "caption"
+                        }
+                      },
+                      {
+                        "type": "component",
+                        "id": "tour-load",
+                        "component": "UploadButton",
+                        "options": {
+                          "type": "file",
+                          "customAccept": ".json,.lumiere",
+                          "tooltip": "開啟場景 JSON 或完整專案包",
+                          "inputId": "tour-source-file",
+                          "maxSize": 134217728,
+                          "multiple": false
+                        },
+                        "events": {
+                          "onSelect": "source.load"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-cancel",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "取消載入",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "source.cancel"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-controls",
+            "class_names": [
+              "tour-controls"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-mode-controls",
+                "class_names": [
+                  "tour-mode-controls"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-walk",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "自由走動",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "walk.start"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-orbit",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "環繞檢視",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "walk.stop"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-plan-toggle",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "平面定位",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "plan.toggle"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-roof-toggle",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "屋頂",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "roof.toggle"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-labels-toggle",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "氣球標籤",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "labels.toggle"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-view-control",
+                "class_names": [
+                  "tour-control"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-view-label",
+                    "component": "Text",
+                    "options": {
+                      "text": "觀察視角",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-view",
+                    "component": "Dropdown",
+                    "options": {
+                      "items": [
+                        {
+                          "value": "overview",
+                          "label": "環繞總覽"
+                        },
+                        {
+                          "value": "front",
+                          "label": "正面"
+                        },
+                        {
+                          "value": "side",
+                          "label": "側面"
+                        },
+                        {
+                          "value": "top",
+                          "label": "俯視"
+                        }
+                      ],
+                      "value": "overview",
+                      "clearable": false,
+                      "size": "small"
+                    },
+                    "events": {
+                      "onChange": "view.preset"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-detail-control",
+                "class_names": [
+                  "tour-control"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-detail-label",
+                    "component": "Text",
+                    "options": {
+                      "text": "室內細節",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-detail",
+                    "component": "Dropdown",
+                    "options": {
+                      "items": [
+                        {
+                          "value": "full",
+                          "label": "全部預覽"
+                        },
+                        {
+                          "value": "auto",
+                          "label": "進入才載入"
+                        }
+                      ],
+                      "value": "full",
+                      "placeholder": "室內細節",
+                      "size": "small",
+                      "clearable": false
+                    },
+                    "events": {
+                      "onChange": "detail.choose"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-lift-controls",
+                "class_names": [
+                  "tour-lift-controls"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-lift-up",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "電梯上一層",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "lift.up"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-lift-down",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "電梯下一層",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "lift.down"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-file-tools",
+            "class_names": [
+              "tour-action-row"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-export-json",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "匯出 JSON",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "source.export.json"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-export-bundle",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "另存完整專案",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "source.export.bundle"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-export-html",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "匯出獨立網頁",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain",
+                  "tooltip": "下載內嵌場景與素材、可直接開啟的單一 HTML"
+                },
+                "events": {
+                  "onClick": "source.export.html"
+                }
+              }
+            ]
+          },
+          {
+            "type": "component",
+            "id": "tour-save-note",
+            "component": "Text",
+            "options": {
+              "text": "修改可匯出保存，或套用到設計器。",
+              "variant": "caption"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-apply-exit",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "套用變更並離開",
+              "showIcon": false,
+              "size": "small",
+              "variant": "primary"
+            },
+            "events": {
+              "onClick": "go.apply"
+            }
+          }
+        ],
+        "aria_label": "導覽設定與檔案"
+      },
+      {
+        "type": "group",
+        "id": "tour-object-editor",
+        "class_names": [
+          "tour-object-editor"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "tour-object-title",
+            "component": "Heading",
+            "options": {
+              "text": "物件功能",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-object-help",
+            "component": "Text",
+            "options": {
+              "text": "點選場景中的物件，或由選單選取。",
+              "variant": "caption"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-objects",
+            "component": "Dropdown",
+            "options": {
+              "items": [],
+              "value": null,
+              "placeholder": "選擇物件",
+              "size": "small",
+              "clearable": false,
+              "variant": "searchable"
+            },
+            "events": {
+              "onChange": "object.choose"
+            }
+          },
+          {
+            "type": "group",
+            "id": "tour-history-actions",
+            "class_names": [
+              "tour-action-row"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-undo",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "復原",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "edit.undo"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-redo",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "重做",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "edit.redo"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-add-controls",
+            "class_names": [
+              "tour-add-controls"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-asset-label",
+                "component": "Text",
+                "options": {
+                  "text": "新增物件",
+                  "variant": "label"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-asset",
+                "component": "Dropdown",
+                "options": {
+                  "items": [],
+                  "value": null,
+                  "placeholder": "選擇素材",
+                  "size": "small",
+                  "clearable": false,
+                  "variant": "searchable"
+                },
+                "events": {
+                  "onChange": "asset.choose"
+                }
+              },
+              {
+                "type": "group",
+                "id": "tour-add-actions",
+                "class_names": [
+                  "tour-action-row"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-add",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "新增並點選位置",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "object.add"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-place-cancel",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "取消放置",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "object.place.cancel"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-object-fields",
+            "class_names": [
+              "tour-object-fields"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-object-x-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-x",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "0",
+                      "label": "X 位置（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-z-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-z",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "0",
+                      "label": "Z 位置（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-elevation-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-elevation",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "0",
+                      "label": "離地高度（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-rotation-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-rotation",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "0",
+                      "label": "方向（度）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-width-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-width",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "1",
+                      "label": "寬度（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-depth-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-depth",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "1",
+                      "label": "深度（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "group",
+                "id": "tour-object-height-field",
+                "class_names": [
+                  "tour-edit-field"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-object-height",
+                    "component": "TextInput",
+                    "options": {
+                      "type": "number",
+                      "value": "1",
+                      "label": "高度（m）",
+                      "size": "small",
+                      "autocomplete": "off"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-edit-actions",
+            "class_names": [
+              "tour-action-row"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-object-apply",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "套用調整",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "primary"
+                },
+                "events": {
+                  "onClick": "object.apply"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-object-rotate",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "旋轉 90°",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "object.rotate"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-object-delete",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "刪除物件",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "object.delete"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-material-picker",
+            "class_names": [
+              "tour-material-picker"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-material-label",
+                "component": "Text",
+                "options": {
+                  "text": "物件材質",
+                  "variant": "label"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-material-category",
+                "component": "Dropdown",
+                "options": {
+                  "items": [],
+                  "value": null,
+                  "placeholder": "選擇材質類型",
+                  "size": "small",
+                  "clearable": false
+                },
+                "events": {
+                  "onChange": "material.category"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-material-choice",
+                "component": "Dropdown",
+                "options": {
+                  "items": [],
+                  "value": null,
+                  "placeholder": "搜尋物件材質",
+                  "size": "small",
+                  "clearable": false,
+                  "variant": "searchable"
+                },
+                "events": {
+                  "onChange": "material.choose"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-material-apply",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "套用材質",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "material.apply"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-material-note",
+                "component": "Text",
+                "options": {
+                  "text": "材質只改變外觀，碰撞與通行設定獨立。",
+                  "variant": "caption"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-device-controls",
+            "class_names": [
+              "tour-device-controls"
+            ],
+            "children": [
+              {
+                "type": "component",
+                "id": "tour-device-toggle",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "切換電源",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "object.power"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-device-channel-label",
+                "component": "Text",
+                "options": {
+                  "text": "開關／控制路數",
+                  "variant": "label"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-device-channel",
+                "component": "Dropdown",
+                "options": {
+                  "items": [],
+                  "value": null,
+                  "placeholder": "選擇控制路數",
+                  "size": "small",
+                  "clearable": false
+                },
+                "events": {
+                  "onChange": "device.channel"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-device-value",
+                "component": "TextInput",
+                "options": {
+                  "type": "number",
+                  "value": "0",
+                  "label": "控制值",
+                  "size": "small",
+                  "autocomplete": "off"
+                }
+              },
+              {
+                "type": "component",
+                "id": "tour-device-apply",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "套用控制值",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "device.apply"
+                }
+              }
+            ]
+          },
+          {
+            "type": "group",
+            "id": "tour-object-controls",
+            "class_names": [
+              "tour-object-controls"
+            ],
+            "children": [
+              {
+                "type": "group",
+                "id": "tour-opening-control",
+                "class_names": [
+                  "tour-control"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-opening-label",
+                    "component": "Text",
+                    "options": {
+                      "text": "門窗操作",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-opening",
+                    "component": "Dropdown",
+                    "options": {
+                      "items": [],
+                      "value": null,
+                      "placeholder": "點選或選擇門窗",
+                      "size": "small",
+                      "clearable": false
+                    },
+                    "events": {
+                      "onChange": "opening.choose"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "component",
+                "id": "tour-opening-toggle",
+                "component": "BasicButton",
+                "options": {
+                  "type": "custom",
+                  "customLabel": "開／關所選門窗",
+                  "showIcon": false,
+                  "size": "small",
+                  "variant": "plain"
+                },
+                "events": {
+                  "onClick": "opening.toggle"
+                }
+              },
+              {
+                "type": "group",
+                "id": "tour-label-control",
+                "class_names": [
+                  "tour-control"
+                ],
+                "children": [
+                  {
+                    "type": "component",
+                    "id": "tour-label-label",
+                    "component": "Text",
+                    "options": {
+                      "text": "重疊標籤",
+                      "variant": "caption"
+                    }
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-label-choice",
+                    "component": "Dropdown",
+                    "options": {
+                      "items": [],
+                      "value": null,
+                      "placeholder": "選擇標籤元件",
+                      "clearable": false,
+                      "size": "small"
+                    },
+                    "events": {
+                      "onChange": "label.choose"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "component",
+                "id": "tour-selected",
+                "component": "Text",
+                "options": {
+                  "text": "點選場景中的門窗或物件可查看資訊。",
+                  "variant": "caption"
+                }
+              }
+            ]
+          }
+        ],
+        "aria_label": "物件新增與調整"
+      },
+      {
+        "type": "group",
+        "id": "tour-footer",
+        "class_names": [
+          "tour-footer"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "tour-summary",
+            "component": "Text",
+            "options": {
+              "text": "尚未載入場景。",
+              "variant": "caption"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-status",
+            "component": "Text",
+            "options": {
+              "text": "使用上方「載入場景」開始。",
+              "variant": "caption"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-help",
+            "component": "Text",
+            "options": {
+              "text": "環繞：拖曳與滾輪。走動：WASD／方向鍵，或按住觸控按鈕移動、轉向；拖曳畫面轉頭。雙擊平面地坪定位，紅點顯示位置；Esc 離開。",
+              "variant": "caption"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

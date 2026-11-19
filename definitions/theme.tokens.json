@@ -1,0 +1,18 @@
+{
+  "meta": { "name": "Lumière / Warm Workspace", "generatedBy": "B4A Theme CLI" },
+  "tokens": {
+    "--cl-primary": "#3e493e", "--cl-primary-dark": "#29372d", "--cl-primary-light": "#e8e9df", "--cl-primary-rgb": "62, 73, 62",
+    "--cl-text": "#343b32", "--cl-text-primary": "#343b32", "--cl-text-secondary": "#767a6e", "--cl-text-muted": "#858777", "--cl-text-dark": "#29372d", "--cl-text-inverse": "#fcfaf4",
+    "--cl-bg": "#faf8f1", "--cl-bg-secondary": "#eae9df", "--cl-bg-tertiary": "#eeece3", "--cl-bg-hover": "#eae9df", "--cl-bg-overlay": "rgba(33, 40, 33, 0.44)",
+    "--cl-border": "#d8d9cd", "--cl-border-light": "#dedfd4", "--cl-border-dark": "#a7ad9d", "--cl-border-focus": "#68785a",
+    "--cl-font-family": "'Segoe UI', 'Microsoft JhengHei', sans-serif", "--cl-font-family-cjk": "'Microsoft JhengHei', 'PingFang TC', sans-serif",
+    "--cl-font-size-xs": "10px", "--cl-font-size-sm": "12px", "--cl-font-size-md": "14px", "--cl-font-size-lg": "13px", "--cl-font-size-xl": "32px", "--cl-font-size-2xl": "28px",
+    "--cl-radius-sm": "6px", "--cl-radius-md": "10px", "--cl-radius-lg": "16px", "--cl-radius-xl": "24px",
+    "--cl-shadow-md": "0 8px 32px rgba(42, 49, 39, 0.08)", "--cl-shadow-lg": "0 16px 56px rgba(42, 49, 39, 0.12)",
+    "--cl-residence-surface": "rgba(250, 248, 241, 0.92)", "--cl-residence-surface-soft": "rgba(250, 248, 241, 0.72)", "--cl-residence-canvas": "#e9e5da", "--cl-residence-gold": "#aa9470", "--cl-residence-serif": "'Palatino Linotype', 'Book Antiqua', 'Noto Serif TC', 'PMingLiU', serif",
+    "--cl-residence-wash-top": "rgba(249, 247, 239, 0.30)", "--cl-residence-wash-bottom": "rgba(249, 247, 239, 0.42)", "--cl-residence-border-glass": "rgba(255, 255, 255, 0.65)", "--cl-residence-description": "#656c5e"
+  },
+  "components": {
+    "BasicButton": { "className": "is-selected", "tokens": { "--cl-bg": "#3e493e", "--cl-text": "#fcfaf4", "--cl-bg-secondary": "#53604d", "--cl-text-dark": "#fcfaf4", "--cl-border-light": "#3e493e", "--cl-border-dark": "#53604d" } }
+  }
+}

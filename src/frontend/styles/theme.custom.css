@@ -1,0 +1,55 @@
+/* 由 B4A 共用主題生成器產生，請修改 token 來源。 */
+
+:root {
+    --cl-bg: #faf8f1;
+    --cl-bg-hover: #eae9df;
+    --cl-bg-overlay: rgba(33, 40, 33, 0.44);
+    --cl-bg-secondary: #eae9df;
+    --cl-bg-tertiary: #eeece3;
+    --cl-border: #d8d9cd;
+    --cl-border-dark: #a7ad9d;
+    --cl-border-focus: #68785a;
+    --cl-border-light: #dedfd4;
+    --cl-font-family: 'Segoe UI', 'Microsoft JhengHei', sans-serif;
+    --cl-font-family-cjk: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+    --cl-font-size-2xl: 28px;
+    --cl-font-size-lg: 13px;
+    --cl-font-size-md: 14px;
+    --cl-font-size-sm: 12px;
+    --cl-font-size-xl: 32px;
+    --cl-font-size-xs: 10px;
+    --cl-primary: #3e493e;
+    --cl-primary-dark: #29372d;
+    --cl-primary-light: #e8e9df;
+    --cl-primary-rgb: 62, 73, 62;
+    --cl-radius-lg: 16px;
+    --cl-radius-md: 10px;
+    --cl-radius-sm: 6px;
+    --cl-radius-xl: 24px;
+    --cl-residence-border-glass: rgba(255, 255, 255, 0.65);
+    --cl-residence-canvas: #e9e5da;
+    --cl-residence-description: #656c5e;
+    --cl-residence-gold: #aa9470;
+    --cl-residence-serif: 'Palatino Linotype', 'Book Antiqua', 'Noto Serif TC', 'PMingLiU', serif;
+    --cl-residence-surface: rgba(250, 248, 241, 0.92);
+    --cl-residence-surface-soft: rgba(250, 248, 241, 0.72);
+    --cl-residence-wash-bottom: rgba(249, 247, 239, 0.42);
+    --cl-residence-wash-top: rgba(249, 247, 239, 0.30);
+    --cl-shadow-lg: 0 16px 56px rgba(42, 49, 39, 0.12);
+    --cl-shadow-md: 0 8px 32px rgba(42, 49, 39, 0.08);
+    --cl-text: #343b32;
+    --cl-text-dark: #29372d;
+    --cl-text-inverse: #fcfaf4;
+    --cl-text-muted: #858777;
+    --cl-text-primary: #343b32;
+    --cl-text-secondary: #767a6e;
+}
+
+.is-selected {
+    --cl-bg: #3e493e;
+    --cl-bg-secondary: #53604d;
+    --cl-border-dark: #53604d;
+    --cl-border-light: #3e493e;
+    --cl-text: #fcfaf4;
+    --cl-text-dark: #fcfaf4;
+}

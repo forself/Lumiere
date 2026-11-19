@@ -1,0 +1,30 @@
+import assert from 'node:assert/strict';
+import {DesignStore,sampleProject,parseProject} from '../src/frontend/designer/model.js';
+import {compatibleTarget} from '../src/frontend/designer/device-links.js';
+import {buildDesign} from '../src/frontend/designer/geometry.js';
+const s=new DesignStore(sampleProject());let checks=0;
+const check=(v,msg)=>{assert.ok(v,msg);checks++;};
+const add=assetId=>{s.execute({type:'addObject',assetId,x:0,z:0});return s.state.objects.at(-1).id;};
+const get=id=>s.state.objects.find(o=>o.id===id);
+const lamp=add('light'),tv=add('tv'),ac=add('ac'),sw=add('switch-triple'),dim=add('dimmer'),therm=add('thermostat'),other=add('switch');
+const bind=(id,channel,targetId)=>s.execute({type:'bindDevice',id,channel,targetId});
+const value=(id,channel,value)=>s.execute({type:'deviceControl',id,channel,value});
+const rejects=fn=>{const before=s.serialize();assert.throws(fn);check(s.serialize()===before,'拒絕後資料不變');};
+check(compatibleTarget(get(sw),get(tv))&&!compatibleTarget(get(dim),get(tv))&&compatibleTarget(get(therm),get(ac)),'依能力篩選');
+bind(sw,0,lamp);bind(sw,1,tv);bind(sw,2,ac);bind(other,0,lamp);bind(dim,0,lamp);bind(therm,0,ac);
+check(!get(lamp).deviceState.power,'連接不改家電電源');
+const off=buildDesign(s.state);value(sw,0,1);const on=buildDesign(s.state);
+try{check(off.byId.get(lamp).children[0].material.color.getHex()!==on.byId.get(lamp).children[0].material.color.getHex(),'3D狀態指示改變');}finally{off.dispose();on.dispose();}
+check(get(lamp).deviceState.power&&get(lamp).deviceState.level===100&&get(dim).controls[0]===100&&get(other).controls[0]===1,'同步所有關聯控制器');
+check(!get(tv).deviceState.power&&!get(ac).deviceState.power,'不同路互不影響');
+value(dim,0,40);check(get(lamp).deviceState.level===40&&get(sw).controls[0]===1,'調光同步');
+value(dim,0,0);check(!get(lamp).deviceState.power&&get(other).controls[0]===0,'亮度零同步關閉');
+s.execute({type:'toggleAppliance',id:lamp});check(get(sw).controls[0]===1&&get(dim).controls[0]===100,'家電直接切換同步');
+value(therm,0,26);check(get(ac).deviceState.temperature===26&&!get(ac).deviceState.power,'溫控設定不擅自開電源');
+rejects(()=>bind(sw,1,lamp));rejects(()=>bind(dim,0,tv));rejects(()=>bind(sw,0,'missing'));rejects(()=>bind(sw,0,sw));rejects(()=>value(sw,0,2));rejects(()=>bind(sw,3,tv));
+const snapshot=s.serialize();s.execute({type:'delete',id:lamp});check(get(sw).targets[0]===null&&get(dim).targets[0]===null,'刪除清除關聯');s.undo();check(s.serialize()===snapshot,'復原同步還原家電關聯');s.redo();s.undo();
+bind(sw,0,null);check(get(lamp).deviceState.power&&get(sw).targets[0]===null,'解除不改電源');
+const roundtrip=parseProject(s.serialize());check(JSON.stringify(roundtrip)===JSON.stringify(s.state),'檔案保留關聯與狀態');
+const old=structuredClone(sampleProject());old.version=6;for(const o of old.objects){delete o.targets;delete o.deviceState;delete o.media;}check(parseProject(JSON.stringify(old)).version===8,'版本6遷移');
+for(const mutate of [p=>p.objects.find(o=>o.id===other).targets[0]='missing',p=>p.objects.find(o=>o.id===other).controls[0]=0,p=>p.objects.find(o=>o.id===lamp).deviceState.power='true']){const p=JSON.parse(s.serialize());mutate(p);assert.throws(()=>parseProject(JSON.stringify(p)));checks++;}
+console.log(`PASS device links: ${checks} assertions; compatible targets, state propagation, geometry, deletion, history, migration and strict import.`);

@@ -1,0 +1,80 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "schemaNotice": "專案能力契約，非 B4A 原生 schema；由可信靜態模組載入。",
+  "id": "lumiere.guided-capture",
+  "version": "0.5.1",
+  "route": "#/capture",
+  "visionEngine": true,
+  "source": "src/frontend/capture/CapturePage.js",
+  "inputFormats": [
+    "lumiere-capture:1/2/3/4 (migration)",
+    "lumiere-capture:5",
+    "lumiere-capture-report:1",
+    "lumiere-workbench:1",
+    "lumiere-semantic:1",
+    "lumiere-capture-workspace:1",
+    "lumiere-rectified-stereo:1",
+    "lumiere-photo-pair-result:1",
+    "lumiere-evidence:1"
+  ],
+  "implementationHashes": {
+    "src/frontend/capture/capture-model.js": "83428906f9c725f2b752f9e1f559be676240f439893e94737a7fe5da9aab051f",
+    "src/frontend/capture/attachments.js": "dcaf64c314ea67227a73d6f5f4f8a1f78c1f1c4425a04550ac9079fa01eb3f2b",
+    "src/frontend/capture/CapturePage.js": "f698cd66aec26b75926061367c27018f8271db68a735f0e05b3adc00313ec6bc",
+    "definitions/capture.page.json": "8456eee5846760e5b1b2aaef852b8d77aebb581c0b00a2918987277d294c4e9e",
+    "scripts/capture-agent.mjs": "df1dbbb61c1502b5a7d04aec06996bd86f394b5a330cb7f8b940a1fe2a630d49",
+    "src/frontend/capture/stereo.js": "e46311b4531eeaa65a0d741b8126fccb62f9cb914a643763ff40df6147d0a71b",
+    "src/frontend/capture/photo-analysis.js": "0549a5001c9ff8681cc4b0555d16b78a75e3ab34ae0a58b6dc49cc7e7d5bcde9",
+    "scripts/capture-photos.mjs": "a9550791e01f3b4f349a73870ec8a3cb4a99c47611102ed782e83560150c0e38",
+    "scripts/vision/photo_pair.py": "875f4a35c820119be9f91e15269b220a12fee97185fbf062fb0521671934620a",
+    "src/frontend/capture/CapturePointCloud.js": "e6cb7e5c0684b4b410d5ddbb60050e8364f0eb738a177ebc7e192eabfbc02273",
+    "scripts/vision/requirements.txt": "ee9c1639f291842b56974dcbd5ab53faacd96087e1fbe41c6c58f399f6d67091",
+    "src/frontend/capture/evidence.js": "caec78966a3cd24009e0bebfadb1b6612e9145b0df7a82f5ddc4263e1025df68",
+    "src/frontend/capture/agent-commands.js": "d324e1e5298004be027faad6e4a449465ae87f30e0552f16a1943914792c5a3f",
+    "src/frontend/capture/workbench.js": "f01cefc617871a09feb30081c8f38de6a38bcbb912d882be8325d940cc686a74",
+    "src/frontend/capture/semantic-assemblies.js": "b24fd657be1b80e725741e235317984293150361b8d648cabf3e8155c72a33b3",
+    "src/frontend/capture/ObservationCanvas.js": "1a4fc90f5918d49e2d367d576fbede327764969df667a511575296bdb04f41a1",
+    "src/frontend/capture/capture-workspace.js": "7395560883f7b2cff86bf64d310495a79150d895c0d7dfbe99b1381c073bbeb5",
+    "src/frontend/styles/capture.css": "fa8561c0d03f3ce4d22119e33dd8968431b17049ad403492b5424f0b97647a26"
+  },
+  "geometryEngine": "rectified-sparse-stereo-v1",
+  "photoEngineStatus": "installed-tested-synthetic-and-browser",
+  "semanticRecognition": false,
+  "optionalDependencies": {
+    "opencv-python-headless": "4.12.0.88",
+    "numpy": "2.2.6"
+  },
+  "evidenceResolution": {
+    "autoApply": false,
+    "perProperty": true,
+    "humanChoiceLock": true,
+    "semanticCorrespondence": true
+  },
+  "agentWorkbench": {
+    "commandCount": 66,
+    "observations": [
+      "point",
+      "polyline",
+      "polygon",
+      "box"
+    ],
+    "customViewports": [
+      "ObservationCanvas"
+    ],
+    "semanticAssemblies": [
+      "partial-space",
+      "window-grid",
+      "sectional-sofa"
+    ],
+    "relations": [
+      "against-wall",
+      "on-ground"
+    ],
+    "completion": "source inventory with explicit review and fingerprint invalidation",
+    "calibration": "constrained vanishing-point principal-point candidate; pose/focal/scale not solved",
+    "offlineWorkspace": "all source attachments and complete capture state, 10 MB JSON including base64",
+    "externalUploads": false,
+    "hostedWindowGrid": "explicit native wall host; one shared aperture with grid frames/glass; standalone mode preserved"
+  }
+}

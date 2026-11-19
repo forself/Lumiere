@@ -1,0 +1,8 @@
+import assert from 'node:assert/strict';
+import * as THREE from '../node_modules/three/build/three.module.js';
+import {ASSETS} from '../src/frontend/designer/catalog.js';
+import {DesignStore,sampleProject,parseProject} from '../src/frontend/designer/model.js';
+import {buildDesign} from '../src/frontend/designer/geometry.js';
+const specs=Object.values(ASSETS).filter(a=>a.prop&&!a.vehicleType&&a.shape!=='chart-sector');assert(specs.some(a=>a.id==='text-panel'));assert(specs.some(a=>a.id==='placeholder-box'));
+for(const spec of specs){const s=new DesignStore(sampleProject());s.execute({type:'addObject',assetId:spec.id,x:0,z:0,elevation:.8});const o=s.state.objects.at(-1),fields={type:'prop.configure',id:o.id,x:1,z:1,elevation:.8,rotation:0,width:.3,depth:.6,height:spec.height,pitch:0,roll:0,color:'#4874a5',label:'現場物品 A'};s.execute(fields);assert.deepEqual(parseProject(s.serialize()),s.state);const built=buildDesign(s.state);try{const root=built.byId.get(o.id),bounds=new THREE.Box3().setFromObject(root),size=bounds.getSize(new THREE.Vector3());assert.ok(size.x<=.301&&size.z<=.601&&size.y<=spec.height*1.01, spec.id+' bounds');assert.equal(root.children[0].material.color.getHexString(),'4874a5');}finally{built.dispose();}const saved=s.serialize();for(const bad of [{color:'red'},{width:0},{height:NaN},{label:'x'.repeat(65)}]){assert.throws(()=>s.execute({...fields,...bad}));assert.equal(s.serialize(),saved);}s.execute({...fields,pitch:90,roll:20,rotation:45});s.undo();assert.equal(s.serialize(),saved);}
+console.log('PASS adjustable props: '+specs.length+' general prop assets, dimensions, color, shelf elevation, persistence, rotation, bounds, rejected inputs and undo; specialized chart sectors have dedicated tests.');

@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "profile": "frontend-runtime",
+  "libraries": [
+    "ui_components",
+    "page-generator",
+    "custom_components"
+  ],
+  "excludedDirectories": [
+    "node_modules",
+    ".git",
+    ".private",
+    ".data",
+    "tests",
+    "test",
+    "__tests__",
+    "examples",
+    "docs",
+    "tools",
+    "evidence"
+  ],
+  "excludedExtensions": [
+    ".md",
+    ".map",
+    ".ts",
+    ".cs",
+    ".py",
+    ".sqlite3",
+    ".db",
+    ".pem",
+    ".key",
+    ".pfx",
+    ".log"
+  ],
+  "excludedNamePatterns": [
+    "(^|[.-])(test|spec)[.-]",
+    "^demo(?:[._-]|$)",
+    "^(?:README|DESIGN-SYSTEM|THEME-USAGE|STYLE_CONVENTION)(?:\\.|$)",
+    "^(?:build-|gen-)",
+    "^(?:package(?:-lock)?\\.json|tsconfig.*|\\.env.*)$"
+  ],
+  "libraryExtensions": [
+    ".js",
+    ".mjs",
+    ".css",
+    ".json",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".webp",
+    ".ico",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".otf",
+    ".wasm"
+  ],
+  "applicationExtensions": [
+    ".html",
+    ".js",
+    ".mjs",
+    ".css",
+    ".json",
+    ".png",
+    ".jpg",
+    ".jpeg",
+    ".gif",
+    ".webp",
+    ".ico",
+    ".woff",
+    ".woff2",
+    ".ttf",
+    ".otf",
+    ".wasm"
+  ],
+  "sourceClassifications": [
+    {
+      "prefix": "ui_components/metadata/",
+      "extensions": [
+        ".js",
+        ".mjs"
+      ],
+      "kind": "build-tool",
+      "reason": "Node metadata 編譯／驗證工具；瀏覽器消費生成後 JSON"
+    },
+    {
+      "prefix": "ui_components/data/EvidenceMap/",
+      "extensions": [
+        ".js",
+        ".mjs",
+        ".css",
+        ".json"
+      ],
+      "kind": "unregistered-legacy",
+      "reason": "不在 catalog 或公開 data/index.js；仍引用已移除 SVG，不屬正式發布能力"
+    }
+  ]
+}

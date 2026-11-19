@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {manualLabel,clusterLabels,hitLabel} from '../src/frontend/designer/balloon-labels.js';
+import {DesignStore,sampleProject,parseProject} from '../src/frontend/designer/model.js';
+const p=(id,x,y,label='標記')=>({id,x,y,label});
+let groups=clusterLabels([p('a',200,200),p('b',220,210),p('c',600,400)],800,600);assert.equal(groups.length,2);assert.equal(groups[0].items.length,2);assert.equal(hitLabel(groups,groups[0].x,groups[0].y+5),groups[0]);assert.equal(hitLabel(groups,0,0),undefined);
+assert.equal(clusterLabels([p('a',-1,200),p('b',900,20)],800,600).length,0);
+const separate=clusterLabels([p('a',100,100),p('b',500,100)],800,600);assert.equal(separate.length,2);assert.equal(separate[0].rect.height,28);
+assert.equal(clusterLabels(Array.from({length:100},(_,i)=>p(String(i),300+i%10,300)),800,600)[0].items.length,100);
+const s=new DesignStore(sampleProject()),id=s.state.objects[0].id;s.execute({type:'label.set',id,text:'證物 A <文字>'});assert.equal(manualLabel(s.state.objects[0]),'證物 A <文字>');assert.deepEqual(parseProject(s.serialize()),s.state);s.execute({type:'label.set',id,text:''});assert.equal(manualLabel(s.state.objects[0]),'');s.undo();assert.ok(manualLabel(s.state.objects[0]));assert.throws(()=>s.execute({type:'label.set',id,text:'x'.repeat(65)}));
+console.log('PASS balloons: overlap clustering, split, screen clipping, hit testing, fixed height, 100 items, labels persistence and undo.');

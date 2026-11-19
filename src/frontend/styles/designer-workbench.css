@@ -1,0 +1,120 @@
+/* Hallmark · v2.0.0 · shape: app screen · theme: brand · genre: modern-minimal · scope: app · signature: synchronized plan and space · posture: Restrained */
+/* Hallmark · pre-emit critique: weakest: E, grouped tools on demand and added compact phone disclosure; finish-review: subagent · 3 findings · 3 resolved across app screens; static 0 FAIL/REFLEX/WARN, browser: CUA, automated render unavailable. */
+.designer-shell {
+  --cl-workbench-title: 21px;
+  --cl-workbench-body: 14px;
+  --cl-workbench-caption: 12px;
+  --cl-workbench-control: 36px;
+  --cl-workbench-drawer: 210px;
+  --cl-font-size-xs: 12px;
+  --cl-font-size-sm: 13px;
+  --cl-font-size-md: 14px;
+  --cl-font-size-lg: 16px;
+  --cl-text-secondary: var(--cl-text-primary);
+  --cl-text-muted: var(--cl-text-primary);
+  height: 100%;
+  max-height: 100dvh;
+  min-width: 0;
+  max-width: 1920px;
+  margin-inline: auto;
+  overflow: hidden;
+  font-size: var(--cl-workbench-body);
+}
+.designer-shell [hidden] { display: none !important; }
+.designer-shell .design-header { flex: 0 0 auto; gap: 16px; padding: 12px 20px; min-height: 68px; }
+.designer-shell .design-brand { gap: 2px; flex: 0 0 auto; }
+.designer-shell .design-brand [data-tool-node="design-kicker"] { display: none; }
+.designer-shell .design-brand [data-tool-node="design-title"] { --cl-font-family: var(--cl-font-family-cjk); letter-spacing: normal; }
+.designer-shell .design-brand h1 { font-size: var(--cl-workbench-title); line-height: 1.2; margin: 0; }
+.designer-shell .design-brand [data-tool-node="design-subtitle"] { font-size: var(--cl-workbench-caption); line-height: 1.4; }
+.designer-shell .design-file-actions { min-width: 0; gap: 4px; }
+.designer-shell .design-primary-actions { display: flex; flex: 0 0 auto; align-items: center; gap: 4px; order: 2; }
+.designer-shell .design-file-actions { order: 1; }
+.designer-shell [data-tool-node="workbench-controls-toggle"] { display: none; }
+.designer-shell .design-file-actions [data-tool-node] { min-width: 0; }
+.designer-shell .design-import-wrap { gap: 4px; }
+.designer-shell .design-toolbar { flex: 0 0 auto; gap: 4px; padding: 8px 20px; }
+.designer-shell .design-history { gap: 4px; }
+.designer-shell .design-workbench-nav { flex: 0 0 auto; display: flex; align-items: center; flex-wrap: wrap; gap: 8px; padding: 8px 20px; border-bottom: 1px solid var(--cl-border); background: var(--cl-bg); }
+.designer-shell .design-workbench-nav > [data-tool-node] { min-width: 0; }
+.designer-shell [data-tool-node="workbench-label"] { font-weight: 600; font-size: var(--cl-workbench-body); }
+.designer-shell [data-tool-node="workbench-panel"] { width: 170px; }
+.designer-shell [data-tool-node="floor-choice"] { width: 185px; }
+.designer-shell [data-tool-node="floor-view"] { width: 215px; }
+.designer-shell .design-workbench-tools { flex: 0 0 auto; min-width: 0; max-height: var(--cl-workbench-drawer); overflow: auto; overscroll-behavior: contain; border-bottom: 1px solid var(--cl-border); background: var(--cl-bg-secondary); }
+.designer-shell .design-workbench-tools .design-catalog,
+.designer-shell .design-workbench-tools .design-batch,
+.designer-shell .design-workbench-tools .design-floors,
+.designer-shell .design-workbench-tools .design-render-tools,
+.designer-shell .design-workbench-tools .design-material-library,
+.designer-shell .workbench-catalog-section { display: flex; flex-wrap: wrap; align-items: end; gap: 8px; min-width: 0; padding: 12px 20px; border: 0; }
+.designer-shell .design-workbench-tools .design-catalog { padding: 0; }
+.designer-shell .design-floors > [data-tool-node] { flex: 0 1 auto; min-width: 130px; max-width: 250px; }
+.designer-shell .design-workbench-tools [data-tool-node] { max-width: 100%; }
+.designer-shell .design-workspace { flex: 1 1 0; min-height: 0; overflow: auto; grid-template-columns: minmax(0,1fr) minmax(0,1.12fr) 248px; gap: 12px; padding: 12px 16px; align-items: stretch; }
+.designer-shell .design-pane { min-height: 340px; border-radius: var(--cl-radius-md); }
+.designer-shell .design-pane-heading { padding: 8px 12px; gap: 8px; }
+.designer-shell .design-pane-heading [data-tool-node$="number"] { letter-spacing: normal; font-size: var(--cl-workbench-caption); order: 1; }
+.designer-shell .design-pane-heading h3 { font-size: var(--cl-workbench-body); line-height: 1.3; margin: 0; }
+.designer-shell [data-tool-node="design-plan"],
+.designer-shell [data-tool-node="design-scene"] { min-height: 280px; }
+.designer-shell .design-inspector { min-width: 0; min-height: 0; padding: 4px; gap: 12px; overscroll-behavior: contain; }
+.designer-shell .design-inspector [data-tool-node="design-inspector-kicker"] { display: none; }
+.designer-shell .design-inspector h3 { font-size: var(--cl-workbench-body); line-height: 1.4; margin: 0; }
+.designer-shell .design-inspector [data-tool-node="design-selection-info"] { font-size: var(--cl-workbench-caption); overflow-wrap: anywhere; }
+.designer-shell .design-inspector .design-fields { gap: 8px; }
+.designer-shell .design-material-picker { display: grid; grid-template-columns: minmax(0,1fr); gap: var(--cl-space-lg); }
+.designer-shell .design-material-picker [data-tool-node] { width: 100%; }
+.designer-shell [data-tool-node="design-material-library"] { min-width: 0; padding: 12px 20px; gap: 12px; }
+.designer-shell [data-tool-node="material-slot"] { flex: 0 1 240px; width: 240px; min-width: min(220px,100%); max-width: 100%; }
+.designer-shell .design-inspector.design-context { width: min(340px,calc(100% - 32px)); max-height: min(520px,calc(100dvh - 24px)); display: flex; overflow: auto; padding: 12px; box-shadow: var(--cl-shadow-lg); }
+.designer-shell .design-footer { flex: 0 0 auto; gap: 12px; padding: 8px 20px; font-size: var(--cl-workbench-caption); line-height: 1.5; align-items: start; }
+.designer-shell [data-tool-node="design-message"] { max-width: 58%; }
+.designer-shell [data-tool-node="design-summary"] { text-align: right; }
+.designer-shell button,
+.designer-shell input,
+.designer-shell .dropdown__selector { font-size: var(--cl-workbench-body); min-height: var(--cl-workbench-control); }
+.designer-shell button:focus-visible,
+.designer-shell input:focus-visible,
+.designer-shell [tabindex]:focus-visible { outline: 2px solid var(--cl-border-focus); outline-offset: 2px; }
+.designer-shell button:active { transform: translateY(1px); }
+@media(max-width:1100px) {
+  .designer-shell .design-header { padding: 12px 16px; flex-wrap: wrap; gap: 12px; }
+  .designer-shell .design-file-actions { justify-content: flex-start; }
+  .designer-shell .design-toolbar,
+  .designer-shell .design-workbench-nav { padding: 8px 16px; }
+  .designer-shell .design-workspace { grid-template-columns: minmax(0,1fr) minmax(0,1fr); padding: 12px; }
+  .designer-shell .design-pane { min-height: 390px; }
+  .designer-shell .design-inspector:not(.design-context) { display: grid; grid-column: 1 / -1; grid-template-columns: minmax(0,1fr) minmax(0,1fr); align-items: start; padding: 12px 4px; overflow: visible; }
+  .designer-shell .design-inspector:not(.design-context) .design-fields { grid-template-columns: repeat(4,minmax(0,1fr)); }
+}
+@media(max-width:680px) {
+  .designer-shell { --cl-workbench-title: 19px; --cl-workbench-drawer: 190px; --cl-workbench-control: 44px; }
+  .designer-shell .design-header { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 8px; padding: 8px 12px; min-height: 60px; }
+  .designer-shell .design-brand { min-width: 0; }
+  .designer-shell .design-brand h1 { overflow-wrap: break-word; }
+  .designer-shell .design-primary-actions { order: 0; min-width: 0; }
+  .designer-shell [data-tool-node="workbench-controls-toggle"] { display: block; }
+  .designer-shell .design-brand [data-tool-node="design-subtitle"] { display: none; }
+  .designer-shell .design-file-actions { grid-column: 1 / -1; gap: 4px; max-height: 168px; overflow: auto; overscroll-behavior: contain; }
+  .designer-shell:not(.workbench-controls-open) .design-file-actions,
+  .designer-shell:not(.workbench-controls-open) .design-toolbar,
+  .designer-shell:not(.workbench-controls-open) .design-workbench-nav,
+  .designer-shell:not(.workbench-controls-open) .design-workbench-tools { display: none !important; }
+  .designer-shell.workbench-controls-open { overflow-y: auto; }
+  .designer-shell.workbench-controls-open .design-workspace { flex: 0 0 auto; }
+  .designer-shell .design-history { margin-left: 0; }
+  .designer-shell .design-workbench-nav { gap: 8px; }
+  .designer-shell [data-tool-node="floor-choice"],
+  .designer-shell [data-tool-node="floor-view"] { width: auto; flex: 1 1 160px; }
+  .designer-shell .design-workspace { grid-template-columns: minmax(0,1fr); }
+  .designer-shell .design-pane { min-height: 360px; }
+  .designer-shell .design-inspector:not(.design-context) { display: flex; }
+  .designer-shell .design-inspector:not(.design-context) .design-fields { grid-template-columns: minmax(0,1fr) minmax(0,1fr); }
+  .designer-shell .design-footer { padding: 8px 16px; flex-direction: column; gap: 4px; }
+  .designer-shell [data-tool-node="design-message"] { max-width: 100%; }
+  .designer-shell [data-tool-node="design-summary"] { text-align: left; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .designer-shell *, .designer-shell *::before, .designer-shell *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
+}

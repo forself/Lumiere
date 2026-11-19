@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {installTestDom} from '../lib/ui_components/common/TreeList/test-dom.mjs';
+installTestDom();
+const {DesignerPage}=await import('../src/frontend/designer/DesignerPage.js');
+const {moveSheetView,sheetDimensions}=await import('../src/frontend/designer/SheetViewport.js');
+const page=new DesignerPage();page.sheetPages=JSON.parse(fs.readFileSync('output/sheets-test.json','utf8')).sheets;page.sheetIndex=0;page.sheetView='0';page.syncSheets=()=>{};page.message=m=>page.notice=m;page.views=[{renderer:{},importedAssets:new Map()}];
+assert.deepEqual(sheetDimensions({paper:'A3',orientation:'landscape'}),[420,297]);
+const before=structuredClone(page.sheetPages),view=before[0].views[0];page.moveSheetViewport(0,moveSheetView(view,5,0));assert.equal(page.sheetPages[0].views[0].x,25);assert.equal(page.sheetPages[0].views[0].scale,100);page.undoSheetDrag();assert.deepEqual(page.sheetPages,before);
+page.moveSheetViewport(0,moveSheetView(view,100,0));assert.deepEqual(page.sheetPages,before);assert.match(page.notice,/重疊/);
+page.moveSheetViewport(0,moveSheetView(view,-100,0));assert.deepEqual(page.sheetPages,before);assert.match(page.notice,/圖框/);
+page.moveSheetViewport(0,moveSheetView(view,-100,-100,true));assert.equal(page.sheetPages[0].views[0].width,80);page.undoSheetDrag();assert.deepEqual(page.sheetPages,before);
+page.moveSheetViewport(0,moveSheetView(view,1,0));page.sheetPages[0].title='另一修改';page.undoSheetDrag();assert.equal(page.sheetPages[0].title,'另一修改');assert.match(page.notice,/其他修改/);
+console.log('PASS sheet canvas: millimetre move/resize, fixed scale, PDF fit validation, overlap/bounds rejection, undo and intervening-edit protection.');

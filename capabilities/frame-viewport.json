@@ -1,0 +1,41 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "schemaNotice": "專案能力契約，非 B4A 原生 schema；由可信靜態 factory 註冊。",
+  "id": "lumiere.frame-viewport",
+  "name": "FrameViewport",
+  "version": "1.0.0",
+  "kind": "uiComponent",
+  "scope": "#/design",
+  "source": "src/frontend/designer/FrameViewport.js",
+  "export": "FrameViewport",
+  "inputs": {
+    "model": "validated lumiere-frame-2d v1, up to 40 nodes and 80 rectangular members",
+    "result": "analyzeFrame result or null",
+    "mode": [
+      "deformation",
+      "axial",
+      "shear",
+      "moment"
+    ],
+    "factor": "1–100000 visualization amplification"
+  },
+  "outputs": [
+    "read-only Canvas2D diagram"
+  ],
+  "authority": "No network, persistence, permissions, raw HTML or execution from user input. Page B4A controls own changes.",
+  "lifecycle": {
+    "mount": "mount(container)",
+    "update": "setData(model,result,mode,factor)",
+    "destroy": "disconnect ResizeObserver and remove owned canvas"
+  },
+  "validation": [
+    "tests/designer-frame.mjs",
+    "scripts/verify.mjs"
+  ],
+  "implementationHashes": {
+    "src/frontend/designer/FrameViewport.js": "1d480c4bb6a1028d02ccefedf1d942df75bd6d4a70a359973446b12a912a214c",
+    "src/frontend/designer/FrameEditor.js": "5ee330d99fc0be1f520f2be3a63404b2544d19319ae8dde005fbc665c7d80da8",
+    "src/frontend/designer/frame-analysis.js": "a5e0e48e795e64180a4d4935078064340c00e86250a2c267232d9e4792f6d4cd"
+  }
+}

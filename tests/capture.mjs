@@ -1,0 +1,36 @@
+import assert from 'node:assert/strict';
+import {writeFile} from 'node:fs/promises';
+import {newCapture,guide,addSource,addPair,addMeasurement,applyReport,reportTemplate,parseCapture,setTask,validateCapture} from '../src/frontend/capture/capture-model.js';
+let s=guide(newCapture('capture-test'));
+const photo=(name,sha)=>({name,sha256:sha.repeat(64),bytes:100,mime:'image/png',width:1280,height:720,kind:'photo',target:'客廳',view:'入口向內',capturedAt:'2026-11-08'});
+s=addSource(s,photo('A.png','a'),'task-overview');assert.equal(s.tasks[0].status,'submitted');
+s=guide(s);assert(s.tasks.some(t=>t.id==='task-scale'));assert(s.tasks.some(t=>t.id==='task-stereo'));assert.throws(()=>addSource(s,photo('duplicate.png','a')),/已登錄/);
+s=addSource(s,photo('B.png','b'),'task-stereo');
+const snapshot=JSON.stringify(s);
+assert.throws(()=>addPair(s,{sourceIds:['source-1','source-1'],metres:.5,uncertainty:.01,direction:'right',sameLens:true}),/間距/);assert.equal(JSON.stringify(s),snapshot);
+s=addPair(s,{sourceIds:['source-1','source-2'],metres:.5,uncertainty:.01,direction:'right',sameLens:true});assert.equal(s.pairs[0].method,'user-reported');
+s=addMeasurement(s,{target:'西牆兩端',metres:4,uncertainty:.02,sourceIds:['source-1'],method:'user-measured'});
+let r=reportTemplate(s);r.summary='測試回報：僅示範命令，不是照片實際解算。';r.operations=[{levelId:'floor-1',sourceIds:['source-1'],basis:'inferred',command:{type:'addRoom',x:0,z:0,width:4,depth:5}}];
+r.tasks=[{id:'task-back-corner',priority:'important',target:'櫃體右後牆角',reason:'目前來源未覆蓋',instruction:'從入口右側朝櫃體右後方拍攝，包含兩面牆與地坪交界，勿移動櫃體。',alternatives:'提供此處含尺寸平面圖。',sourceIds:['source-1'],status:'pending',resolution:''}];
+const result=applyReport(s,r);assert.equal(s.scene.levels[0].design.rooms.length,0);assert.equal(result.scene.levels[0].design.rooms.length,1);assert.equal(result.reports[0].operations[0].basis,'inferred');assert.deepEqual(applyReport(result,r),result);
+assert.throws(()=>applyReport(guide(s),r),/版本/);
+const bad=structuredClone(r);bad.operations.push({...bad.operations[0],command:{type:'addRoom',x:100,z:0,width:4,depth:5}});assert.throws(()=>applyReport(s,bad));assert.equal(s.scene.levels[0].design.rooms.length,0);
+const evil=structuredClone(r);evil.operations[0].command.type='not.registered';assert.throws(()=>applyReport(s,evil),/允許命令|未登錄|不支援/);
+const missing=structuredClone(r);missing.sourceIds=['missing'];assert.throws(()=>applyReport(s,missing),/來源/);
+assert.throws(()=>setTask(result,'task-back-corner','skipped',''),/無效/);
+assert.equal(setTask(result,'task-back-corner','skipped','現場無法安全站立').tasks.at(-1).status,'skipped');
+assert.deepEqual(parseCapture(JSON.stringify(result)),result);assert.throws(()=>validateCapture({...result,extra:1}),/欄位/);
+assert.throws(()=>parseCapture(' '.repeat(10485761)),/10 MB/);
+await writeFile('output/capture-test.json',JSON.stringify(s,null,2));await writeFile('output/capture-test-report.json',JSON.stringify(r,null,2));
+console.log('PASS guided capture: source provenance, tasks, pair/scale, version conflict, idempotency, atomic scene generation, limits and persistence');
+
+// 人工校正後舊代理回報失效；已鎖定構件不可被代理移動。
+const {replaceCaptureScene}=await import('../src/frontend/capture/capture-model.js');
+const edited=replaceCaptureScene(result,result.scene);assert.equal(edited.revision,result.revision+1);
+const repeatChanged=structuredClone(r);repeatChanged.summary='不同內容';assert.throws(()=>applyReport(result,repeatChanged),/不同內容/);
+const extraField=structuredClone(r);extraField.operations[0].command.hiddenWrite=true;assert.throws(()=>applyReport(s,extraField),/未知欄位|不支援欄位/);
+const {applyBuildingCommand}=await import('../src/frontend/designer/building-model.js');
+let lockedScene=applyBuildingCommand(result.scene,{type:'addObject',assetId:'table',x:2,z:2});
+lockedScene=applyBuildingCommand(lockedScene,{type:'editor.set',flag:'locked',value:true,ids:['object-1']});
+let locked=replaceCaptureScene(result,lockedScene),lr=reportTemplate(locked);lr.operations=[{levelId:'floor-1',sourceIds:['source-1'],basis:'inferred',command:{type:'moveObject',id:'object-1',x:3,z:2}}];assert.throws(()=>applyReport(locked,lr));
+console.log('PASS human correction, duplicate-ID collision, command field allowlist and preserved locks');

@@ -1,0 +1,17 @@
+import assert from 'node:assert/strict';
+import {readFile,writeFile} from 'node:fs/promises';
+import {parseCapture,applyStereo} from '../src/frontend/capture/capture-model.js';
+import {solveStereo,stereoTemplate} from '../src/frontend/capture/stereo.js';
+const s=parseCapture(await readFile('output/capture-test.json','utf8')),j=stereoTemplate(s);
+j.calibration={model:'rectified-parallel-common-intrinsics',fx:1000,fy:1000,cx:640,cy:360,focalErrorPx:1,evidence:'合成相機測試；非實拍校正結果'};
+j.matches=[{id:'point-near',label:'合成點 5 m',left:{u:740,v:400},right:{u:640,v:400}},{id:'point-far',label:'遠點',left:{u:740,v:400},right:{u:739,v:400}},{id:'point-bad',label:'上下不齊',left:{u:740,v:400},right:{u:640,v:410}}];
+const r=solveStereo(s,j);assert.equal(r.accepted.length,1);assert.equal(r.rejected.length,2);assert.equal(r.accepted[0].z,5);assert.equal(r.accepted[0].x,.5);assert.equal(r.accepted[0].y,.2);assert(Math.abs(r.accepted[0].depthErrorMetres-.205)<1e-9);
+const done=applyStereo(s,j);assert.deepEqual(parseCapture(JSON.stringify(done)),done);assert.deepEqual(applyStereo(done,j),done);assert.equal(s.reconstructions.length,0);assert(done.tasks.some(t=>t.id.includes(j.id)));
+const tampered=structuredClone(done);tampered.reconstructions[0].result.accepted[0].z=4;assert.throws(()=>parseCapture(JSON.stringify(tampered)),/不一致/);
+const stale=structuredClone(j);stale.baseRevision--;assert.throws(()=>applyStereo(s,stale),/版本/);
+const zero=structuredClone(j);zero.matches[0].right.u=740;assert(solveStereo(s,zero).rejected.some(p=>p.reason==='nonpositive-disparity'));
+const wrong=structuredClone(s);wrong.pairs[0].direction='forward';assert.throws(()=>solveStereo(wrong,j),/向右/);
+const noCalibration=stereoTemplate(s);assert.throws(()=>solveStereo(s,noCalibration),/內參/);
+const bounds=structuredClone(j);bounds.matches[0].left.u=2000;assert.throws(()=>solveStereo(s,bounds),/範圍/);
+const old=structuredClone(s);old.version=1;delete old.reconstructions;delete old.photoAnalyses;delete old.evidence;delete old.workbench;assert.equal(parseCapture(JSON.stringify(old)).version,5);
+await writeFile('output/stereo-test-job.json',JSON.stringify(j,null,2));await writeFile('output/stereo-test-result.json',JSON.stringify(done,null,2));console.log('PASS stereo depth, coordinates, conservative error, rejection, provenance, replay, tamper check and v1 migration');

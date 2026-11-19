@@ -1,0 +1,18 @@
+import assert from 'node:assert/strict';
+import {writeFileSync} from 'node:fs';
+import {DesignStore,sampleProject,parseProject} from '../src/frontend/designer/model.js';
+import {audioPositions,youtubeId} from '../src/frontend/designer/media-runtime.js';
+const s=new DesignStore(sampleProject());const add=(assetId,x,z)=>{s.execute({type:'addObject',assetId,x,z});return s.state.objects.at(-1).id;};
+const screen=add('projection-screen',0,-1),projector=add('projector',0,1),speakers=add('speakers',2,0);
+s.execute({type:'rotateObject',id:screen});s.execute({type:'rotateObject',id:screen});s.execute({type:'dimensions',id:projector,width:.32,depth:.25,height:.12,elevation:1.26});
+s.execute({type:'mediaSettings',id:projector,screenId:screen,speakerId:null,throwRatio:1});s.execute({type:'toggleAppliance',id:projector});
+let p=s.state.objects.find(o=>o.id===projector),positions=audioPositions(s.state,p);assert.equal(positions[0].z,1);assert.ok(positions[0].x<0&&positions[1].x>0);
+s.execute({type:'rotateObject',id:projector});p=s.state.objects.find(o=>o.id===projector);positions=audioPositions(s.state,p);assert.ok(positions[0].z<positions[1].z);s.undo();
+s.execute({type:'mediaSettings',id:projector,screenId:screen,speakerId:speakers,throwRatio:1});p=s.state.objects.find(o=>o.id===projector);positions=audioPositions(s.state,p);assert.ok(positions.every(p=>p.x>1));s.undo();
+const saved=s.serialize();s.execute({type:'delete',id:screen});assert.equal(s.state.objects.find(o=>o.id===projector).media.screenId,null);s.undo();assert.equal(s.serialize(),saved);assert.equal(parseProject(saved).version,8);
+assert.throws(()=>s.execute({type:'mediaSettings',id:projector,screenId:speakers,speakerId:null,throwRatio:1}));assert.equal(youtubeId('https://youtu.be/M7lc1UVf-VE'),'M7lc1UVf-VE');assert.equal(youtubeId('https://youtube.com.evil.test/watch?v=M7lc1UVf-VE'),null);assert.equal(youtubeId('javascript:alert(1)'),null);
+writeFileSync('output/media-test-design.json',saved);console.log('PASS media runtime: source positions, rotation, external speakers, pairing cleanup/undo, strict URL and version 8.');
+import {MediaRuntime} from '../src/frontend/designer/media-runtime.js';
+const connections=[];const node=()=>({gain:{value:0},connect(...args){connections.push(args);},disconnect(){}});
+globalThis.AudioContext=class {constructor(){this.destination={};}createChannelSplitter(){return node();}createGain(){return node();}createPanner(){return node();}createMediaElementSource(){return node();}resume(){return Promise.resolve();}};
+const runtime=Object.create(MediaRuntime.prototype);runtime.video={pause(){}};await runtime.audio();assert.equal(runtime.panners.length,2);assert.ok(runtime.panners.every(p=>p.panningModel==='HRTF'));assert.ok(connections.some(c=>c[0]===runtime.panners[0]&&c[1]===0));assert.ok(connections.some(c=>c[0]===runtime.panners[1]&&c[1]===1));let invalidations=0;runtime.view={invalidate(){invalidations++;}};runtime.operation=0;runtime.playing=false;runtime.pause();assert.equal(invalidations,0);runtime.playing=true;runtime.pause();assert.equal(invalidations,1);assert.equal(runtime.gain.gain.value,0);console.log('PASS stereo graph: L/R routing, HRTF, pause mute and idle invalidation.');

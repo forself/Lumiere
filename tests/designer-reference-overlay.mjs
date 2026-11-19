@@ -1,0 +1,13 @@
+import assert from 'node:assert/strict';
+import {referenceTransform,drawReference} from '../src/frontend/designer/reference-overlay.js';
+const p={opacity:.5,scale:1,x:0,y:0,rotation:0,fov:45};assert.deepEqual(referenceTransform(p),p);
+for(const [k,v] of [['opacity',2],['scale',0],['x',Infinity],['y',NaN],['rotation',181],['fov',0]])assert.throws(()=>referenceTransform({...p,[k]:v}));
+const calls=[],ctx={save(){calls.push('save');},restore(){calls.push('restore');},translate(...v){calls.push(['translate',...v]);},rotate(v){calls.push(['rotate',v]);},drawImage(...v){calls.push(['image',...v.slice(1)]);}};
+drawReference(ctx,{...p,image:{width:960,height:1280}},600,400);assert.deepEqual(calls[1],['translate',300,200]);assert.deepEqual(calls[3],['image',-150,-200,300,400]);assert.equal(calls.at(-1),'restore');const n=calls.length;drawReference(ctx,{hidden:true},600,400);assert.equal(calls.length,n);console.log('Reference overlay: validation, aspect-preserving fit, transparent hide passed');
+import {ReferenceOverlay} from '../src/frontend/designer/reference-overlay.js';
+const pending=[];globalThis.createImageBitmap=()=>new Promise(resolve=>pending.push(resolve));
+const page={destroyed:false,sync(){},message(){}};const overlay=new ReferenceOverlay(page);const f={type:'image/png',size:100,name:'test.png'};
+const first=overlay.load(f),second=overlay.load(f);let closed=0;pending[1]({width:100,height:100,close(){closed++;}});await second;const newest=overlay.image;pending[0]({width:100,height:100,close(){closed++;}});await first;assert.equal(overlay.image,newest);assert.equal(closed,1);overlay.clear();assert.equal(closed,2);assert.equal(overlay.image,null);
+console.log('Reference overlay: asynchronous replacement and clear resource release passed');
+const photoCalls=[];const pc={...ctx,save(){},restore(){},fillRect(...a){photoCalls.push(a);},translate(){},rotate(){},drawImage(){photoCalls.push(this.globalAlpha);}};drawReference(pc,{...p,mode:'photo',image:{width:100,height:100}},600,400);assert.deepEqual(photoCalls,[[0,0,600,400],1]);
+const modeOverlay=new ReferenceOverlay({sync(){},views:[]});modeOverlay.image={opacity:.25};modeOverlay.setMode('photo');assert.equal(modeOverlay.image.mode,'photo');modeOverlay.setMode('scene');assert.equal(modeOverlay.image.hidden,true);modeOverlay.setMode('overlay');assert.equal(modeOverlay.image.hidden,false);assert.equal(modeOverlay.image.opacity,.25);console.log('Photo/scene/overlay mode transitions and opaque photo backdrop passed');

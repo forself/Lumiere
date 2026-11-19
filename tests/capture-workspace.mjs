@@ -1,0 +1,14 @@
+import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
+import {newCapture,addSource,guide,applyWorkbench} from '../src/frontend/capture/capture-model.js';
+import {workbenchTemplate} from '../src/frontend/capture/workbench.js';
+import {createCaptureWorkspace,parseCaptureWorkspace} from '../src/frontend/capture/capture-workspace.js';
+const data=Buffer.from('%PDF-1.7 local attachment roundtrip'),hash=createHash('sha256').update(data).digest('hex');
+let c=addSource(newCapture('capture-workspace-test'),{name:'a.pdf',sha256:hash,bytes:data.length,mime:'application/pdf',width:100,height:100,kind:'plan',target:'測試',view:'',capturedAt:''});
+const packet=workbenchTemplate(c);packet.observations=[{id:'observation-one',sourceId:'source-1',name:'局部窗',semantic:'window',geometry:{type:'box',points:[[10,10],[50,50]]},visibility:{overall:'partial',edges:['visible','occluded','unknown','visible']},basis:'observed',entityRefs:[],note:''}];c=guide(applyWorkbench(c,packet));assert(c.tasks.some(t=>t.id==='task-observation-one'));assert.equal(c.version,5);
+const p=await createCaptureWorkspace(c,async()=>new Blob([data])),parsed=await parseCaptureWorkspace(JSON.stringify(p));assert.deepEqual(parsed.capture,c);assert.equal(await parsed.files[0].file.text(),data.toString());
+const broken=structuredClone(p);broken.attachments[0].base64=btoa('wrong bytes');await assert.rejects(parseCaptureWorkspace(JSON.stringify(broken)),/損毀/);
+await assert.rejects(createCaptureWorkspace(c,async()=>null),/缺少/);await assert.rejects(parseCaptureWorkspace(JSON.stringify({...p,attachments:[]})),/不完整/);
+const badMime=structuredClone(p);badMime.capture.sources[0].mime='image/png';badMime.attachments[0].mime='image/png';await assert.rejects(parseCaptureWorkspace(JSON.stringify(badMime)),/實際格式/);
+const old=structuredClone(c);old.version=4;delete old.workbench;const {validateCapture}=await import('../src/frontend/capture/capture-model.js');assert.equal(validateCapture(old).version,5);assert.deepEqual(validateCapture(old).scene,c.scene);
+console.log('PASS capture workspace: v4 migration, complete local attachment roundtrip, corruption/missing rejection and targeted task integration');

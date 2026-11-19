@@ -1,0 +1,31 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "id": "lumiere.sheet-viewport",
+  "name": "SheetViewport",
+  "version": "1.0.0",
+  "kind": "uiComponent",
+  "source": "src/frontend/designer/SheetViewport.js",
+  "export": "SheetViewport",
+  "inputs": [
+    "validated current sheet",
+    "selected view index",
+    "building geometry for plan outline"
+  ],
+  "outputs": [
+    "onSelect(view index)",
+    "onChange(view index, candidate viewport)"
+  ],
+  "authority": "Canvas draws and emits candidates only; trusted DesignerPage validates layout bounds, overlap and PDF scale before commit. No network or persistence.",
+  "lifecycle": [
+    "mount(parent)",
+    "setData(sheet,selected,building)",
+    "destroy()"
+  ],
+  "validation": [
+    "tests/designer-sheet-canvas.mjs"
+  ],
+  "implementationHashes": {
+    "src/frontend/designer/SheetViewport.js": "9060941d89812a09cd4d493a03d2d77f022cebaf9bbdc40afb7785593d4438a3"
+  }
+}

@@ -1,0 +1,1540 @@
+{
+  "schema_version": 1,
+  "name": "LumiereCapturePage",
+  "type": "tool",
+  "root": {
+    "type": "group",
+    "id": "capture",
+    "class_names": [
+      "capture-page"
+    ],
+    "children": [
+      {
+        "type": "component",
+        "id": "capture-title",
+        "component": "Heading",
+        "options": {
+          "text": "受引導採集工作台",
+          "level": 1
+        }
+      },
+      {
+        "type": "component",
+        "id": "capture-intro",
+        "component": "Text",
+        "options": {
+          "text": "照片由代理視覺判讀與推論，產生可編輯的場景 JSON；先查看下方場景。點雲是獨立的輔助診斷，不等於完成的 3D 場景。照片只保存在本機，本頁不自動呼叫外部模型。"
+        }
+      },
+      {
+        "type": "component",
+        "id": "capture-summary",
+        "component": "Text",
+        "options": {
+          "text": ""
+        }
+      },
+      {
+        "type": "component",
+        "id": "capture-message",
+        "component": "Text",
+        "options": {
+          "text": "開始：提供第一張照片或圖面。"
+        }
+      },
+      {
+        "type": "group",
+        "id": "capture-actions",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "capture-name",
+            "component": "TextInput",
+            "options": {
+              "label": "新採集工作名稱",
+              "value": "單一房間採集",
+              "maxLength": 100
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-new",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "建立新採集工作",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.new"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-design",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "人類校正工具",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "go.design"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-save",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "保存採集草稿",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.save"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "匯出採集 JSON",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.export"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-load-label",
+            "component": "Text",
+            "options": {
+              "text": "開啟採集 JSON"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-load",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "tooltip": "開啟採集 JSON",
+              "inputId": "capture-load-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "capture.load"
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-undo",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "復原上一筆",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.undo"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "workbench-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "workbench-heading",
+            "component": "Heading",
+            "options": {
+              "text": "來源觀察與重建工作狀態",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-summary",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "workspace-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載完整工作包（含來源照片）",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workspace.export"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workspace-load-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入完整工作包；先驗證所有附件，再載入場景。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workspace-load",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "tooltip": "匯入完整工作包",
+              "inputId": "workspace-load-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "workspace.load"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-template",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載觀察批次範本",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.template"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-examples",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載觀察／視點／校正範例",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.examples"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-load-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入觀察、固定視點、比對回報或相機候選。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-load",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "tooltip": "匯入觀察批次",
+              "inputId": "workbench-load-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "workbench.load"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-summary-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "匯出缺漏與待補拍清單",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.summary"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-choice",
+            "component": "Dropdown",
+            "options": {
+              "items": [],
+              "placeholder": "來源觀察"
+            },
+            "events": {
+              "onChange": "workbench.observation"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-detail",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-canvas",
+            "component": "ObservationCanvas",
+            "options": {}
+          },
+          {
+            "type": "component",
+            "id": "observation-edit-note",
+            "component": "Text",
+            "options": {
+              "text": "矩形輪廓使用原始照片像素；實線為可見邊，虛線為未知、遮蔽或照片外的邊。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-x1",
+            "component": "NumberInput",
+            "options": {
+              "label": "X1（來源像素）",
+              "value": 0,
+              "min": 0,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-y1",
+            "component": "NumberInput",
+            "options": {
+              "label": "Y1（來源像素）",
+              "value": 0,
+              "min": 0,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-x2",
+            "component": "NumberInput",
+            "options": {
+              "label": "X2（來源像素）",
+              "value": 1,
+              "min": 0,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-y2",
+            "component": "NumberInput",
+            "options": {
+              "label": "Y2（來源像素）",
+              "value": 1,
+              "min": 0,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-bounds",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "修正目前矩形輪廓",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.bounds"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-view",
+            "component": "Dropdown",
+            "options": {
+              "items": [],
+              "placeholder": "固定比對視點"
+            },
+            "events": {
+              "onChange": "workbench.view"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-view-detail",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-focal",
+            "component": "NumberInput",
+            "options": {
+              "label": "焦距（像素）",
+              "value": 800,
+              "min": -1000,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-cx",
+            "component": "NumberInput",
+            "options": {
+              "label": "主點 X",
+              "value": 400,
+              "min": -1000,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-cy",
+            "component": "NumberInput",
+            "options": {
+              "label": "主點 Y",
+              "value": 300,
+              "min": -1000,
+              "max": 40000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-position-x",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機位置 X",
+              "value": 0,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-position-y",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機位置 Y",
+              "value": 1.6,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-position-z",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機位置 Z",
+              "value": 0,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-target-x",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機朝向目標 X",
+              "value": 0,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-target-y",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機朝向目標 Y",
+              "value": 1.6,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-target-z",
+            "component": "NumberInput",
+            "options": {
+              "label": "相機朝向目標 Z",
+              "value": -1,
+              "min": -1000,
+              "max": 1000,
+              "step": 0.01,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "camera-apply",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "更新目前視點",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.camera"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-result",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "needs-fix",
+                  "label": "仍需修正"
+                },
+                {
+                  "value": "pass",
+                  "label": "已逐項比對通過"
+                }
+              ],
+              "placeholder": "本次比對結果",
+              "value": "needs-fix"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-note",
+            "component": "TextInput",
+            "options": {
+              "label": "比對理由與差異",
+              "placeholder": "記錄邊緣、位置、大小與未確認部分"
+            }
+          },
+          {
+            "type": "component",
+            "id": "observation-review",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "記錄目前觀察的比對結果",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "workbench.review"
+            }
+          },
+          {
+            "type": "component",
+            "id": "workbench-design",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "帶著照片與視點開啟 3D 比對",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "go.design"
+            }
+          },
+          {
+            "type": "component",
+            "id": "semantic-intro",
+            "component": "Text",
+            "options": {
+              "text": "語意構件可一次建立局部空間、窗格組與組合沙發，並記錄靠牆／落地關係。保留人工修改與原始成員 ID。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "semantic-template",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載語意構件範本",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "semantic.template"
+            }
+          },
+          {
+            "type": "component",
+            "id": "semantic-load",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "tooltip": "匯入語意構件批次",
+              "inputId": "semantic-load-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "semantic.load"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "capture-agent-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "agent-heading",
+            "component": "Heading",
+            "options": {
+              "text": "代理回報與候選場景",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "report-template",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載代理回報範本",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.template"
+            }
+          },
+          {
+            "type": "component",
+            "id": "report-upload-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入代理判讀／補件／場景命令 JSON"
+            }
+          },
+          {
+            "type": "component",
+            "id": "report-upload",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "tooltip": "預覽代理回報",
+              "inputId": "report-upload-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "capture.report"
+            }
+          },
+          {
+            "type": "component",
+            "id": "report-preview",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-scene",
+            "component": "DesignViewport",
+            "options": {
+              "mode": "scene"
+            }
+          },
+          {
+            "type": "component",
+            "id": "report-commit",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "提交已驗證的回報",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.commit"
+            }
+          },
+          {
+            "type": "component",
+            "id": "scene-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "匯出場景供人類校正",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.scene"
+            }
+          },
+          {
+            "type": "component",
+            "id": "agent-note",
+            "component": "Text",
+            "options": {
+              "text": "採集 JSON 不含照片內容。交給代理時須一併提供原始附件；本頁不會自動傳送到外部服務。場景 JSON 可在設計工坊開啟；既有住宅草稿不會被覆寫。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "scene-load-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入人類校正後的場景 JSON（保留設計檔中的鎖定）"
+            }
+          },
+          {
+            "type": "component",
+            "id": "scene-load",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "maxSize": 10485760,
+              "inputId": "scene-load-file",
+              "tooltip": "匯入人類校正場景"
+            },
+            "events": {
+              "onSelect": "capture.scene-load"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "capture-task-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "tasks-heading",
+            "component": "Heading",
+            "options": {
+              "text": "下一步採集任務",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "task",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "",
+                  "label": "一般來源／不指定任務"
+                }
+              ],
+              "value": ""
+            },
+            "events": {
+              "onChange": "capture.task"
+            }
+          },
+          {
+            "type": "component",
+            "id": "task-detail",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "capture-guide",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "更新起始採集引導",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.guide"
+            }
+          },
+          {
+            "type": "component",
+            "id": "task-note",
+            "component": "TextInput",
+            "options": {
+              "label": "略過原因",
+              "value": "",
+              "maxLength": 1000
+            }
+          },
+          {
+            "type": "component",
+            "id": "task-skip",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "略過所選任務",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.skip"
+            }
+          },
+          {
+            "type": "component",
+            "id": "task-reopen",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "重新開啟任務",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.reopen"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "capture-source-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "source-heading",
+            "component": "Heading",
+            "options": {
+              "text": "照片與圖面來源",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-kind",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "photo",
+                  "label": "現場照片"
+                },
+                {
+                  "value": "plan",
+                  "label": "2D 平面圖"
+                },
+                {
+                  "value": "elevation",
+                  "label": "立面／設計圖"
+                }
+              ],
+              "value": "photo"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-target",
+            "component": "TextInput",
+            "options": {
+              "label": "拍攝目標／空間",
+              "value": "目標房間",
+              "maxLength": 1000
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-view",
+            "component": "TextInput",
+            "options": {
+              "label": "站位與拍攝方向",
+              "value": "從入口朝房間內部",
+              "maxLength": 1000
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-time",
+            "component": "TextInput",
+            "options": {
+              "label": "拍攝時間／現場狀態",
+              "value": "",
+              "maxLength": 1000
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-upload-label",
+            "component": "Text",
+            "options": {
+              "text": "新增來源或重新連結原始附件（JPEG／PNG／WebP／PDF；每檔 10 MB）"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-upload",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".jpg,.jpeg,.png,.webp,.pdf",
+              "tooltip": "登錄來源附件",
+              "inputId": "source-upload-file",
+              "maxSize": 10485760,
+              "multiple": false
+            },
+            "events": {
+              "onSelect": "capture.photo"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-a-label",
+            "component": "Text",
+            "options": {
+              "text": "主要來源 A"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-a",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "",
+                  "label": "選擇來源"
+                }
+              ],
+              "value": ""
+            },
+            "events": {
+              "onChange": "capture.source"
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo",
+            "component": "PhotoCard",
+            "options": {
+              "alt": "採集來源預覽",
+              "clickable": false,
+              "width": "100%"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-detail",
+            "component": "Text",
+            "options": {
+              "text": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-note",
+            "component": "Text",
+            "options": {
+              "text": "上傳只代表檔案可讀，任務轉為待判讀；不代表畫質、視差或幾何已合格。PDF 此版只保存原檔。"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "capture-scale-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "scale-heading",
+            "component": "Heading",
+            "options": {
+              "text": "尺度與雙照片",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "measure-target",
+            "component": "TextInput",
+            "options": {
+              "label": "量測端點／尺寸對象",
+              "value": "入口左門框至右側牆角",
+              "maxLength": 1000
+            }
+          },
+          {
+            "type": "component",
+            "id": "measure-value",
+            "component": "NumberInput",
+            "options": {
+              "label": "實測長度（公尺）",
+              "value": 1,
+              "min": 0,
+              "max": 1000,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "measure-error",
+            "component": "NumberInput",
+            "options": {
+              "label": "估計誤差 ±（公尺）",
+              "value": 0.01,
+              "min": 0,
+              "max": 1000,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "measure-method",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "user-measured",
+                  "label": "人類實測"
+                },
+                {
+                  "value": "drawing-dimension",
+                  "label": "圖面尺寸標註"
+                }
+              ],
+              "value": "user-measured"
+            }
+          },
+          {
+            "type": "component",
+            "id": "measure-add",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "登錄來源 A 的尺寸",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.measure"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-b-label",
+            "component": "Text",
+            "options": {
+              "text": "照片 B（與來源 A 配對）"
+            }
+          },
+          {
+            "type": "component",
+            "id": "source-b",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "",
+                  "label": "選擇來源"
+                }
+              ],
+              "value": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-distance",
+            "component": "NumberInput",
+            "options": {
+              "label": "實際相機位移（公尺）",
+              "value": 0.5,
+              "min": 0,
+              "max": 1000,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-error",
+            "component": "NumberInput",
+            "options": {
+              "label": "位移估計誤差 ±（公尺）",
+              "value": 0.01,
+              "min": 0,
+              "max": 1000,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-direction",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "right",
+                  "label": "向右平移"
+                },
+                {
+                  "value": "left",
+                  "label": "向左平移"
+                },
+                {
+                  "value": "forward",
+                  "label": "向前"
+                },
+                {
+                  "value": "back",
+                  "label": "向後"
+                },
+                {
+                  "value": "up",
+                  "label": "向上"
+                },
+                {
+                  "value": "down",
+                  "label": "向下"
+                },
+                {
+                  "value": "unknown",
+                  "label": "方向未知"
+                }
+              ],
+              "value": "right"
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-lens",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "unknown",
+                  "label": "鏡頭／倍率未確認"
+                },
+                {
+                  "value": "yes",
+                  "label": "確認同一鏡頭與倍率"
+                }
+              ],
+              "value": "unknown"
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-add",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "登錄雙照片間距",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "capture.pair"
+            }
+          },
+          {
+            "type": "component",
+            "id": "pair-note",
+            "component": "Text",
+            "options": {
+              "text": "記錄的是拍攝位置的實際位移，不是畫面偏移。50 公分僅為起始建議；這些數值不會自動變成已校準深度。"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "evidence-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "evidence-title",
+            "component": "Heading",
+            "options": {
+              "text": "圖面與照片：來源衝突裁決",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-help",
+            "component": "Text",
+            "options": {
+              "text": "依屬性比較候選，排序僅供參考。狀態須明確填入相同的時間／版次名稱；unknown 表示未確認。不同狀態分開保留，人工指定可優先於預設排序。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-purpose",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "as-built",
+                  "label": "現況還原／偵查"
+                },
+                {
+                  "value": "design",
+                  "label": "指定版本設計"
+                }
+              ],
+              "value": "as-built"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-state",
+            "component": "TextInput",
+            "options": {
+              "label": "目標時間／現場狀態／設計版次",
+              "value": "現況",
+              "maxLength": 100
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-tolerance",
+            "component": "NumberInput",
+            "options": {
+              "label": "差異容許值（依屬性單位）",
+              "value": 0.02,
+              "min": 0,
+              "max": 1,
+              "precision": 3
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-policy",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "套用來源比較設定",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "evidence.policy"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-template",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載來源候選範本",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "evidence.template"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-upload-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入代理來源候選 JSON"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-upload",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "maxSize": 10485760,
+              "inputId": "evidence-upload-file",
+              "tooltip": "匯入來源候選"
+            },
+            "events": {
+              "onSelect": "evidence.load"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-target",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "",
+                  "label": "尚無來源候選"
+                }
+              ],
+              "value": ""
+            },
+            "events": {
+              "onChange": "evidence.choose"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-detail",
+            "component": "Text",
+            "options": {
+              "text": "尚無候選。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-choice",
+            "component": "Dropdown",
+            "options": {
+              "items": [
+                {
+                  "value": "",
+                  "label": "尚無候選"
+                }
+              ],
+              "value": ""
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-note",
+            "component": "TextInput",
+            "options": {
+              "label": "人工裁決／解除鎖定理由",
+              "maxLength": 500
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-resolve",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "採用所選值並鎖定",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "evidence.resolve"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-unlock",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "解除所選屬性鎖定",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "evidence.unlock"
+            }
+          },
+          {
+            "type": "component",
+            "id": "evidence-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "匯出來源比較報告",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "evidence.review"
+            }
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "photo-analysis-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "photo-analysis-title",
+            "component": "Heading",
+            "options": {
+              "text": "輔助幾何診斷（非生成場景）",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo-analysis-help",
+            "component": "Text",
+            "options": {
+              "text": "由本機代理執行 capture-photos CLI，提供原始照片與採集 JSON。無內參時先檢查共同特徵，不猜焦距生成深度。此入口讀取結果，不會自行安裝或外傳照片。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo-analysis-upload",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "maxSize": 10485760,
+              "inputId": "photo-analysis-file",
+              "tooltip": "匯入照片自動分析結果"
+            },
+            "events": {
+              "onSelect": "photo.analysis"
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo-analysis-result",
+            "component": "Text",
+            "options": {
+              "text": "尚無結果。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo-cloud-note",
+            "component": "Text",
+            "options": {
+              "text": "點雲僅為相機 A 座標下的重建候選；依深度著色，可旋轉查看。尚未定位建築地面或轉換牆體，空白表示尚無通過檢查的點。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "photo-cloud",
+            "component": "CapturePointCloud",
+            "options": {}
+          }
+        ]
+      },
+      {
+        "type": "group",
+        "id": "capture-stereo-section",
+        "class_names": [
+          "capture-section"
+        ],
+        "children": [
+          {
+            "type": "component",
+            "id": "stereo-heading",
+            "component": "Heading",
+            "options": {
+              "text": "已校正雙照片：稀疏深度解算",
+              "level": 2
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-help",
+            "component": "Text",
+            "options": {
+              "text": "此工具接受已水平校正、相同像素尺寸及同內參的照片與對應點。需先登錄 A 向右至 B 的實際位移並確認鏡頭；普通照片不能直接勾選當成校正影像。內參焦距以像素表示。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-template",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "下載雙視角解算範本",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "stereo.template"
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-upload-label",
+            "component": "Text",
+            "options": {
+              "text": "匯入代理／校正工具提供的雙視角 JSON"
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-upload",
+            "component": "UploadButton",
+            "options": {
+              "type": "file",
+              "customAccept": ".json",
+              "maxSize": 10485760,
+              "inputId": "stereo-upload-file",
+              "tooltip": "匯入雙視角解算工作"
+            },
+            "events": {
+              "onSelect": "stereo.load"
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-result",
+            "component": "Text",
+            "options": {
+              "text": "尚無解算結果。"
+            }
+          },
+          {
+            "type": "component",
+            "id": "stereo-export",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "匯出稀疏點與誤差結果",
+              "showIcon": false
+            },
+            "events": {
+              "onClick": "stereo.export"
+            }
+          }
+        ]
+      }
+    ]
+  }
+}

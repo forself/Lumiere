@@ -1,0 +1,129 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "schemaNotice": "專案材質能力契約，並非 B4A 原生 schema；僅由可信靜態來源匯入。雜湊確認來源一致性，不代表畫質或光學認證。",
+  "id": "lumiere.material-library",
+  "name": "MaterialLibrary",
+  "version": "1.0.0",
+  "kind": "frontendBehavior",
+  "scope": [
+    "#/design",
+    "#/tour",
+    "scripts/capture-agent.mjs"
+  ],
+  "source": "src/frontend/designer/material-library.js",
+  "exports": [
+    "MATERIAL_PRESETS",
+    "MATERIAL_CATEGORIES",
+    "materialOptions",
+    "createBuiltInMaterial",
+    "materialTexturePixels",
+    "createProceduralMaterialTextures"
+  ],
+  "dependencies": [
+    "three@0.187.0",
+    "Canvas 2D or OffscreenCanvas",
+    "B4A DynamicPageRenderer and Dropdown/BasicButton/Text"
+  ],
+  "registration": "Explicit local imports, immutable material IDs and trusted B4A command registry. Input files cannot supply shader code, executable modules or arbitrary material URLs.",
+  "inputs": {
+    "materialId": "One of 32 registered presets: 4 legacy and 28 additional procedural presets.",
+    "categories": [
+      "wall",
+      "fabric",
+      "metal",
+      "glass",
+      "plastic",
+      "wood",
+      "floor"
+    ],
+    "transform": "Existing material command accepts entity ID and materialId only; application validates target kind, material and scene before replacing the model.",
+    "customMaps": "Existing strict lumiere-materials image pack parser: embedded PNG/JPEG/WebP and allowed color/normal/roughness/metalness channels. Presets retain physical parameters by stable ID.",
+    "generation": "Default 256 pixel square maps; explicit power-of-two size 32–512; fixed local generator and no external images."
+  },
+  "outputs": [
+    "Immutable JSON-serializable preset descriptions with category, source generator and PBR parameters",
+    "Standard or physical Three.js material referencing viewport-owned shared maps",
+    "Deterministic seamless color, OpenGL normal and roughness pixel maps for patterned presets",
+    "B4A categorized/searchable material selection in designer and tour",
+    "Agent discovery through existing materials/capabilities commands and existing material write command",
+    "Building JSON materialId persistence and complete-project custom-map persistence"
+  ],
+  "authority": {
+    "read": "Trusted preset definitions and explicitly selected local custom image files.",
+    "write": "Validated in-memory materialId changes, normal scene undo/redo and explicit user downloads. No source-file or draft overwrite without the existing save action.",
+    "collision": "Material appearance does not change collision, walk support, door state or trace attachments.",
+    "network": "No cloud services, external image fetching or arbitrary URL resolution."
+  },
+  "physicalRendering": {
+    "optics": "Glass and optical plastic use MeshPhysicalMaterial transmission with opacity 1, IOR and thickness. Frosted/translucent presets add roughness or attenuation; this is real-time approximation, not measured optical simulation.",
+    "metalFabric": "Metalness/roughness and optional anisotropy for metals; sheen and procedural weave maps for fabric.",
+    "legacy": "Original four IDs and original color/roughness/pattern behavior retained, including custom normal-map scale 1.",
+    "environment": "Existing RoomEnvironment reflection resource is generated once and reused for optical/metallic presets; rendering integration owns lifecycle."
+  },
+  "limits": {
+    "presets": 32,
+    "newPresets": 28,
+    "patternedNewPresets": 21,
+    "runtimeMapSize": 256,
+    "maximumGeneratorMapSize": 512,
+    "customPackChannels": 16,
+    "customMapBudget": "Existing image/material/project-bundle byte and image-size validation applies."
+  },
+  "targetRules": "Shared material-application.js rules refuse unsupported new-preset targets, floor-only misuse and imported GLB replacement. Slab openings have no material-bearing surface and reject new presets; their UI field is disabled. Designer/tour retain existing locked evidence, relationship and group constraints.",
+  "limitations": [
+    "Not a per-face UV editor, camera-projected source-image layer or four-corner photo mapping tool.",
+    "Native door/window panes retain their existing glass style; independently modeled glass panels can use the new presets.",
+    "Specialized vehicles, roads, school assets, pipes and some scene props retain multi-part/system colors. Imported GLB keeps embedded materials and UVs.",
+    "Transparent material does not imply a passable object. Runtime transmission and environment effects are approximate.",
+    "materials-library.json is a descriptive catalog, not an importable lumiere-materials image pack."
+  ],
+  "errors": "Unknown IDs, invalid targets, oversized maps or invalid image packs reject without committing a scene/history change. Partial texture allocations are disposed on generation failure.",
+  "lifecycle": "Procedural maps are shared per viewport; material instances do not dispose map ownership. Viewport reload/destroy and existing disposeMaterialTextures release color and associated PBR maps; environment targets are reused and disposed by the viewport.",
+  "artifacts": {
+    "generator": "scripts/generate-material-library-demo.mjs",
+    "directory": "output/material-library-20261110",
+    "catalog": "materials-library.json",
+    "sampleScene": "material-samples.json",
+    "sampleIndex": "sample-index.json",
+    "textureManifest": "texture-manifest.json",
+    "pngMaps": 112,
+    "importablePacks": 9,
+    "categoryScenes": 5
+  },
+  "validation": [
+    "tests/material-library.mjs",
+    "tests/material-rendering.mjs",
+    "tests/material-selection.mjs",
+    "tests/material-capability.mjs",
+    "scripts/verify.mjs",
+    "docs/material-library.md",
+    "tests/material-artifacts.mjs"
+  ],
+  "verificationScope": "Tests cover deterministic pixels and seamless boundaries, immutable presets, legacy/custom-map compatibility, physical material parameters, resource disposal, target refusal, JSON persistence, UI filtering and agent discovery. Browser appearance and hardware performance are separate checks.",
+  "rollback": "Export scenes before removing presets. Revert material selectors/factory integration and replace added IDs explicitly; unsupported IDs are rejected rather than silently remapped.",
+  "implementationHashes": {
+    "src/frontend/designer/material-library.js": "919a57fd141397f049c1c4051978b62c2e8f68cd019fcc5a27cb3c74ee6485b1",
+    "src/frontend/designer/material-application.js": "55fe32e16a0be2cd183a6aa65776356855c1603501f14b004fae3abe103ca8c8",
+    "src/frontend/designer/catalog.js": "71f64f7f62fa3a083ebcd38346375efec11d14457b8a14d906f8eced2d41b83e",
+    "src/frontend/designer/model.js": "d0e81d1fbc8347f96fc58b1931b10813a22c4d990e23ebec13b2aae0aa655c68",
+    "src/frontend/designer/elements.js": "58ab6601c9db5d5f7430f80c4c2a29f6aa58f03fe13f4df23275bf0d03bbf6a9",
+    "src/frontend/designer/geometry.js": "330a9f7290d1a2e1658f22468ee0011c2253c20a8fa1b274852886064fa7afcf",
+    "src/frontend/designer/building-geometry.js": "73a30e09a208c4088039b3bd61aa48771b4eafd868d96d27d148f1fdc46f708e",
+    "src/frontend/designer/asset-geometry.js": "44132b8a1dadb07ed90b7fe5c823d0d5f3f26586aaafb53fd77ecacd5e21b725",
+    "src/frontend/designer/DesignViewport.js": "7cb7b6ef0dbf77e847c8f4fb60599e270bc6b2171ddb971b1940e31b0436cbdb",
+    "src/frontend/designer/DesignerPage.js": "0a8d34631976e1f30e38a80d02e9824eabe872e71da09f13b992b47e0a2ffd06",
+    "src/frontend/tour/TourPage.js": "921d184089c5afec040afa9b3a17f16e4950330205b2c34b046c197190defcf0",
+    "src/frontend/tour/TourEditor.js": "e0b04c118840abb70c52d5671ef4334efe96e26f66cf20cbc36d33a3bbdbd68c",
+    "src/frontend/capture/agent-commands.js": "911e095cd7f11a60f897b343db62bafe7e725c33ac73495147e0bb0e783337b7",
+    "definitions/designer.page.json": "1320145fe33517559749bb1e06d9cf63396d6aeec1eb9ea34b5d3d16bfbf32f9",
+    "definitions/tour.page.json": "52076dd3f234af8dad29c1ff3b58efd2b562249ecac9c049dfca734a4042239f",
+    "src/frontend/styles/designer-workbench.css": "67adcb3531339ecd9551d54baeee2c2fcedcbc35c97b8f228caa7ea7198d3a61",
+    "src/frontend/styles/tour.css": "8b70984ad7b21eaee8d4eb5275dfd21f972a2487cd4238998440003645ef75f7"
+  },
+  "integrations": [
+    "lumiere.design-viewport",
+    "lumiere.tour-viewport"
+  ],
+  "artifactGeneratorHash": "3fd1d7193a98a0cb2eabeb85abc8ace5c05ba8800fed5e14d8804d7d2373157c"
+}

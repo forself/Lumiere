@@ -1,0 +1,28 @@
+.capture-page { max-width: 1100px; height: 100dvh; overflow: auto; align-content: start; margin: 0 auto; padding: 24px; display: grid; gap: 18px; color: var(--cl-text); background: var(--cl-bg); }
+.capture-section { display: grid; gap: 12px; padding: 20px; border: 1px solid var(--cl-border); border-radius: var(--cl-radius-lg); background: var(--cl-bg-secondary); }
+[data-tool-node="capture-actions"] { grid-template-columns: repeat(auto-fit,minmax(160px,1fr)); align-items: center; }
+.capture-page [data-tool-node="task-detail"], .capture-page [data-tool-node="report-preview"], .capture-page [data-tool-node="source-detail"] { white-space: pre-wrap; overflow-wrap: anywhere; }
+.capture-page .photo-card { max-width: 600px; }
+
+.capture-page .photo-card__image { object-fit: contain !important; }
+
+.capture-page [data-tool-node="capture-scene"] { height: 360px; min-height: 360px; }
+.capture-page [data-tool-node="capture-scene"] { position: relative; overflow: hidden; }
+
+.capture-page [data-tool-node="stereo-result"] { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.capture-page [data-tool-node="photo-analysis-result"] { white-space: pre-wrap; }
+
+.capture-page [data-tool-node="photo-cloud"] { height:320px; min-height:320px; position:relative; overflow:hidden; }
+
+.capture-page [data-tool-node="evidence-detail"] { white-space:pre-wrap; overflow-wrap:anywhere; }
+.capture-page [data-tool-node="workbench-section"] { grid-template-columns:repeat(2,minmax(0,1fr)); }
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="heading"],
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="summary"],
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="detail"],
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="label"],
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="note"],
+.capture-page [data-tool-node="workbench-section"] > [data-tool-node$="intro"],
+.capture-page [data-tool-node="observation-canvas"] { grid-column:1/-1; white-space:pre-wrap; overflow-wrap:anywhere; }
+.capture-page [data-tool-node="observation-canvas"] { min-height:180px; }
+@media(max-width:640px){.capture-page [data-tool-node="workbench-section"]{grid-template-columns:1fr;}}

@@ -1,0 +1,11 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "id": "lumiere.youtube-preview",
+  "version": "1.0.0",
+  "name": "YouTubePreview",
+  "source": "src/frontend/designer/media-runtime.js",
+  "authority": "Only https://www.youtube-nocookie.com/embed/<validated 11-character ID>; no scripts injected into parent, no media extraction, no autoplay. Explicit user click opens external player.",
+  "lifecycle": "mount, open, stop, destroy; replacing/removing iframe stops playback",
+  "ui": "Registered static factory in B4A dynamic page; official player only",
+  "validation": "youtubeId allowlist tests; real browser official player loading"
+}

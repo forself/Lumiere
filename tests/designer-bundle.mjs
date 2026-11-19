@@ -1,0 +1,38 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import {syntheticPng,syntheticBoxGlb} from './synthetic-fixtures.mjs';
+import {exportIfc} from '../src/frontend/designer/ifc-export.js';
+import {BuildingStore} from '../src/frontend/designer/building-model.js';
+import {sampleProject} from '../src/frontend/designer/model.js';
+import {frameExample} from '../src/frontend/designer/frame-analysis.js';
+import {encodeBytes,decodeBytes,validateBundle,prepareBundle,disposePrepared} from '../src/frontend/designer/project-bundle.js';
+import {ProjectBundleEditor} from '../src/frontend/designer/ProjectBundleEditor.js';
+import {IfcAPI} from '../node_modules/web-ifc/web-ifc-api-node.js';
+import {readIfcGeometry} from '../src/frontend/designer/ifc-reader.js';
+const array=bytes=>bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength);
+const building=new BuildingStore(sampleProject()).building,source=syntheticBoxGlb().buffer,png=array(syntheticPng());
+const sheets={format:'lumiere-sheets',version:1,sheets:[{title:'Synthetic plan',paper:'A3',orientation:'landscape',project:'Fixture',author:'',revision:'1',views:[{type:'plan',levelId:'floor-1',scale:100,offset:0,x:20,y:45,width:180,height:180}]}]};
+fs.mkdirSync('output',{recursive:true});
+const pack={format:'lumiere-project',version:1,building,assets:[{id:'table',data:encodeBytes(source)}],underlays:[{levelId:'floor-1',name:'底圖.png',type:'image/png',data:encodeBytes(png),x:-3,z:-2,width:7,rotation:90,opacity:.4}],materials:{format:'lumiere-materials',version:2,materials:[{id:'oak',channel:'color',tileMetres:2,data:'data:image/png;base64,'+encodeBytes(png)}]},ifc:{name:'住宅.ifc',data:encodeBytes(new TextEncoder().encode(exportIfc(building)).buffer)},sheets,frame:frameExample()};
+// Use an actual catalog material ID from the existing test fixture when needed.
+const {MATERIALS}=await import('../src/frontend/designer/catalog.js');pack.materials.materials[0].id=Object.keys(MATERIALS)[0];
+assert.deepEqual(new Uint8Array(decodeBytes(encodeBytes(source),source.byteLength)),new Uint8Array(source));
+assert.throws(()=>decodeBytes('AA==',0));assert.throws(()=>decodeBytes('https://example.com',100));
+validateBundle(pack);const draft=structuredClone(pack);draft.sheets.sheets[0].views=[];validateBundle(draft);
+for(const mutate of [p=>p.url='https://example.com',p=>p.underlays[0].levelId='missing',p=>p.underlays[0].width=-1,p=>p.assets.push(p.assets[0]),p=>p.assets[0].id='projector',p=>p.materials.materials[0].data='https://example.com']){const bad=structuredClone(pack);mutate(bad);assert.throws(()=>validateBundle(bad));}
+let closed=0;const decodeImage=async()=>({width:16,height:16,close(){closed++;}}),decodeMaterials=async p=>p.materials.map(m=>({...m,image:{close(){closed++;}}}));
+const api=new IfcAPI();await api.Init();const loadIfc=async blob=>readIfcGeometry(api,new Uint8Array(await blob.arrayBuffer()));
+const prepared=await prepareBundle(pack,{decodeImage,decodeMaterials,loadIfc});
+assert.equal(prepared.assets.get('table').triangles,12);assert.equal(prepared.underlays.get('floor-1').rotation,90);assert.ok(prepared.ifcRoot.children.length>20);assert.equal(prepared.frame.members.length,1);
+const page={store:new BuildingStore(sampleProject()),underlays:prepared.underlays,ifcSource:prepared.ifcSource,ifcName:prepared.ifcName,sheetPages:prepared.sheets.sheets,frameEditor:{model:prepared.frame},views:[{renderer:{},importedAssets:prepared.assets,materialEntries:prepared.materials}],message(m){this.notice=m;}};
+const editor=new ProjectBundleEditor(page);editor.markSaved();assert.equal(editor.dirty,false);page.underlays.get('floor-1').width=9;assert.equal(editor.dirty,true);page.underlays.get('floor-1').width=7;
+const captured=await editor.capture();assert.deepEqual(captured,{...pack,version:2,reference:null,captureContext:null});fs.writeFileSync('output/bundle-test.lumiere',JSON.stringify(captured));
+disposePrepared(prepared);assert.equal(closed,2);
+const bad=structuredClone(pack);bad.ifc.data=encodeBytes(new TextEncoder().encode('not IFC').buffer);await assert.rejects(()=>prepareBundle(bad,{decodeImage,decodeMaterials,loadIfc}));assert.equal(closed,4);
+const abort=new AbortController();await assert.rejects(()=>prepareBundle(pack,{signal:abort.signal,decodeImage:async()=>{abort.abort();return decodeImage();},decodeMaterials,loadIfc}),/取消/);assert.equal(closed,5);
+let finish;const original=page.store.serialize(),pending=editor.load({size:100,text:()=>new Promise(resolve=>{finish=resolve;})});page.store.execute({type:'moveObject',id:'object-1',x:2,z:1});finish('{broken');await pending;assert.notEqual(page.store.serialize(),original);assert.match(page.notice,/未開啟/);
+globalThis.createImageBitmap=decodeImage;
+const empty={...structuredClone(pack),assets:[],underlays:[],materials:{format:'lumiere-materials',version:2,materials:[]},ifc:null,sheets:null};
+let resolveRead;const race=editor.load({size:100,text:()=>new Promise(resolve=>{resolveRead=resolve;})});page.store.execute({type:'moveObject',id:'object-1',x:2.1,z:1});const edited=page.store.serialize();resolveRead(JSON.stringify(empty));await race;assert.equal(page.store.serialize(),edited);assert.match(page.notice,/讀檔期間專案已變更/);
+delete globalThis.createImageBitmap;
+api.Dispose();console.log('PASS bundle: full binary/material/calibration/IFC/frame/sheet round trip, real GLB+IFC decode, draft sheets, validation, resource cleanup on failure/cancel, dirty tracking and preservation on read failure.');

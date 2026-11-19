@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {readFile} from 'node:fs/promises';
+import {parseCapture,applyPhotoAnalysis} from '../src/frontend/capture/capture-model.js';
+const s=parseCapture(await readFile('output/capture-test.json','utf8'));
+const r={format:'lumiere-photo-pair-result',version:1,captureId:s.id,baseRevision:s.revision,sourceIds:['source-1','source-2'],sourceHashes:s.sources.map(x=>x.sha256),engine:{opencv:'contract-test-not-run',numpy:'contract-test-not-run',method:'SIFT-mutual-ratio-RANSAC'},status:'insufficient-matches',diagnostics:{images:[{features:2,laplacianVariance:0},{features:3,laplacianVariance:0}],mutualMatches:0,fundamentalInliers:0,homographyRatio:0,coverage:[0,0]},matches:[],pose:null,points:[],calibration:null,baseline:null,suggestions:['請補拍共同視野，包含牆角與門框。']};
+const result=applyPhotoAnalysis(s,r);assert.equal(result.photoAnalyses.length,1);assert.equal(result.tasks.at(-1).instruction,r.suggestions[0]);assert.deepEqual(applyPhotoAnalysis(result,r),result);assert.deepEqual(parseCapture(JSON.stringify(result)),result);
+const bad=structuredClone(r);bad.sourceHashes[0]='f'.repeat(64);assert.throws(()=>applyPhotoAnalysis(s,bad),/來源/);
+const stale=structuredClone(r);stale.baseRevision--;assert.throws(()=>applyPhotoAnalysis(s,stale),/版本/);
+const fake=structuredClone(r);fake.points=[{xyz:[1,2,3],parallaxDegrees:2,normalizedReprojectionError:0}];assert.throws(()=>applyPhotoAnalysis(s,fake),/不得/);
+const before=JSON.stringify(s);assert.throws(()=>applyPhotoAnalysis(s,{...r,unknown:1}));assert.equal(JSON.stringify(s),before);
+console.log('PASS photo analysis contract and atomic ingestion; image engine NOT exercised');

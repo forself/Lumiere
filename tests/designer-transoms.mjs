@@ -1,0 +1,4 @@
+import assert from 'node:assert/strict';
+import {openingParts} from '../src/frontend/designer/openings.js';
+for(const side of [-1,1]){const o={styleId:'window-transom-awning',width:2,height:2.4,sill:.5,side};const wall={thickness:.16},closed=openingParts(o,wall,0).parts;for(const progress of [0,.25,.5,1]){const p=openingParts(o,wall,progress).parts;assert.deepEqual(p[0],closed[0]);const t=p[1],angle=t.rotationX;assert(Math.abs(t.y+t.height/2*Math.cos(angle)-(o.sill+o.height-.03))<1e-9);assert(Math.abs(t.z+t.height/2*Math.sin(angle))<1e-9);if(progress)assert.equal(Math.sign(t.z),-side);assert.equal(t.width,closed[1].width);assert.equal(t.height,closed[1].height);}}
+console.log('PASS transom: stationary main pane, fixed top hinge, outward tilt on both wall sides, preserved leaf dimensions.');

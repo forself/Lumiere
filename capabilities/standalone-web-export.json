@@ -1,0 +1,98 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "schemaNotice": "專案能力契約，非 B4A 原生 schema；由可信 TourPage 命令註冊。",
+  "id": "lumiere.standalone-web-export",
+  "version": "1.0.0",
+  "kind": "frontendBehavior",
+  "scope": "#/tour",
+  "registration": {
+    "component": "B4A BasicButton",
+    "definition": "definitions/tour.page.json",
+    "node": "tour-export-html",
+    "command": "source.export.html",
+    "handler": "TourPage.exportHtml"
+  },
+  "source": "src/frontend/tour/standalone-export.js",
+  "exports": [
+    "createStandaloneHtml",
+    "exportStandaloneHtml",
+    "loadStandaloneRuntime",
+    "validateStandaloneView",
+    "validateStandaloneRuntime"
+  ],
+  "inputs": {
+    "project": "Validated lumiere-project v2 with captured current native building and embedded GLB/materials/underlays/reference context",
+    "runtime": "Trusted fixed same-origin standalone-runtime.json, built only from allowlisted local modules with complete static/literal-dynamic import closure",
+    "view": "Exact optional walk/orbit snapshot, existing floor, bounded finite coordinates, camera direction, roof/plan/labels/detail flags"
+  },
+  "outputs": {
+    "html": "One UTF-8 HTML containing data modules, B4A definition/CSS, project, view and license notices",
+    "download": "Browser Blob download; does not overwrite source or the current HTML"
+  },
+  "dependencies": [
+    "three@0.187.0",
+    "existing B4A DynamicPageRenderer and registered controls",
+    "native browser WebCrypto, Blob, ES modules, import map and WebGL",
+    "Node standard library for optional runtime build/CLI"
+  ],
+  "authority": {
+    "read": "Current validated in-memory scene and embedded resources; fixed same-origin runtime manifest only",
+    "write": "Explicit local browser download",
+    "network": "Export preparation reads one fixed same-origin artifact; output CSP blocks HTTP/HTTPS resources, external frames and workers",
+    "noDatabaseOrIdentityWrite": true,
+    "newDependencies": false
+  },
+  "limits": {
+    "nativeBuildingBytes": 10485760,
+    "projectBytes": 134217728,
+    "runtimeBytes": 33554432,
+    "htmlBytes": 167772160,
+    "moduleCount": 1000
+  },
+  "errors": [
+    "Invalid or oversized project/runtime/view rejects without download",
+    "IFC reference rejects explicitly; never silently omitted",
+    "Missing/stale runtime must be rebuilt",
+    "Cancelled/destroyed page or changed source cannot download a stale export"
+  ],
+  "security": [
+    "Escaped inert user JSON and HTML title; no data-to-code conversion",
+    "Trusted static module alias allowlist; no eval or Function",
+    "Hash-pinned bootstrap/importmap/CSS; CSS newline normalization before hash",
+    "Existing original-site CSP unchanged",
+    "Three MIT and B4A provenance included"
+  ],
+  "lifecycle": "Captures current bundle, blocks concurrent export UI, validates geometry stamp, supports AbortController on page destruction; output mounts/cleans up existing native TourPage.",
+  "unsupported": [
+    "IFC reference in independent HTML",
+    "Session-only local video/audio and external YouTube",
+    "New headset WebXR entry"
+  ],
+  "verificationScope": {
+    "automated": "module closure/source freshness; hostile labels; exact assets/view; limits/cancellation; real walk/orbit restore; existing tour regressions",
+    "browser": "Actual B4A button download, exact source project retention and restored view; isolated one-artifact HTTP preview with no original-site assets; map/WASD/door/edit JSON tested",
+    "fileProtocol": "Direct file:// test blocked by browser URL security policy; no bypass or alternate browser used. Direct double-click not verified in this environment."
+  },
+  "validation": [
+    "tests/standalone-runtime.mjs",
+    "tests/standalone-export.mjs",
+    "tests/standalone-page.mjs",
+    "tests/tour-page.mjs",
+    "tests/tour-editing.mjs",
+    "tests/tour-capability.mjs",
+    "docs/standalone-web-export.md"
+  ],
+  "rollback": "Remove the additive button/command/import and runtime artifact to withdraw export. Existing native JSON/bundle and viewer behavior remain independently available; exported HTML retains its embedded runtime.",
+  "implementationHashes": {
+    "src/frontend/tour/TourPage.js": "921d184089c5afec040afa9b3a17f16e4950330205b2c34b046c197190defcf0",
+    "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
+    "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
+    "src/frontend/tour/standalone-runtime.json": "e1690c42984f686ddd73ecf82517f7372f09e3bc115beb84384867dcaddc8770",
+    "definitions/tour.page.json": "52076dd3f234af8dad29c1ff3b58efd2b562249ecac9c049dfca734a4042239f",
+    "scripts/build-standalone-runtime.mjs": "1a987d218e467bd9eb83c8a6c0e578fa4355d331ba03456a56f091373d19dd17",
+    "scripts/export-standalone-tour.mjs": "7879896580e1041e527dd877a9a102ad3fe21d1ca3c122d8a6d0729c3e77311a",
+    "scripts/preview-standalone.mjs": "88d4210b28ba5cf1249fe0e667ba08d288b7840892df44acf49e8f47921b5bdf",
+    "package.json": "db1e8376196986851406acc86535327f9b6cc1d22910f126dab179e7ecd575e5"
+  }
+}

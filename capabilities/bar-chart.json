@@ -1,0 +1,101 @@
+{
+  "contractKind": "project-owned-conceptual-capability",
+  "contractVersion": "1.0.0",
+  "schemaNotice": "專案統計展示能力契約，並非B4A原生schema；來源雜湊只確認一致性，不取代數據或畫面驗收。",
+  "id": "lumiere.bar-chart",
+  "name": "Native3DBarChart",
+  "version": "1.0.0",
+  "kind": "frontendBehavior",
+  "scope": [
+    "scripts/generate-population-chart.mjs",
+    "#/design",
+    "#/tour"
+  ],
+  "source": "src/frontend/designer/bar-chart.js",
+  "exports": [
+    "barChartScale",
+    "buildBarChart"
+  ],
+  "dependencies": [
+    "three@0.187.0",
+    "lumiere.material-library",
+    "lumiere.design-viewport",
+    "lumiere.tour-viewport",
+    "B4A DynamicPageRenderer Dropdown/BasicButton"
+  ],
+  "registration": "Explicit reviewed module imports and registered text-panel asset; generated charts use existing strict native building JSON, existing material whitelist and existing validated model commands.",
+  "inputs": {
+    "chart": "title/period/unit/source name and http(s) URL; data is 1–40 unique named non-negative numeric values; options allow registered opaque material and chart height.",
+    "population": "Fixed RIS HTTPS ODS m0s1 and ROC month; 22 unique allowlisted county names, safe integer values, same month, male+female totals and national reconciliation. Source strings are data, never instructions.",
+    "textPanel": "Registered native prop asset uses existing bounded prop.label and transform fields; labels rendered with Canvas fillText, no HTML."
+  },
+  "outputs": [
+    "Native lumiere-building JSON with equal-width/depth bars and common statistical zero baseline",
+    "Independent exact source-to-object index with scale, data and provenance",
+    "Standalone .lumiere bundle with no external assets",
+    "CSV data and retained official ODS evidence"
+  ],
+  "authority": {
+    "network": "Only separate standard-library fetch script accesses fixed public RIS origin. Core chart conversion does not fetch source URLs.",
+    "write": "Local explicitly named generated artifacts; no database, account, master-data, draft or user-source writes.",
+    "collision": "Data bars keep normal collision. Text-panel signs are nonblocking and independent from manual balloon labels."
+  },
+  "scale": {
+    "minimum": 0,
+    "linear": true,
+    "sharedBaselineElevation": 1,
+    "maximumAxisHeight": 8,
+    "barWidth": 0.9,
+    "barDepth": 0.7,
+    "spacing": 1.4,
+    "defaultMaterialId": "paint-gray-satin",
+    "populationExampleMaterialId": "metal-steel-matte",
+    "zeroValues": "No positive-height bar; category remains.",
+    "smallValues": "Reject below native representable minimum rather than inflate."
+  },
+  "textLifecycle": "One bounded 64–512 px CanvasTexture per text-panel object, shared by its two faces; material disposal releases texture. No new image files or external fonts are fetched.",
+  "viewing": "B4A tour dropdown provides overview/front/side/top with aspect/FOV-aware native geometry framing; manual balloon visibility toggle does not hide world-space text. Full preview also requests full street detail.",
+  "errors": "Invalid IDs, duplicates, nonfinite or negative values, too-small geometry, unsupported transparent/floor-only material or overlong labels reject; output remains native-schema validated.",
+  "limitations": [
+    "Single series; no spreadsheet live link or bidirectional value editing.",
+    "Manual geometry changes do not update source population/index labels; regenerate from data for numeric changes.",
+    "No headset WebXR or GPU energy benchmark verified in this task."
+  ],
+  "rollback": "Retain source CSV/JSON and original scene; regenerate or revert new helper/asset/UI registration. Removing text-panel requires migrating its objects before reopening affected scenes.",
+  "validation": [
+    "tests/bar-chart.mjs",
+    "tests/text-panel.mjs",
+    "tests/population-chart.mjs",
+    "tests/designer-coarse-area.mjs",
+    "tests/designer-preset-framing.mjs",
+    "tests/designer-street-scene.mjs",
+    "tests/tour-page.mjs",
+    "tests/tour-layout.mjs",
+    "tests/material-rendering.mjs",
+    "scripts/verify.mjs",
+    "docs/population-chart.md"
+  ],
+  "implementationHashes": {
+    "src/frontend/designer/bar-chart.js": "4f020c6924af3fd6990d8c057406adbf9d0496a663ae9b27110f67a9c86baee4",
+    "src/frontend/designer/catalog.js": "71f64f7f62fa3a083ebcd38346375efec11d14457b8a14d906f8eced2d41b83e",
+    "src/frontend/designer/asset-geometry.js": "44132b8a1dadb07ed90b7fe5c823d0d5f3f26586aaafb53fd77ecacd5e21b725",
+    "src/frontend/designer/geometry.js": "330a9f7290d1a2e1658f22468ee0011c2253c20a8fa1b274852886064fa7afcf",
+    "src/frontend/designer/balloon-labels.js": "a257305ba582fa27eec39717375165b27a2605bcbcd0c237ddec3b78e482ff82",
+    "src/frontend/designer/walk.js": "3e7c54902ecbb73c41a4e340383c8b0f846296178d05004448ee3c7821a22369",
+    "src/frontend/designer/DesignViewport.js": "7cb7b6ef0dbf77e847c8f4fb60599e270bc6b2171ddb971b1940e31b0436cbdb",
+    "src/frontend/tour/TourPage.js": "921d184089c5afec040afa9b3a17f16e4950330205b2c34b046c197190defcf0",
+    "definitions/tour.page.json": "52076dd3f234af8dad29c1ff3b58efd2b562249ecac9c049dfca734a4042239f"
+  },
+  "artifactGenerators": {
+    "scripts/fetch-taiwan-population.py": "a6d78a11210948337f4b1d5c4e07df36f23fd1bb9be2fe2001fb4afd5db2c64f",
+    "scripts/generate-population-chart.mjs": "bcc5a2fbf165ffc4db9ee47e3f4459c443097039898679db35cab7f4d1c3c3b0"
+  },
+  "artifacts": {
+    "directory": "output/population-chart-20261110",
+    "data": "population-data.json",
+    "scene": "population-3d.json",
+    "bundle": "population-3d.lumiere",
+    "index": "chart-index.json",
+    "csv": "population.csv"
+  }
+}

@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {BuildingStore} from '../src/frontend/designer/building-model.js';
+import {DesignerPage} from '../src/frontend/designer/DesignerPage.js';
+import {sampleProject} from '../src/frontend/designer/model.js';
+const store=new BuildingStore(sampleProject());const ids=store.state.objects.map(o=>o.id),before=store.serialize(),p=store.state.objects.map(o=>({...o}));
+store.execute({type:'objects.batch',ids,action:'move',dx:.2,dz:.3});for(let i=0;i<p.length;i++){assert.ok(Math.abs(store.state.objects[i].x-p[i].x-.2)<1e-8);assert.ok(Math.abs(store.state.objects[i].z-p[i].z-.3)<1e-8);}store.undo();assert.equal(store.serialize(),before);
+store.execute({type:'objects.batch',ids,action:'rotate'});const d=Math.hypot(p[0].x-p[1].x,p[0].z-p[1].z),a=store.state.objects;assert.ok(Math.abs(Math.hypot(a[0].x-a[1].x,a[0].z-a[1].z)-d)<1e-8);store.undo();
+store.execute({type:'objects.batch',ids,action:'align',mode:'center-x'});assert.equal(store.state.objects[0].x,store.state.objects[1].x);store.undo();
+assert.throws(()=>store.execute({type:'objects.batch',ids,action:'move',dx:100,dz:0}));assert.equal(store.serialize(),before);
+store.execute({type:'objects.paste',objects:p,dx:.5,dz:.5});assert.equal(store.state.objects.length,p.length*2);assert.equal(new Set(store.state.objects.map(o=>o.id)).size,p.length*2);store.undo();assert.equal(store.serialize(),before);
+store.execute({type:'floor.add',copy:true,linked:true});assert.throws(()=>store.execute({type:'objects.batch',ids,action:'move',dx:.2,dz:0}));store.execute({type:'floor.detach'});store.execute({type:'objects.paste',objects:p,dx:.5,dz:.5});assert.equal(store.state.objects.length,p.length*2);
+// A copied switch controls only its copied appliance; external references are cleared.
+const source=sampleProject();const linked=new BuildingStore(source);linked.execute({type:'addObject',assetId:'light',x:0,z:0});
+const lamp=linked.state.objects.at(-1).id;linked.execute({type:'addObject',assetId:'switch',x:1,z:0});const sw=linked.state.objects.at(-1).id;linked.execute({type:'bindDevice',id:sw,channel:0,targetId:lamp});const copied=linked.state.objects.filter(o=>[lamp,sw].includes(o.id));linked.execute({type:'objects.paste',objects:copied,dx:.2,dz:.2});const pasted=linked.state.objects.slice(-2);assert.equal(pasted[1].targets[0],pasted[0].id);assert.notEqual(pasted[1].targets[0],lamp);linked.execute({type:'objects.paste',objects:[copied[1]],dx:.4,dz:.4});assert.equal(linked.state.objects.at(-1).targets[0],null);
+const page=new DesignerPage(),locked=page.store.state.objects[0];page.store.execute({type:'editor.set',flag:'locked',ids:[locked.id],value:true});assert.throws(()=>page.checkedPreview({type:'moveObject',id:locked.id,x:locked.x+.3,z:locked.z}),/鎖定/);assert.throws(()=>page.checkedPreview({type:'objects.batch',ids:page.store.state.objects.map(o=>o.id),action:'rotate'}),/鎖定/);page.store.execute({type:'editor.set',flag:'locked',ids:[locked.id],value:false});assert.ok(page.checkedPreview({type:'moveObject',id:locked.id,x:locked.x+.3,z:locked.z}));
+console.log('PASS batch editing: atomic group movement, centroid rotation, alignment, copy IDs, undo, invalid move, cross-floor paste and linked floor protection.');
