@@ -15,7 +15,11 @@ const built=buildBuilding(s.building);try{const floors=[];built.group.traverse(o
 assert.ok(!shaftContains(s.building.shafts[0],walkStart(s.building,'floor-1'),.3));assert.match(planSvg(s.building,'floor-2'),/管道間 shaft-1/);
 assert.throws(()=>s.execute({...add,x:.5}));assert.throws(()=>s.execute({...add,x:3.6}));assert.throws(()=>s.execute({type:'lift.add',toId:'floor-3',x:0,z:0,width:1.6,depth:1.6,style:'home'}));assert.throws(()=>s.execute({type:'stair.add',x:0,z:0,width:1,length:4,rotation:0}));assert.equal(s.serialize(),saved);
 s.execute({type:'shaft.delete',id:'shaft-1'});assert.equal(stairHoles(s.building,'floor-2').length,0);s.undo();assert.equal(s.serialize(),saved);s.redo();s.undo();assert.equal(parseBuilding(saved).shafts.length,1);
-const old=JSON.parse(saved);old.version=6;delete old.shafts;for(const l of old.levels){delete l.elements;delete l.groups;delete l.editor;delete l.constraints;}assert.deepEqual(parseBuilding(JSON.stringify(old)).shafts,[]);
+const old=JSON.parse(saved);
+old.version=6;
+delete old.shafts;
+old.levels=old.levels.map(({id,name,height,design,zones,templateId})=>({id,name,height,design,zones,templateId}));
+assert.deepEqual(parseBuilding(JSON.stringify(old)).shafts,[]);
 const bad=JSON.parse(saved);bad.shafts[0].toId='missing';assert.throws(()=>parseBuilding(JSON.stringify(bad)));
 s.execute({type:'floor.select',id:'floor-2'});s.execute({...add,toId:'floor-3',x:2});assert.equal(s.building.shafts.length,2);s.undo();s.undo();
 // Boundary segment inside the rectangle must be rejected, even when all four corners lie inside a concave room.

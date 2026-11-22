@@ -13,7 +13,13 @@ const opened=structuredClone(b);const w=opened.levels[0].design.walls.find(w=>w.
 assert.equal(stairWallAt(b,{...s,wallMode:'right'},-1.165,1,.5),null);assert.equal(stairWallAt(b,{...s,wallMode:'both-rails'},-1.165,1,.5),null);
 const thick=structuredClone(b.levels[0].design);thick.walls.forEach(w=>w.thickness=.4);assert.equal(roomForStair(thick,s),undefined,'thick walls cannot intersect stairs/void');
 const count=building=>{const built=buildBuilding(building);let n=0;built.group.traverse(m=>{if(m.isMesh&&m.userData.kind==='stair-rail')n+=m.geometry.attributes.position.count;});built.dispose();return n;};const all=structuredClone(b);all.stairs[0].wallMode='both-rails';assert.ok(count(b)<count(all),'actual guard geometry removed at walls');const none=structuredClone(b);none.stairs[0].wallHandrail='no';assert.ok(count(none)<count(b),'optional wall handrails removed');
-const old=structuredClone(b);old.version=3;delete old.shafts;for(const l of old.levels){delete l.elements;delete l.groups;delete l.editor;delete l.constraints;delete l.zones;delete l.templateId;}delete old.stairs[0].wallMode;delete old.stairs[0].wallHandrail;assert.equal(parseBuilding(JSON.stringify(old)).stairs[0].wallMode,'both-rails','legacy visual behavior preserved');
+const old=structuredClone(b);
+old.version=3;
+delete old.shafts;
+old.levels=old.levels.map(({id,name,height,design})=>({id,name,height,design}));
+delete old.stairs[0].wallMode;
+delete old.stairs[0].wallHandrail;
+assert.equal(parseBuilding(JSON.stringify(old)).stairs[0].wallMode,'both-rails','legacy visual behavior preserved');
 const saved=store.serialize();assert.throws(()=>store.execute({type:'stair.update',...s,wallMode:'invalid'}));assert.equal(store.serialize(),saved);writeFileSync('output/wall-stairs-test.json',saved);console.log('PASS wall stairs: wall/opening/height/floor detection, modes, thick-wall clearance, actual geometry, v3 migration and atomic rejection.');
 
 for(const degrees of [0,90,180,270]){const rotated=structuredClone(b),angle=degrees*Math.PI/180,rotate=p=>({x:p.x*Math.cos(angle)-p.z*Math.sin(angle),z:p.x*Math.sin(angle)+p.z*Math.cos(angle)});for(const l of rotated.levels)for(const v of l.design.vertices)Object.assign(v,rotate(v));const stair=rotated.stairs[0];Object.assign(stair,rotate(stair),{rotation:degrees});assert.ok(stairWallAt(rotated,stair,-1.165,1,.5));const built=buildBuilding(rotated);try{for(const reverse of [false,true]){const route=stairPath(stair);if(reverse)route.reverse();let p={...route[0],y:1.65+(reverse?3.2:0)};for(let k=1;k<route.length;k++){const a=route[k-1],end=route[k],n=Math.ceil(Math.hypot(end.x-a.x,end.z-a.z)/.04);for(let i=0;i<n;i++){p=stepWalk(rotated,p,(end.x-a.x)/n,(end.z-a.z)/n,built.group);assert.ok(p,'wall stair traversable in both directions');}}}}finally{built.dispose();}}
