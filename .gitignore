@@ -108,6 +108,9 @@ __pycache__/
 *.pyc
 /docs/*
 !/docs/repository-setup.md
+!/docs/tour.md
+!/docs/material-library.md
+!/docs/standalone-web-export.md
 /scripts/fetch-taiwan-population.py
 /scripts/finalize-street-photo-vr.mjs
 /scripts/fit-interior-window-skeleton.py
