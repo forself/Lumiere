@@ -67,7 +67,7 @@
   "unsupported": [
     "IFC reference in independent HTML",
     "Session-only local video/audio and external YouTube",
-    "New headset WebXR entry"
+    "Physical headset performance certification"
   ],
   "verificationScope": {
     "automated": "module closure/source freshness; hostile labels; exact assets/view; limits/cancellation; real walk/orbit restore; existing tour regressions",
@@ -81,18 +81,20 @@
     "tests/tour-page.mjs",
     "tests/tour-editing.mjs",
     "tests/tour-capability.mjs",
-    "docs/standalone-web-export.md"
+    "docs/standalone-web-export.md",
+    "tests/tour-headset.mjs"
   ],
   "rollback": "Remove the additive button/command/import and runtime artifact to withdraw export. Existing native JSON/bundle and viewer behavior remain independently available; exported HTML retains its embedded runtime.",
   "implementationHashes": {
-    "src/frontend/tour/TourPage.js": "921d184089c5afec040afa9b3a17f16e4950330205b2c34b046c197190defcf0",
+    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
     "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
     "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
-    "src/frontend/tour/standalone-runtime.json": "e1690c42984f686ddd73ecf82517f7372f09e3bc115beb84384867dcaddc8770",
-    "definitions/tour.page.json": "52076dd3f234af8dad29c1ff3b58efd2b562249ecac9c049dfca734a4042239f",
+    "src/frontend/tour/standalone-runtime.json": "14055a0ff3874c4c4c68d7f41729192f2eb9a0d0b3885ee8082a38d685effd51",
+    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e",
     "scripts/build-standalone-runtime.mjs": "1a987d218e467bd9eb83c8a6c0e578fa4355d331ba03456a56f091373d19dd17",
     "scripts/export-standalone-tour.mjs": "7879896580e1041e527dd877a9a102ad3fe21d1ca3c122d8a6d0729c3e77311a",
     "scripts/preview-standalone.mjs": "88d4210b28ba5cf1249fe0e667ba08d288b7840892df44acf49e8f47921b5bdf",
-    "package.json": "db1e8376196986851406acc86535327f9b6cc1d22910f126dab179e7ecd575e5"
+    "package.json": "5bc124845ee8d69157e0bf3a8ef2ed3957b8e164edda67e019ad947771c90cab",
+    "src/frontend/tour/TourHeadset.js": "d3d2eabc465ce954a952be3b2b8d8b3cddb3c3c1aecebb2358171af520a4aaee"
   }
 }

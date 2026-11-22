@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs && node scripts/serve.mjs",
     "build:standalone": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs",
-    "check:standalone": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs --check && node --experimental-vm-modules tests/standalone-runtime.mjs && node tests/standalone-export.mjs && node tests/standalone-page.mjs",
+    "check:standalone": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs --check && node --experimental-vm-modules tests/standalone-runtime.mjs && node tests/standalone-export.mjs && node tests/standalone-page.mjs && node tests/tour-headset.mjs",
     "check": "node scripts/verify.mjs",
     "check:public-default": "node tests/public-default.mjs",
     "check:designer": "node tests/designer.mjs",

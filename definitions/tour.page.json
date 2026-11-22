@@ -302,6 +302,36 @@
         "children": [
           {
             "type": "component",
+            "id": "tour-vr-enter",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "進入 VR",
+              "showIcon": false,
+              "size": "small",
+              "variant": "plain"
+            },
+            "events": {
+              "onClick": "vr.enter"
+            }
+          },
+          {
+            "type": "component",
+            "id": "tour-vr-exit",
+            "component": "BasicButton",
+            "options": {
+              "type": "custom",
+              "customLabel": "退出 VR",
+              "showIcon": false,
+              "size": "small",
+              "variant": "plain"
+            },
+            "events": {
+              "onClick": "vr.exit"
+            }
+          },
+          {
+            "type": "component",
             "id": "tour-editor",
             "component": "BasicButton",
             "options": {

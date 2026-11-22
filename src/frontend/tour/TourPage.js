@@ -10,6 +10,7 @@ import {materialApplicationReason} from '../designer/material-application.js';
 import {wallFrame,objectPose} from '../designer/model.js';
 import {manualLabel} from '../designer/balloon-labels.js';
 import {labelMetrics,metricText} from '../designer/label-metrics.js';
+import {TourHeadset} from './TourHeadset.js';
 import {TourViewport} from './TourViewport.js';
 import {TourInputSession} from './tour-input.js';
 import {consumeTourHandoff,stageTourEditedReturn} from './tour-handoff.js';
@@ -34,6 +35,7 @@ export class TourPage{
    ['object.choose',(_,id)=>this.chooseObject(id)],['asset.choose',(_,id)=>{if(Object.hasOwn(ASSETS,id))this.assetId=id;}],['object.add',()=>this.beginPlacement()],['object.place.cancel',()=>this.cancelPlacement()],['object.apply',()=>this.applyObject()],['object.rotate',()=>this.editSelected('rotate')],['object.delete',()=>this.editSelected('remove')],['object.power',()=>this.editSelected('togglePower')],
    ['material.category',(_,value)=>this.chooseMaterialCategory(value)],['material.choose',(_,value)=>{if(Object.hasOwn(MATERIALS,value)){this.materialChoice=value;this.syncMaterialControls();}}],['material.apply',()=>this.applyMaterial()],
    ['edit.undo',()=>this.history(-1)],['edit.redo',()=>this.history(1)],['device.channel',(_,value)=>{this.deviceChannel=Number(value);this.syncObjectControls(true);}],['device.apply',()=>this.applyDevice()],['source.export.json',()=>this.exportJson()],['source.export.bundle',()=>this.exportBundle()],['source.export.html',()=>this.exportHtml()],
+   ['vr.enter',()=>{if(this.building&&!this.loading&&!this.exporting)return this.scene.headset?.enter();}],['vr.exit',()=>this.scene.headset?.exit()],
    ['walk.start',()=>this.startWalk()],['walk.stop',()=>this.orbit()],['view.preset',(_,value)=>this.chooseView(value)],['plan.toggle',()=>{this.showPlan=!this.showPlan;this.syncControls();if(this.showPlan){this.plan?.resize();this.plan?.fit();}}],
    ['roof.toggle',()=>{this.roof=!this.roof;this.syncViews();}],['labels.toggle',()=>{this.showLabels=this.showLabels===false;this.syncViews();}],['detail.choose',(_,value)=>{if(!['full','auto'].includes(value))return;this.detail=value;this.syncViews();}],
    ['floor.choose',(_,id)=>this.chooseFloor(id)],['opening.choose',(_,id)=>this.chooseOpening(id)],['opening.toggle',()=>this.toggleOpening()],
@@ -42,11 +44,16 @@ export class TourPage{
   ]);
   this.pageRenderer=new DynamicPageRenderer({mode:'tool',definition,factory,commandRegistry:commands});await this.pageRenderer.init();if(this.destroyed){this.pageRenderer.destroy();return;}
   this.pageRenderer.mount(container);this.renderer=this.pageRenderer.getRenderer();this.scene=this.c('tour-scene');this.plan=this.c('tour-plan');this.scene.allFloors=true;this.c('tour-status').element.setAttribute('role','status');this.renderer.getHost('tour-controls').setAttribute('aria-label','導覽控制');this.renderer.getHost('tour-workspace').setAttribute('aria-label','場景與平面定位');
+  this.scene.headset = new TourHeadset(this.scene, message => {
+    if (this.destroyed) return;
+    this.syncControls();
+    if (message) this.message(message);
+  });
   this.touch=new TourTouchControls(this.scene);for(const action of TOUR_TOUCH_ACTIONS)this.touch.bind(this.c('tour-touch-'+action).element,action);this.renderer.getHost('tour-touch-controls').setAttribute('aria-label','觸控移動與轉向');this.syncControls();
   for(const key of [...TOUR_TRANSFORM_FIELDS,'device-value']){const component=this.c(key==='device-value'?'tour-device-value':'tour-object-'+key);component?.input?.setAttribute('aria-label',component.options.label||key);}
   this.c('tour-objects')?.input?.setAttribute('aria-label','搜尋既有物件');this.c('tour-asset')?.input?.setAttribute('aria-label','搜尋新增素材');
   this.c('tour-material-choice')?.input?.setAttribute('aria-label','搜尋物件材質');
-  const escape=e=>{if(e.key==='Escape'&&this.placement){this.cancelPlacement();return;}if(e.key==='Escape'&&this.scene.walk.active){this.scene.walk.stop();this.observe(null);this.message('已離開自由走動，可拖曳環繞檢視。');}};window.addEventListener('keydown',escape);this.listeners.push(()=>window.removeEventListener('keydown',escape));
+  const escape=e=>{if(e.key==='Escape'&&this.scene.headset?.state!=='idle'){this.scene.headset?.exit();return;}if(e.key==='Escape'&&this.placement){this.cancelPlacement();return;}if(e.key==='Escape'&&this.scene.walk.active){this.scene.walk.stop();this.observe(null);this.message('已離開自由走動，可拖曳環繞檢視。');}};window.addEventListener('keydown',escape);this.listeners.push(()=>window.removeEventListener('keydown',escape));
   const unload=e=>{if(this.editor?.dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',unload);this.listeners.push(()=>window.removeEventListener('beforeunload',unload));
   window.__lumiereTour={page:this,getState:()=>({loaded:!!this.building,fileName:this.fileName||null,walking:this.scene?.walk.active||false,levelId:this.building?.activeLevelId||null,loading:this.loading,dirty:!!this.editor?.dirty,objects:this.building?.levels.reduce((n,l)=>n+l.design.objects.length,0)||0,selection:this.selection,placement:this.placement})};
   const handoff=consumeTourHandoff();if(handoff)await this.loadValue(handoff,'目前設計',{fromEditor:true});
@@ -81,6 +88,17 @@ export class TourPage{
   this.renderer.getHost('tour-functions').hidden=ready&&!this.menuOpen;this.renderer.getHost('tour-object-editor').hidden=!ready||!this.objectPanelOpen;
   for(const [id,expanded]of [['tour-menu-toggle',this.menuOpen||!ready],['tour-object-panel-toggle',this.objectPanelOpen]]){this.c(id)?.element.setAttribute('aria-expanded',String(expanded));}
   this.c('tour-object-panel-toggle')?.setDisabled(!ready||busy);this.c('tour-editor')?.setDisabled(!!busy);
+  const headset = this.scene?.headset;
+  const inVR = headset?.state === 'active' || headset?.state === 'ending';
+  const changingVR = headset?.state === 'starting' || headset?.state === 'ending';
+  this.renderer.getHost('tour-vr-enter').hidden = !ready || inVR;
+  this.renderer.getHost('tour-vr-exit').hidden = !inVR;
+  this.c('tour-vr-enter').setDisabled(!ready || busy || changingVR || headset?.available === null);
+  this.c('tour-vr-exit').setDisabled(changingVR);
+  this.c('tour-vr-enter').element.title = headset?.available ? '使用頭顯進入空間；握壓控制器側鍵可退出。' : '查看頭顯及安全連線需求';
+  for (const id of ['tour-functions','tour-object-editor','tour-workspace','tour-editor','tour-menu-toggle','tour-object-panel-toggle']) {
+    this.renderer.getHost(id).inert = !!headset && headset.state !== 'idle';
+  }
   this.renderer.getHost('tour-load').hidden=true;
   if(this.options?.standalone){for(const id of ['tour-editor','tour-file-control','tour-cancel','tour-apply-exit','tour-export-html']){const host=this.renderer.getHost(id);if(host)host.hidden=true;}this.c('tour-save-note')?.setText('獨立網頁可直接巡覽與調整；修改後請匯出 JSON 或完整專案保存。');}
   this.renderer.getHost('tour-controls').hidden=!ready;

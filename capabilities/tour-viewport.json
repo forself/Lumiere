@@ -110,7 +110,7 @@
     "destroy": "Idempotently cancel loads, release held touch/keyboard movement, cancel turn RAF and activation pulses, remove page listeners, release prepared GLB/material/underlay/IFC resources and destroy both viewports including RAF, blink timer, WebGL resources and observers."
   },
   "limitations": [
-    "Responsive browser navigation with touch movement controls; this page does not expose an immersive WebXR/headset session. Emulated narrow-screen checks do not certify physical phones.",
+    "Responsive browser navigation with touch movement controls; the tour supports a user-initiated immersive-vr session with local-floor tracking. Emulated narrow-screen checks do not certify physical phones.",
     "Walkability depends on modeled floor surfaces, openings and connections. A visible model can remain orbit-only when no valid walking start exists.",
     "Raw building JSON carries geometry/settings, not separately imported GLB files, textures or source images; use a complete project bundle for embedded resources.",
     "Object editing is limited to registered assets and allowed transforms. Attached or semantic assembly objects may require the main designer; no wall/room topology editing, local video/YouTube playback, automatic reconstruction or source-photo comparison UI.",
@@ -140,16 +140,17 @@
     "tests/standalone-export.mjs",
     "tests/standalone-page.mjs",
     "tests/standalone-runtime.mjs",
-    "docs/standalone-web-export.md"
+    "docs/standalone-web-export.md",
+    "tests/tour-headset.mjs"
   ],
   "verificationScope": "Tests cover strict import, cancellation/disposal, original and edited handoff, cross-source history/asset separation, non-editing navigation gestures, explicit object commands, floor provenance/follow, initial sizing, heading projection and touch movement/collision/input-release cleanup. Browser visual checks and real-device/headset validation are separate.",
   "rollback": "Remove the #/tour route and its explicit navigation entry to disable the additive viewer; retained designer controls and existing residence route remain independent. Imported source files are never overwritten.",
   "implementationHashes": {
-    "src/frontend/tour/TourViewport.js": "456930bfa0763072f021703c5790fd779c6a941afb30bb75c015dbb731558dd6",
-    "src/frontend/tour/TourPage.js": "921d184089c5afec040afa9b3a17f16e4950330205b2c34b046c197190defcf0",
+    "src/frontend/tour/TourViewport.js": "af998c13023d9cc2447c93d7f882cf90a42fe26679ffe02cf7a02d56a66c2293",
+    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
     "src/frontend/tour/tour-input.js": "f730e25e0d4f65c8f0dd76a2b5940aca0157f23c4bdf776428d65acebd3c2363",
     "src/frontend/tour/tour-handoff.js": "af3178b11bb6d9b24450b5a8923bafd8d24e869dc45d5c595aa69f367a7a587c",
-    "definitions/tour.page.json": "52076dd3f234af8dad29c1ff3b58efd2b562249ecac9c049dfca734a4042239f",
+    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e",
     "src/frontend/styles/tour.css": "8b70984ad7b21eaee8d4eb5275dfd21f972a2487cd4238998440003645ef75f7",
     "src/frontend/tour/TourTouchControls.js": "a190743f042b73d007bda02fe17206b73b18a5aa0f1bbb23b009fe1f4bdf6f8b",
     "src/frontend/tour/TourEditor.js": "e0b04c118840abb70c52d5671ef4334efe96e26f66cf20cbc36d33a3bbdbd68c",
@@ -168,7 +169,8 @@
     "definitions/designer.page.json": "1320145fe33517559749bb1e06d9cf63396d6aeec1eb9ea34b5d3d16bfbf32f9",
     "src/frontend/styles/designer-workbench.css": "67adcb3531339ecd9551d54baeee2c2fcedcbc35c97b8f228caa7ea7198d3a61",
     "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
-    "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7"
+    "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
+    "src/frontend/tour/TourHeadset.js": "d3d2eabc465ce954a952be3b2b8d8b3cddb3c3c1aecebb2358171af520a4aaee"
   },
   "viewing": {
     "presets": [
@@ -189,7 +191,7 @@
     "turn": "unchanged",
     "teleport": "unchanged",
     "collision": "unchanged",
-    "headsetXR": "unchanged",
+    "headsetXR": "immersive-vr, local-floor, headset pose and return to desktop",
     "supersedes": "Earlier same-day reverse-input setting.",
     "validation": [
       "tests/designer-walk-directions.mjs",

@@ -5,7 +5,23 @@ import {outdoorSurface} from '../designer/outdoor.js';
 
 // 一般手勢維持環繞、轉頭、平面平移與選取；只有明確啟用放置模式才送出放置點。
 export class TourViewport extends DesignViewport{
+ invalidate(){
+  if(!this.headset?.ownsFrames)super.invalidate();
+ }
+ frame(now){
+  if(this.headset?.ownsFrames){this.frameId=null;return;}
+  super.frame(now);
+ }
+ destroy(){
+  if(!this.headset){super.destroy();return;}
+  // Three must finish detaching the XR framebuffer before disposing WebGL.
+  const headset=this.headset;
+  if(headset.disposed)return;
+  if(!headset.session){headset.destroy();super.destroy();return;}
+  headset.destroy().finally(()=>super.destroy());
+ }
  resize(){
+  if(this.headset?.ownsFrames)return;
   const beforeWidth=this.width,beforeHeight=this.height;super.resize();
   if(this.mode==='plan'&&this.project&&this.width>1&&this.height>1&&(this.width!==beforeWidth||this.height!==beforeHeight))this.fit();
  }
