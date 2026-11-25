@@ -86,15 +86,15 @@
   ],
   "rollback": "Remove the additive button/command/import and runtime artifact to withdraw export. Existing native JSON/bundle and viewer behavior remain independently available; exported HTML retains its embedded runtime.",
   "implementationHashes": {
-    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
+    "src/frontend/tour/TourPage.js": "809628919e2152eac996f30a7cd25be2e5609b6047336452377e8ef43b8d34c1",
     "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
     "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
-    "src/frontend/tour/standalone-runtime.json": "14055a0ff3874c4c4c68d7f41729192f2eb9a0d0b3885ee8082a38d685effd51",
-    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e",
+    "src/frontend/tour/standalone-runtime.json": "5bbb8601c02402c1900edcc8a7de4f80429ae291e1a1b8dac6aa2d037f8e3c14",
+    "definitions/tour.page.json": "b1e425a584b4f3c4e22c20fd977b714887c1613e79172dc91da38ee3d56b4ba2",
     "scripts/build-standalone-runtime.mjs": "1a987d218e467bd9eb83c8a6c0e578fa4355d331ba03456a56f091373d19dd17",
     "scripts/export-standalone-tour.mjs": "7879896580e1041e527dd877a9a102ad3fe21d1ca3c122d8a6d0729c3e77311a",
     "scripts/preview-standalone.mjs": "88d4210b28ba5cf1249fe0e667ba08d288b7840892df44acf49e8f47921b5bdf",
-    "package.json": "5bc124845ee8d69157e0bf3a8ef2ed3957b8e164edda67e019ad947771c90cab",
-    "src/frontend/tour/TourHeadset.js": "d3d2eabc465ce954a952be3b2b8d8b3cddb3c3c1aecebb2358171af520a4aaee"
+    "package.json": "2226b58efe7816469bd381ccca5bf58d15da06a81b702fbd75737b85d0d2459f",
+    "src/frontend/tour/TourHeadset.js": "a6c13e6ebbec733dd161d979a88db24e69239e358303c9549798ccd72de46a36"
   }
 }

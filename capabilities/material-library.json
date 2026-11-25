@@ -111,15 +111,15 @@
     "src/frontend/designer/geometry.js": "d1450769d8fbb152a9a4aa14d6198a0a95afc4976a471208b0fab7bb5ccd548f",
     "src/frontend/designer/building-geometry.js": "4accb71c509e74eef8fb9e50f99adc8a3848d5fc19f11be4827dd92d749ad2a8",
     "src/frontend/designer/asset-geometry.js": "d3ef5e47c6e0b7d2bfe64575cb1e3b5316826e4add38c8503a97317b634e8068",
-    "src/frontend/designer/DesignViewport.js": "8311ba738c24ace8e8dc0ddbdb2ac3aa218a1ca3b1ae1e75a2e08ace503e68cd",
+    "src/frontend/designer/DesignViewport.js": "9ab4199b89bd65a11614ce4531dddd7c967dd52963f1177bd81259674a1505a2",
     "src/frontend/designer/DesignerPage.js": "5342065f02efa77d0b31ef0b55abc23d98f41d22f26a0f023fe8aa28e4618022",
-    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
+    "src/frontend/tour/TourPage.js": "809628919e2152eac996f30a7cd25be2e5609b6047336452377e8ef43b8d34c1",
     "src/frontend/tour/TourEditor.js": "e0b04c118840abb70c52d5671ef4334efe96e26f66cf20cbc36d33a3bbdbd68c",
     "src/frontend/capture/agent-commands.js": "911e095cd7f11a60f897b343db62bafe7e725c33ac73495147e0bb0e783337b7",
     "definitions/designer.page.json": "a1eaa4e52b94ec9273ebd3e7ccefb06f4b71ee3ca2137d75d12c7a16ecd5d0b9",
-    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e",
+    "definitions/tour.page.json": "b1e425a584b4f3c4e22c20fd977b714887c1613e79172dc91da38ee3d56b4ba2",
     "src/frontend/styles/designer-workbench.css": "67adcb3531339ecd9551d54baeee2c2fcedcbc35c97b8f228caa7ea7198d3a61",
-    "src/frontend/styles/tour.css": "e48a8c72d4b869e7b341beb730c8d5ec6dbb2459efe39ee200e65d42cd590d9e"
+    "src/frontend/styles/tour.css": "8f02c9c950418dba897dd4b859bf5f90a1ef7f4c7bb7cc242157cbd55570e84e"
   },
   "integrations": [
     "lumiere.design-viewport",

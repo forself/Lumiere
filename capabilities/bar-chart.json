@@ -83,8 +83,8 @@
     "src/frontend/designer/balloon-labels.js": "a257305ba582fa27eec39717375165b27a2605bcbcd0c237ddec3b78e482ff82",
     "src/frontend/designer/walk.js": "3e7c54902ecbb73c41a4e340383c8b0f846296178d05004448ee3c7821a22369",
     "src/frontend/designer/DesignViewport.js": "7cb7b6ef0dbf77e847c8f4fb60599e270bc6b2171ddb971b1940e31b0436cbdb",
-    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
-    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e"
+    "src/frontend/tour/TourPage.js": "809628919e2152eac996f30a7cd25be2e5609b6047336452377e8ef43b8d34c1",
+    "definitions/tour.page.json": "b1e425a584b4f3c4e22c20fd977b714887c1613e79172dc91da38ee3d56b4ba2"
   },
   "artifactGenerators": {
     "scripts/fetch-taiwan-population.py": "a6d78a11210948337f4b1d5c4e07df36f23fd1bb9be2fe2001fb4afd5db2c64f",

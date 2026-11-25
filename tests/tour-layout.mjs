@@ -13,7 +13,7 @@ const events=new Map([
  ['tour-objects','object.choose'],['tour-asset','asset.choose'],['tour-add','object.add'],['tour-place-cancel','object.place.cancel'],
  ['tour-object-apply','object.apply'],['tour-object-rotate','object.rotate'],['tour-object-delete','object.delete'],
  ['tour-undo','edit.undo'],['tour-redo','edit.redo'],['tour-device-toggle','object.power'],['tour-device-channel','device.channel'],['tour-device-apply','device.apply'],
- ['tour-export-json','source.export.json'],['tour-export-bundle','source.export.bundle'],['tour-apply-exit','go.apply'],['tour-view','view.preset']
+ ['tour-export-json','source.export.json'],['tour-export-bundle','source.export.bundle'],['tour-apply-exit','go.apply'],['tour-view','view.preset'],['tour-touch-gyro','gyro.toggle']
 ]);
 for(const [id,command]of events){const node=nodes.get(id);assert(node,`missing action: ${id}`);assert(Object.values(node.events||{}).includes(command),`missing trusted command: ${id}`);}
 assert(under('tour-view','tour-functions'));assert.equal(nodes.get('tour-view').component,'Dropdown');assert.deepEqual(nodes.get('tour-view').options.items.map(item=>item.value),['overview','front','side','top']);
@@ -25,7 +25,7 @@ for(const id of ['tour-opening','tour-opening-toggle','tour-label-choice','tour-
 for(const field of ['x','z','elevation','rotation','width','depth','height']){
  const node=nodes.get('tour-object-'+field);assert.equal(node.component,'TextInput');assert.equal(node.options.type,'number');assert(node.options.label.length>0);assert(under(node.id,'tour-object-editor'));
 }
-for(const action of ['forward','backward','left','right','turn-left','turn-right'])assert(under('tour-touch-'+action,'tour-scene-pane'));
+for(const action of ['forward','backward','left','right','turn-left','turn-right','gyro'])assert(under('tour-touch-'+action,'tour-scene-pane'));
 assert.equal(nodes.get('tour-title').options.text,'3D實境導覽');assert.equal(nodes.get('tour-editor').options.customLabel,'離開');
 const designer=JSON.parse(await readFile('definitions/designer.page.json','utf8'));let viewer,legacy;function designWalk(n){if(n.id==='design-viewer')viewer=n;if(n.id==='design-tour')legacy=n;for(const c of n.children||[])designWalk(c);}designWalk(designer.root);
 assert.equal(viewer.options.customLabel,'3D實境導覽');assert.equal(viewer.events.onClick,'go.viewer');assert.equal(legacy.options.customLabel,'通用設計範例');assert.equal(legacy.events.onClick,'go.tour');

@@ -2,6 +2,7 @@ import {DesignViewport} from '../designer/DesignViewport.js';
 import {hitLabel} from '../designer/balloon-labels.js';
 import * as THREE from '../../../node_modules/three/build/three.module.js';
 import {outdoorSurface} from '../designer/outdoor.js';
+import {tourHints,touchPrimary} from './tour-hints.js';
 
 // 一般手勢維持環繞、轉頭、平面平移與選取；只有明確啟用放置模式才送出放置點。
 export class TourViewport extends DesignViewport{
@@ -10,7 +11,23 @@ export class TourViewport extends DesignViewport{
  }
  frame(now){
   if(this.headset?.ownsFrames){this.frameId=null;return;}
+  // 陀螺儀轉頭與其他導覽畫面同樣受 30 fps 上限。30 在 60／90／120 Hz 螢幕都能整除成等距畫格；
+  // 實機（90 Hz）量測 24 fps 上限實得 22.5 fps，提高到 60 則只得 45 fps。
+  const sensing=!!this.orientation?.apply(now);
   super.frame(now);
+  // 手機轉動期間連續出畫格，不等個別感測事件，節奏才會固定；停下後即停止。
+  if(sensing&&this.orientation.moving(now))this.invalidate();
+ }
+ // 頭顯以自己的相機繪製場景；在 VR 中開關門或換樓層後，仍需桌面畫格才會執行的幾何重建。
+ syncHeadsetScene(){
+  const project=this.preview||this.project;if(!this.rebuild||!this.renderer||!project)return false;
+  this.syncDesign(project);return true;
+ }
+ // 觸控裝置的提示不提滾輪、滑鼠按鍵或鍵盤。
+ setInputMode(touch){
+  const hints=tourHints(touch);this.planHint=this.mode==='plan'?hints.planHint:null;
+  if(this.canvas)this.canvas.title=this.mode==='scene'?hints.sceneTitle:hints.planTitle;
+  this.invalidate();
  }
  destroy(){
   if(!this.headset){super.destroy();return;}
@@ -27,7 +44,7 @@ export class TourViewport extends DesignViewport{
  }
  mount(container){
   const result=super.mount(container);this.canvas.setAttribute('aria-label',this.mode==='scene'?'3D 場景導覽，環繞檢視或自由走動':'2D 平面定位，雙擊地坪移動至該處');
-  this.canvas.title=this.mode==='scene'?'拖曳環繞檢視；自由走動時以 WASD／方向鍵移動，拖曳轉頭。':'左鍵雙擊地坪定位；滾輪縮放，右鍵拖曳平移；紅點代表目前位置。';return result;
+  this.setInputMode(touchPrimary());return result;
  }
  pick(e){
   if(this.mode!=='scene')return super.pick(e);if(!this.project)return null;

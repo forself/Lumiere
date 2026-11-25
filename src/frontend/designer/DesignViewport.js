@@ -130,17 +130,22 @@ export class DesignViewport{
     if(now-this.lastRender<1000/30-.5){this.invalidate();return;}this.lastRender=now;
     const project=this.preview||this.project;if(!project)return;
     if(this.renderer){
-      if(this.building&&this.interiorMode!=='full'){
-        if(this.interiorBuilding!==this.building){this.interiorBuilding=this.building;this.interiorIndex=createInteriorIndex(this.building);this.interiorActive=new Set();this.interiorKey=null;}
-        const observer={x:this.camera.position.x,y:this.camera.position.y+(this.allFloors?0:floorElevation(this.building,this.building.activeLevelId)),z:this.camera.position.z},state=interiorState(this.interiorIndex,observer,{onlyLevelId:this.allFloors?null:this.building.activeLevelId,selectedId:this.walk.active?null:this.selection,selectionLevelId:this.building.activeLevelId,previous:this.interiorActive,passengers:this.liftPassengers});
-        if(this.interiorKey!==state.key){this.interiorKey=state.key;}this.interiorActive=state.active;this.visibleObjects=state.allowed;
-      }else{if(this.visibleObjects){this.interiorKey=null;}this.visibleObjects=null;}
-      const streetOptions={textures:this.textures,importedAssets:this.renderAssets||this.importedAssets,selectedRoomIds:this.zoneRoomIds,selectedId:this.walk.active?null:this.selection,onlyLevelId:this.allFloors?null:this.building?.activeLevelId,roof:!!this.roof,liftLevelId:this.liftLevelId,liftPassengers:this.liftPassengers,visibleObjects:this.visibleObjects,streetMode:this.streetMode||'auto',observer:{x:this.camera.position.x,y:this.camera.position.y+(this.allFloors||!this.building?0:floorElevation(this.building,this.building.activeLevelId)),z:this.camera.position.z}};
-      if(this.rebuild){let renderAssets=this.importedAssets;try{if(this.building)checkAssetBudget(this.building,renderAssets);}catch(e){renderAssets=new Map();this.options.onMessage?.(e.message+'；目前先顯示內建外觀。');}this.renderAssets=renderAssets;streetOptions.importedAssets=renderAssets;if(this.design){this.scene.remove(this.design.group);this.design.dispose();}this.design=this.building?createStreetScene(this.building,streetOptions):buildDesign(project,{selectedId:this.selection,textures:this.textures,importedAssets:renderAssets});this.scene.add(this.design.group);this.rebuild=false;}else this.design?.update?.(streetOptions);
+      this.syncDesign(project);
       if(!this.allFloors&&!this.walk.active)for(const [id,root] of this.design.byId)root.visible=!this.hiddenIds?.has(id);
       if(this.walk.active)this.walk.update(now);else this.controls.update();if(!this.allFloors)this.media.update(project,this.camera,now);if(this.referenceCamera)applyReferenceProjection(this.camera,this.referenceCamera,this.width,this.height);this.renderer.render(this.scene,this.camera);if(this.media.playing)this.invalidate();
     }else this.drawPlan(project);
     this.drawBalloons(project);if(this.mode==='scene'){this.options.onLabelFrame?.();this.options.onWalkPosition?.(this.walk.active?this.walk.body||this.camera.position:null);}
+  }
+  // Brings the 3D design group up to date without drawing it, so a camera other
+  // than the desktop one (a headset) can render the same scene.
+  syncDesign(project){
+    if(this.building&&this.interiorMode!=='full'){
+      if(this.interiorBuilding!==this.building){this.interiorBuilding=this.building;this.interiorIndex=createInteriorIndex(this.building);this.interiorActive=new Set();this.interiorKey=null;}
+      const observer={x:this.camera.position.x,y:this.camera.position.y+(this.allFloors?0:floorElevation(this.building,this.building.activeLevelId)),z:this.camera.position.z},state=interiorState(this.interiorIndex,observer,{onlyLevelId:this.allFloors?null:this.building.activeLevelId,selectedId:this.walk.active?null:this.selection,selectionLevelId:this.building.activeLevelId,previous:this.interiorActive,passengers:this.liftPassengers});
+      if(this.interiorKey!==state.key){this.interiorKey=state.key;}this.interiorActive=state.active;this.visibleObjects=state.allowed;
+    }else{if(this.visibleObjects){this.interiorKey=null;}this.visibleObjects=null;}
+    const streetOptions={textures:this.textures,importedAssets:this.renderAssets||this.importedAssets,selectedRoomIds:this.zoneRoomIds,selectedId:this.walk.active?null:this.selection,onlyLevelId:this.allFloors?null:this.building?.activeLevelId,roof:!!this.roof,liftLevelId:this.liftLevelId,liftPassengers:this.liftPassengers,visibleObjects:this.visibleObjects,streetMode:this.streetMode||'auto',observer:{x:this.camera.position.x,y:this.camera.position.y+(this.allFloors||!this.building?0:floorElevation(this.building,this.building.activeLevelId)),z:this.camera.position.z}};
+    if(this.rebuild){let renderAssets=this.importedAssets;try{if(this.building)checkAssetBudget(this.building,renderAssets);}catch(e){renderAssets=new Map();this.options.onMessage?.(e.message+'；目前先顯示內建外觀。');}this.renderAssets=renderAssets;streetOptions.importedAssets=renderAssets;if(this.design){this.scene.remove(this.design.group);this.design.dispose();}this.design=this.building?createStreetScene(this.building,streetOptions):buildDesign(project,{selectedId:this.selection,textures:this.textures,importedAssets:renderAssets});this.scene.add(this.design.group);this.rebuild=false;}else this.design?.update?.(streetOptions);
   }
   setWalkPosition(position){
     if(this.mode!=='plan')return;
@@ -360,7 +365,7 @@ export class DesignViewport{
     if(this.calibrationAnchor){const p=this.screen(this.calibrationAnchor);c.save();c.strokeStyle='#c87535';c.lineWidth=2;c.beginPath();c.moveTo(p.x-7,p.y);c.lineTo(p.x+7,p.y);c.moveTo(p.x,p.y-7);c.lineTo(p.x,p.y+7);c.stroke();c.restore();}
     if(this.tool==='polygon'&&this.polygonPoints?.length){const points=this.polygonPoints.map(p=>this.screen(p));c.save();c.strokeStyle='#c87535';c.lineWidth=2;c.setLineDash([5,4]);c.beginPath();points.forEach((p,i)=>i?c.lineTo(p.x,p.y):c.moveTo(p.x,p.y));if(points.length>2)c.closePath();c.stroke();c.setLineDash([]);for(const p of points){c.fillStyle='#c87535';c.fillRect(p.x-4,p.y-4,8,8);}c.restore();}
     if(this.drag?.type==='marquee'){const a=this.screen(this.drag.start),b=this.screen(this.drag.end);c.save();c.setLineDash([5,4]);c.strokeStyle='#c87535';c.fillStyle='#c8753522';c.fillRect(a.x,a.y,b.x-a.x,b.y-a.y);c.strokeRect(a.x,a.y,b.x-a.x,b.y-a.y);c.restore();}
-    c.textAlign='left';c.fillStyle='#7b8477';c.font='11px Segoe UI, Microsoft JhengHei';c.fillText('選取模式雙擊巡覽 · 滾輪縮放 · 右鍵空白平移',16,this.height-16);this.drawWalkPosition();
+    c.textAlign='left';c.fillStyle='#7b8477';c.font='11px Segoe UI, Microsoft JhengHei';c.fillText(this.planHint||'選取模式雙擊巡覽 · 滾輪縮放 · 右鍵空白平移',16,this.height-16);this.drawWalkPosition();
   }
   updateEnvironment(){const needed=materialEnvironmentNeeded(this.building,this.project,this.materialEntries||[],this.importedAssets);if(!needed){this.scene.environment=null;this.environmentTarget?.dispose();this.environmentTarget=null;return;}if(this.environmentTarget)return;const room=new RoomEnvironment(),generator=new THREE.PMREMGenerator(this.renderer);try{this.environmentTarget=generator.fromScene(room,.04,.1,100,{size:256});this.scene.environment=this.environmentTarget.texture;this.scene.environmentIntensity=.45;}finally{room.dispose();generator.dispose();}}
   setImportedAsset(id,entry){this.traceAbort?.abort();this.importedAssets??=new Map();disposeImportedAsset(this.importedAssets.get(id));if(entry)this.importedAssets.set(id,entry);else this.importedAssets.delete(id);this.updateEnvironment();this.rebuild=true;this.invalidate();}

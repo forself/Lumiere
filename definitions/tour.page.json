@@ -155,6 +155,21 @@
                         }
                       }
                     ]
+                  },
+                  {
+                    "type": "component",
+                    "id": "tour-touch-gyro",
+                    "component": "BasicButton",
+                    "options": {
+                      "type": "custom",
+                      "customLabel": "陀螺儀轉頭",
+                      "showIcon": false,
+                      "size": "small",
+                      "variant": "plain"
+                    },
+                    "events": {
+                      "onClick": "gyro.toggle"
+                    }
                   }
                 ]
               }

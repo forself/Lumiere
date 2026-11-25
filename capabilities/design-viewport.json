@@ -165,7 +165,7 @@
   "implementationHashes": {
     "src/frontend/designer/model.js": "baf5751872fc339c976c121393a59a3acba466e9f7f13533b594ac2fc114b60a",
     "src/frontend/designer/geometry.js": "330a9f7290d1a2e1658f22468ee0011c2253c20a8fa1b274852886064fa7afcf",
-    "src/frontend/designer/DesignViewport.js": "8311ba738c24ace8e8dc0ddbdb2ac3aa218a1ca3b1ae1e75a2e08ace503e68cd",
+    "src/frontend/designer/DesignViewport.js": "9ab4199b89bd65a11614ce4531dddd7c967dd52963f1177bd81259674a1505a2",
     "src/frontend/designer/DesignerPage.js": "5342065f02efa77d0b31ef0b55abc23d98f41d22f26a0f023fe8aa28e4618022",
     "src/frontend/designer/catalog.js": "71f64f7f62fa3a083ebcd38346375efec11d14457b8a14d906f8eced2d41b83e",
     "src/frontend/designer/openings.js": "a3e2fbfee79e08f660bd9890473e1a1ce7fe0dbaea6541725a1795f53b513cee",

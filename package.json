@@ -9,6 +9,7 @@
     "build:standalone": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs",
     "check:standalone": "node --experimental-vm-modules scripts/build-standalone-runtime.mjs --check && node --experimental-vm-modules tests/standalone-runtime.mjs && node tests/standalone-export.mjs && node tests/standalone-page.mjs && node tests/tour-headset.mjs",
     "check": "node scripts/verify.mjs",
+    "check:tour-phone": "node tests/tour-orientation.mjs && node tests/tour-gaze.mjs && node tests/tour-headset.mjs && node tests/tour-phone.mjs",
     "check:public-default": "node tests/public-default.mjs",
     "check:designer": "node tests/designer.mjs",
     "check:designer-files": "node tests/designer-files.mjs",
