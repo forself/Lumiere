@@ -15,6 +15,8 @@ import {TourViewport} from './TourViewport.js';
 import {TourInputSession} from './tour-input.js';
 import {consumeTourHandoff,stageTourEditedReturn} from './tour-handoff.js';
 import {TourTouchControls,TOUR_TOUCH_ACTIONS} from './TourTouchControls.js';
+import {TourOrientation} from './TourOrientation.js';
+import {GYRO_HINTS,TOUCH_QUERY,tourHints,touchPrimary} from './tour-hints.js';
 import {TourEditor,TOUR_TRANSFORM_FIELDS,captureTourBundle} from './TourEditor.js';
 import {downloadBlob} from '../designer/design-export.js';
 import {exportStandaloneHtml} from './standalone-export.js';
@@ -35,7 +37,7 @@ export class TourPage{
    ['object.choose',(_,id)=>this.chooseObject(id)],['asset.choose',(_,id)=>{if(Object.hasOwn(ASSETS,id))this.assetId=id;}],['object.add',()=>this.beginPlacement()],['object.place.cancel',()=>this.cancelPlacement()],['object.apply',()=>this.applyObject()],['object.rotate',()=>this.editSelected('rotate')],['object.delete',()=>this.editSelected('remove')],['object.power',()=>this.editSelected('togglePower')],
    ['material.category',(_,value)=>this.chooseMaterialCategory(value)],['material.choose',(_,value)=>{if(Object.hasOwn(MATERIALS,value)){this.materialChoice=value;this.syncMaterialControls();}}],['material.apply',()=>this.applyMaterial()],
    ['edit.undo',()=>this.history(-1)],['edit.redo',()=>this.history(1)],['device.channel',(_,value)=>{this.deviceChannel=Number(value);this.syncObjectControls(true);}],['device.apply',()=>this.applyDevice()],['source.export.json',()=>this.exportJson()],['source.export.bundle',()=>this.exportBundle()],['source.export.html',()=>this.exportHtml()],
-   ['vr.enter',()=>{if(this.building&&!this.loading&&!this.exporting)return this.scene.headset?.enter();}],['vr.exit',()=>this.scene.headset?.exit()],
+   ['vr.enter',()=>{if(this.building&&!this.loading&&!this.exporting)return this.scene.headset?.enter();}],['vr.exit',()=>this.scene.headset?.exit()],['gyro.toggle',()=>this.toggleGyro()],
    ['walk.start',()=>this.startWalk()],['walk.stop',()=>this.orbit()],['view.preset',(_,value)=>this.chooseView(value)],['plan.toggle',()=>{this.showPlan=!this.showPlan;this.syncControls();if(this.showPlan){this.plan?.resize();this.plan?.fit();}}],
    ['roof.toggle',()=>{this.roof=!this.roof;this.syncViews();}],['labels.toggle',()=>{this.showLabels=this.showLabels===false;this.syncViews();}],['detail.choose',(_,value)=>{if(!['full','auto'].includes(value))return;this.detail=value;this.syncViews();}],
    ['floor.choose',(_,id)=>this.chooseFloor(id)],['opening.choose',(_,id)=>this.chooseOpening(id)],['opening.toggle',()=>this.toggleOpening()],
@@ -48,18 +50,35 @@ export class TourPage{
     if (this.destroyed) return;
     this.syncControls();
     if (message) this.message(message);
+  }, {
+    phone: () => !!this.touchMode,
+    actions: {
+      teleport: target => this.headsetTeleport(target),
+      toggleOpening: (levelId, id) => this.headsetToggleOpening(levelId, id),
+      notify: message => this.message(message)
+    }
   });
-  this.touch=new TourTouchControls(this.scene);for(const action of TOUR_TOUCH_ACTIONS)this.touch.bind(this.c('tour-touch-'+action).element,action);this.renderer.getHost('tour-touch-controls').setAttribute('aria-label','觸控移動與轉向');this.syncControls();
+  this.gyro=new TourOrientation(this.scene,{onChange:state=>this.gyroChanged(state)});this.scene.orientation=this.gyro;
+  this.touch=new TourTouchControls(this.scene);for(const action of TOUR_TOUCH_ACTIONS)this.touch.bind(this.c('tour-touch-'+action).element,action);this.renderer.getHost('tour-touch-controls').setAttribute('aria-label','觸控移動與轉向');
+  this.touchMode=touchPrimary();const media=globalThis.matchMedia?.(TOUCH_QUERY);if(media){const changed=e=>{this.touchMode=e.matches;this.applyInputMode();};media.addEventListener('change',changed);this.listeners.push(()=>media.removeEventListener('change',changed));}
+  this.applyInputMode();
   for(const key of [...TOUR_TRANSFORM_FIELDS,'device-value']){const component=this.c(key==='device-value'?'tour-device-value':'tour-object-'+key);component?.input?.setAttribute('aria-label',component.options.label||key);}
   this.c('tour-objects')?.input?.setAttribute('aria-label','搜尋既有物件');this.c('tour-asset')?.input?.setAttribute('aria-label','搜尋新增素材');
   this.c('tour-material-choice')?.input?.setAttribute('aria-label','搜尋物件材質');
   const escape=e=>{if(e.key==='Escape'&&this.scene.headset?.state!=='idle'){this.scene.headset?.exit();return;}if(e.key==='Escape'&&this.placement){this.cancelPlacement();return;}if(e.key==='Escape'&&this.scene.walk.active){this.scene.walk.stop();this.observe(null);this.message('已離開自由走動，可拖曳環繞檢視。');}};window.addEventListener('keydown',escape);this.listeners.push(()=>window.removeEventListener('keydown',escape));
   const unload=e=>{if(this.editor?.dirty){e.preventDefault();e.returnValue='';}};window.addEventListener('beforeunload',unload);this.listeners.push(()=>window.removeEventListener('beforeunload',unload));
-  window.__lumiereTour={page:this,getState:()=>({loaded:!!this.building,fileName:this.fileName||null,walking:this.scene?.walk.active||false,levelId:this.building?.activeLevelId||null,loading:this.loading,dirty:!!this.editor?.dirty,objects:this.building?.levels.reduce((n,l)=>n+l.design.objects.length,0)||0,selection:this.selection,placement:this.placement})};
+  window.__lumiereTour={page:this,getState:()=>({loaded:!!this.building,fileName:this.fileName||null,walking:this.scene?.walk.active||false,levelId:this.building?.activeLevelId||null,loading:this.loading,dirty:!!this.editor?.dirty,gyro:this.gyro?.state||'off',headset:this.scene?.headset?.state||'idle',objects:this.building?.levels.reduce((n,l)=>n+l.design.objects.length,0)||0,selection:this.selection,placement:this.placement})};
   const handoff=consumeTourHandoff();if(handoff)await this.loadValue(handoff,'目前設計',{fromEditor:true});
  }
  c(id){return this.renderer?.getComponent(id);}
  message(text){this.c('tour-status')?.setText(text);}
+ get hints(){return tourHints(this.touchMode);}
+ // 滑鼠鍵盤與觸控各有一套說明；觸控版不提滾輪、滑鼠按鍵或鍵盤。
+ applyInputMode(){
+  if(!this.renderer||this.destroyed)return;const hints=this.hints;
+  this.c('tour-help')?.setText(hints.help);this.c('tour-empty-note')?.setText(hints.emptyNote);this.c('tour-plan-hint')?.setText(hints.planCaption);
+  for(const view of [this.scene,this.plan])view?.setInputMode?.(!!this.touchMode);this.syncControls();
+ }
  async loadFile(file){if(!file)return;if(this.editor?.dirty&&!await this.confirmDiscard('開啟另一份場景？','目前調整尚未匯出或套用，開啟另一份檔案會取代這些調整。'))return;return this.load(()=>this.session.loadFile(file));}
  async loadValue(value,name,options={}){return this.load(()=>this.session.loadValue(value,name),options);}
  async load(action,{fromEditor=false}={}){
@@ -95,7 +114,7 @@ export class TourPage{
   this.renderer.getHost('tour-vr-exit').hidden = !inVR;
   this.c('tour-vr-enter').setDisabled(!ready || busy || changingVR || headset?.available === null);
   this.c('tour-vr-exit').setDisabled(changingVR);
-  this.c('tour-vr-enter').element.title = headset?.available ? '使用頭顯進入空間；握壓控制器側鍵可退出。' : '查看頭顯及安全連線需求';
+  this.c('tour-vr-enter').element.title = headset?.available ? this.hints.vrTitle : this.hints.vrUnavailableTitle;
   for (const id of ['tour-functions','tour-object-editor','tour-workspace','tour-editor','tour-menu-toggle','tour-object-panel-toggle']) {
     this.renderer.getHost(id).inert = !!headset && headset.state !== 'idle';
   }
@@ -105,6 +124,11 @@ export class TourPage{
   this.c('tour-view')?.setDisabled(!ready||busy);
   this.c('tour-labels-toggle')?.setDisabled(!ready||busy);this.c('tour-labels-toggle')?.element.setAttribute('aria-pressed',String(this.showLabels!==false));
   this.renderer.getHost('tour-touch-controls').hidden=!ready||!active||busy;this.touch?.setEnabled(ready&&active&&!busy);for(const action of TOUR_TOUCH_ACTIONS)this.c('tour-touch-'+action).setDisabled(!ready||!active||busy);
+  const gyro=this.gyro,gyroButton=this.c('tour-touch-gyro'),sensing=!!gyro?.active;
+  if(gyroButton){this.renderer.getHost('tour-touch-gyro').hidden=!this.touchMode||!gyro?.supported||gyro.state==='unavailable';gyroButton.setDisabled(!ready||!active||busy);gyroButton.element.setAttribute('aria-pressed',String(sensing));gyroButton.element.classList.toggle('is-selected',sensing);}
+  this.c('tour-touch-help')?.setText(gyro?.state==='tracking'?GYRO_HINTS.help:this.hints.touchHelp);
+  // 觸控裝置開始走動時預設以陀螺儀轉頭；瀏覽器若要求由點按取得授權（iOS），留給按鈕啟動。
+  if(ready&&active&&!busy&&this.touchMode&&gyro?.supported&&gyro.state==='off'&&this.gyroWanted!==false&&!gyro.needsGesture)gyro.enable();
   this.renderer.getHost('tour-empty').hidden=ready;this.renderer.getHost('tour-workspace').hidden=!ready;this.renderer.getHost('tour-object-controls').hidden=!ready;this.renderer.getHost('tour-plan-pane').hidden=!this.showPlan;this.renderer.getHost('tour-workspace').classList.toggle('has-plan',this.showPlan);
   this.c('tour-empty-title').setText(busy?'正在建立場景':this.error?'這份場景尚未載入':'先載入一個場景');
   this.c('tour-empty-copy').setText(busy?'正在驗證本機檔案與內嵌素材。':this.error?'請確認檔案是設計器匯出的場景 JSON 或完整專案，再重新選取。':'選擇設計器匯出的場景 JSON，或含素材與底圖的 .lumiere 完整專案。');
@@ -130,11 +154,23 @@ export class TourPage{
   if(observer){this.c('tour-position')?.setText('X '+observer.x.toFixed(2)+' m，Z '+observer.z.toFixed(2)+' m');this.c('tour-facing')?.setText(heading===null?'面向：朝上／下觀察':'面向 '+(((heading*180/Math.PI)%360+360)%360).toFixed(0)+'°（圖上方為 0°）');}
   if(active!==this.walking){this.walking=active;this.syncControls();}else if(this.selection?.kind==='object')this.describeSelection();
  }
- startWalk(){if(!this.building)return;try{this.scene.walk.start();this.observe(this.scene.walk.body);this.message('自由走動：WASD／方向鍵或觸控按鈕移動、拖曳轉頭；雙擊平面圖定位，Esc 離開。');}catch(e){this.message(e.message+' 可繼續使用環繞檢視。');}}
- orbit(){if(!this.building)return;this.scene.walk.stop();this.observe(null);this.scene.fit();this.message('環繞檢視：拖曳旋轉，滾輪縮放。');}
- chooseView(value){if(!this.building||this.loading||this.exporting||!['overview','front','side','top'].includes(value))return;this.scene.walk.stop();if(value==='overview')this.scene.fit();else this.scene.preset(value);this.observe(null);this.message(({overview:'環繞總覽',front:'正面視角',side:'側面視角',top:'俯視視角'})[value]+'；可繼續拖曳旋轉或滾輪縮放。');}
+ startWalk(){if(!this.building)return;try{this.scene.walk.start();this.observe(this.scene.walk.body);this.message(this.hints.walk);}catch(e){this.message(e.message+' 可繼續使用環繞檢視。');}}
+ orbit(){if(!this.building)return;this.scene.walk.stop();this.observe(null);this.scene.fit();this.message(this.hints.orbit);}
+ chooseView(value){if(!this.building||this.loading||this.exporting||!['overview','front','side','top'].includes(value))return;this.scene.walk.stop();if(value==='overview')this.scene.fit();else this.scene.preset(value);this.observe(null);this.message(({overview:'環繞總覽',front:'正面視角',side:'側面視角',top:'俯視視角'})[value]+this.hints.viewSuffix);}
  teleport(point){if(!this.building)return;try{const position=this.scene.walk.teleportTo(point.x,point.z,this.building.activeLevelId);this.observe(position);this.message('已移至所指地坪；紅點同步目前位置。');}catch(e){this.message(e.message);}}
- chooseFloor(id){if(!this.building?.levels.some(l=>l.id===id))return;this.scene.walk.stop();this.observe(null);this.building=this.editor.selectFloor(id);this.prepared.building=this.building;this.selection=null;this.labelCandidates=[];this.placement=null;this.syncViews();this.plan.resize();this.plan.fit();this.message('已切換平面樓層；雙擊地坪可前往該層。');}
+ // 頭顯中的視線瞬移：沿用平面圖雙擊的可站立判斷，並同步平面圖位置與所在樓層。
+ headsetTeleport(target){if(!this.building||this.loading||this.exporting)return null;const position=this.scene.walk.teleportTo(target.x,target.z,target.levelId);this.observe(position);return position;}
+ headsetToggleOpening(levelId,id){if(!this.editor||this.loading||this.exporting)return false;this.editor.toggleOpening(levelId,id);this.refreshEdited();return true;}
+ toggleGyro(){
+  const gyro=this.gyro;if(!gyro||!this.building||!this.scene.walk.active)return;
+  if(gyro.active){this.gyroWanted=false;gyro.disable();this.message(GYRO_HINTS.off);return;}
+  this.gyroWanted=true;this.gyroAsked=true;return gyro.enable({gesture:true});
+ }
+ gyroChanged(state){
+  if(this.destroyed)return;const asked=this.gyroAsked;if(state!=='waiting')this.gyroAsked=false;this.syncControls();
+  if(asked&&state==='denied')this.message(GYRO_HINTS.denied);else if(asked&&state==='unavailable')this.message(GYRO_HINTS.unavailable);else if(asked&&state==='tracking')this.message(GYRO_HINTS.on);
+ }
+ chooseFloor(id){if(!this.building?.levels.some(l=>l.id===id))return;this.scene.walk.stop();this.observe(null);this.building=this.editor.selectFloor(id);this.prepared.building=this.building;this.selection=null;this.labelCandidates=[];this.placement=null;this.syncViews();this.plan.resize();this.plan.fit();this.message(this.hints.floorChanged);}
  ride(direction){if(!this.building)return;try{this.scene.walk.ride(direction);this.observe(this.scene.walk.body);this.message('電梯已停靠目標樓層。');}catch(e){this.message(e.message);}}
  pick(hit,mode){
   if(!this.building)return;if(this.placement)return;if(!hit){this.selection=null;this.syncControls();return;}
@@ -189,7 +225,7 @@ export class TourPage{
  beginPlacement(){
   if(!this.editor||this.loading)return;const asset=ASSETS[this.assetId];if(!asset)return;
   if(asset.hostKind){try{const object=this.editor.place(this.building.activeLevelId,asset.id,null,{hostId:this.selection?.kind==='opening'?this.selection.id:null});this.refreshEdited();this.select(this.building.activeLevelId,object.id,'object');this.message('已新增附加項目，位置與尺寸跟隨所選門窗。');}catch(e){this.message(e.message);}return;}
-  this.placement={assetId:asset.id,levelId:this.building.activeLevelId};this.objectPanelOpen=false;this.menuOpen=false;this.syncControls();this.message('放置 '+asset.name+'：點選 3D 或平面圖中的地坪；Esc 取消。');
+  this.placement={assetId:asset.id,levelId:this.building.activeLevelId};this.objectPanelOpen=false;this.menuOpen=false;this.syncControls();this.message('放置 '+asset.name+this.hints.placementSuffix);
  }
  cancelPlacement(){this.placement=null;this.objectPanelOpen=true;this.syncControls();this.message('已取消新增物件。');}
  placeObject(point){
@@ -218,7 +254,7 @@ export class TourPage{
   if(description!==this.selectionDescription){this.selectionDescription=description;this.c('tour-selected').setText(description);}
  }
  destroy(){
-  if(this.destroyed)return;this.destroyed=true;this.loadSequence++;this.exportAbort?.abort();this.touch?.destroy();this.confirming?.destroy?.();this.listeners.forEach(fn=>fn());
+  if(this.destroyed)return;this.destroyed=true;this.loadSequence++;this.exportAbort?.abort();this.touch?.destroy();this.gyro?.destroy();this.confirming?.destroy?.();this.listeners.forEach(fn=>fn());
   // Session owns imported source resources; detach them before viewport teardown.
   if(this.scene){this.scene.importedAssets=new Map();this.scene.materialEntries=[];this.scene.ifcReference=null;}
   this.session.destroy();this.pageRenderer?.destroy();if(window.__lumiereTour?.page===this)delete window.__lumiereTour;this.renderer=null;this.building=null;

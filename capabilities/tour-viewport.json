@@ -4,7 +4,7 @@
   "schemaNotice": "專案能力契約，非 B4A 原生 schema；由已審閱的靜態 factory 註冊，不從匯入檔執行元件或程式。雜湊只核對來源一致性，不代表安全或視覺驗收。",
   "id": "lumiere.tour-viewport",
   "name": "TourViewport",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "kind": "uiComponent",
   "scope": "#/tour",
   "source": "src/frontend/tour/TourViewport.js",
@@ -27,7 +27,12 @@
     "src/frontend/designer/balloon-labels.js",
     "src/frontend/designer/label-metrics.js",
     "lumiere.material-library",
-    "src/frontend/designer/material-application.js"
+    "src/frontend/designer/material-application.js",
+    "src/frontend/tour/TourHeadset.js",
+    "src/frontend/tour/TourGaze.js",
+    "src/frontend/tour/TourOrientation.js",
+    "src/frontend/tour/tour-hints.js",
+    "src/frontend/tour/TourFrameHold.js"
   ],
   "registration": {
     "factory": "TourPage.mount explicitly registers the B4A component allowlist and TourViewport; ModalPanel supplies confirmation dialogs. Unknown component names reject.",
@@ -56,7 +61,11 @@
     "validated local object placement, deletion, position/elevation/rotation/size updates, undo and redo",
     "door/window and available appliance/switch operation within the tour copy",
     "explicit local JSON/full-project download; exit transfers dirty edits to the designer while clean exit restores the original snapshot",
-    "text status for loading, cancellation, rejection and navigation"
+    "text status for loading, cancellation, rejection and navigation",
+    "device-orientation head turning on touch devices, alongside the hold-to-move pad, drag look and turn buttons; a B4A toggle switches it off and a refused or missing sensor falls back to touch",
+    "cardboard-style gaze control in immersive-vr: centre reticle, a tap on standable floor teleports under the walk clearance rule behind a short fade, a tap on an operable door or window toggles it",
+    "touch wording for help, status and canvas hints on touch-primary devices, with no wheel, mouse-button or keyboard instructions",
+    "one 30 fps scene rate on phones: sensor-driven walking keeps the shared frame limit, and a phone viewer session draws the scene 30 times a second while presenting a kept image on every 60 Hz frame"
   ],
   "authority": {
     "read": "User-selected local files or an explicitly staged in-memory editor snapshot.",
@@ -107,7 +116,7 @@
   "lifecycle": {
     "mount": "Fetch fixed local definition, instantiate trusted B4A renderer, mount scene/map, consume one pending viewer handoff.",
     "update": "Load requests supersede and abort earlier requests. Whitelisted TourEditor commands validate the entire candidate before replacing the tour building and one undo step. Map position/facing uses the existing 2D overlay. While walking, a changed observer floor switches only map floor/underlay/fit without stopping the walker or adding edit history; source replacement associates history only after successful load.",
-    "destroy": "Idempotently cancel loads, release held touch/keyboard movement, cancel turn RAF and activation pulses, remove page listeners, release prepared GLB/material/underlay/IFC resources and destroy both viewports including RAF, blink timer, WebGL resources and observers."
+    "destroy": "Idempotently cancel loads, release held touch/keyboard movement, cancel turn RAF and activation pulses, remove page listeners, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, release prepared GLB/material/underlay/IFC resources and destroy both viewports including RAF, blink timer, WebGL resources and observers."
   },
   "limitations": [
     "Responsive browser navigation with touch movement controls; the tour supports a user-initiated immersive-vr session with local-floor tracking. Emulated narrow-screen checks do not certify physical phones.",
@@ -115,7 +124,9 @@
     "Raw building JSON carries geometry/settings, not separately imported GLB files, textures or source images; use a complete project bundle for embedded resources.",
     "Object editing is limited to registered assets and allowed transforms. Attached or semantic assembly objects may require the main designer; no wall/room topology editing, local video/YouTube playback, automatic reconstruction or source-photo comparison UI.",
     "Source reference, capture, sheet and structural-analysis data may be validated as part of a full bundle; their editing/review interfaces remain in the designer.",
-    "Clean exit restores the original editor snapshot; dirty exit stages the edited bundle into the designer's in-memory model. Refreshing the page clears the transient handoff. Downloads do not overwrite the user-selected source file or local draft."
+    "Clean exit restores the original editor snapshot; dirty exit stages the edited bundle into the designer's in-memory model. Refreshing the page clears the transient handoff. Downloads do not overwrite the user-selected source file or local draft.",
+    "Gaze taps act only for gaze input sources such as a phone in a cardboard viewer. Tracked controllers keep squeeze-to-exit and have no teleport. Head turning by device orientation needs a secure context and a sensor; iOS additionally needs a tap to grant it and has no WebXR session.",
+    "The 30 fps phone-viewer rate holds each image for two display frames without reprojection, so fast head turns step. Tracked headsets are not limited. The limit steadies pacing and halves scene drawing; it does not make a frame cheaper, so a scene too heavy for 30 fps still runs slower."
   ],
   "validation": [
     "tests/tour-page.mjs",
@@ -141,17 +152,20 @@
     "tests/standalone-page.mjs",
     "tests/standalone-runtime.mjs",
     "docs/standalone-web-export.md",
-    "tests/tour-headset.mjs"
+    "tests/tour-headset.mjs",
+    "tests/tour-orientation.mjs",
+    "tests/tour-gaze.mjs",
+    "tests/tour-phone.mjs"
   ],
-  "verificationScope": "Tests cover strict import, cancellation/disposal, original and edited handoff, cross-source history/asset separation, non-editing navigation gestures, explicit object commands, floor provenance/follow, initial sizing, heading projection and touch movement/collision/input-release cleanup. Browser visual checks and real-device/headset validation are separate.",
+  "verificationScope": "Tests cover strict import, cancellation/disposal, original and edited handoff, cross-source history/asset separation, non-editing navigation gestures, explicit object commands, floor provenance/follow, initial sizing, heading projection and touch movement/collision/input-release cleanup. Browser visual checks and real-device/headset validation are separate. Phone additions cover device-orientation poses and permission paths, gaze targets under the walk rule, fade teleport, door taps, deferred post-session sizing and touch wording; they are exercised with simulated sensors and sessions.",
   "rollback": "Remove the #/tour route and its explicit navigation entry to disable the additive viewer; retained designer controls and existing residence route remain independent. Imported source files are never overwritten.",
   "implementationHashes": {
-    "src/frontend/tour/TourViewport.js": "af998c13023d9cc2447c93d7f882cf90a42fe26679ffe02cf7a02d56a66c2293",
-    "src/frontend/tour/TourPage.js": "eefe37a6e52d1040f66211f6780b65f990142b84721d157fcdf6a2074d14acdb",
+    "src/frontend/tour/TourViewport.js": "b1e6db0652910c0419bac66e95fa8a224d8f841cbb4beb915b7696f9048630bc",
+    "src/frontend/tour/TourPage.js": "809628919e2152eac996f30a7cd25be2e5609b6047336452377e8ef43b8d34c1",
     "src/frontend/tour/tour-input.js": "f730e25e0d4f65c8f0dd76a2b5940aca0157f23c4bdf776428d65acebd3c2363",
     "src/frontend/tour/tour-handoff.js": "af3178b11bb6d9b24450b5a8923bafd8d24e869dc45d5c595aa69f367a7a587c",
-    "definitions/tour.page.json": "cb63d63261e750d9cd00db7d64e3fee78688eb9fdbb8e2f6e33ab966d5fdd35e",
-    "src/frontend/styles/tour.css": "e48a8c72d4b869e7b341beb730c8d5ec6dbb2459efe39ee200e65d42cd590d9e",
+    "definitions/tour.page.json": "b1e425a584b4f3c4e22c20fd977b714887c1613e79172dc91da38ee3d56b4ba2",
+    "src/frontend/styles/tour.css": "8f02c9c950418dba897dd4b859bf5f90a1ef7f4c7bb7cc242157cbd55570e84e",
     "src/frontend/tour/TourTouchControls.js": "a190743f042b73d007bda02fe17206b73b18a5aa0f1bbb23b009fe1f4bdf6f8b",
     "src/frontend/tour/TourEditor.js": "e0b04c118840abb70c52d5671ef4334efe96e26f66cf20cbc36d33a3bbdbd68c",
     "src/frontend/designer/model.js": "baf5751872fc339c976c121393a59a3acba466e9f7f13533b594ac2fc114b60a",
@@ -162,15 +176,19 @@
     "src/frontend/designer/geometry.js": "d1450769d8fbb152a9a4aa14d6198a0a95afc4976a471208b0fab7bb5ccd548f",
     "src/frontend/designer/building-geometry.js": "4accb71c509e74eef8fb9e50f99adc8a3848d5fc19f11be4827dd92d749ad2a8",
     "src/frontend/designer/asset-geometry.js": "d3ef5e47c6e0b7d2bfe64575cb1e3b5316826e4add38c8503a97317b634e8068",
-    "src/frontend/designer/DesignViewport.js": "8311ba738c24ace8e8dc0ddbdb2ac3aa218a1ca3b1ae1e75a2e08ace503e68cd",
+    "src/frontend/designer/DesignViewport.js": "9ab4199b89bd65a11614ce4531dddd7c967dd52963f1177bd81259674a1505a2",
     "src/frontend/designer/DesignerPage.js": "5342065f02efa77d0b31ef0b55abc23d98f41d22f26a0f023fe8aa28e4618022",
     "src/frontend/capture/agent-commands.js": "911e095cd7f11a60f897b343db62bafe7e725c33ac73495147e0bb0e783337b7",
     "definitions/designer.page.json": "a1eaa4e52b94ec9273ebd3e7ccefb06f4b71ee3ca2137d75d12c7a16ecd5d0b9",
     "src/frontend/styles/designer-workbench.css": "67adcb3531339ecd9551d54baeee2c2fcedcbc35c97b8f228caa7ea7198d3a61",
     "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
     "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
-    "src/frontend/tour/TourHeadset.js": "d3d2eabc465ce954a952be3b2b8d8b3cddb3c3c1aecebb2358171af520a4aaee",
-    "src/frontend/public-app.js": "7f10273fb9067785dd0e1ab09ee38c7f659a46336f9bf96ad270579af286fa65"
+    "src/frontend/tour/TourHeadset.js": "04a0648cf54b755907492b2df87d530c43b1469147ef4a011a1425f9aaf01f0d",
+    "src/frontend/public-app.js": "7f10273fb9067785dd0e1ab09ee38c7f659a46336f9bf96ad270579af286fa65",
+    "src/frontend/tour/TourGaze.js": "2a25917ce16284253fea9de7fb1e3ae31b0fb364ade760e5c3fe22daf0c5cbb5",
+    "src/frontend/tour/TourOrientation.js": "4b8f536c3a3f80d798ce6737c18c2c4f0363555d0434c545b287e3e85cb49014",
+    "src/frontend/tour/tour-hints.js": "bca4a585989f8ce7e79dd764ba2702bed0703f929ca15b42db8c94a4642351b9",
+    "src/frontend/tour/TourFrameHold.js": "9a815ef39ea2ce8aa35c0edb0af49b2dbd4cd241f17f3f1139a0572581ae34fb"
   },
   "viewing": {
     "presets": [
@@ -191,7 +209,7 @@
     "turn": "unchanged",
     "teleport": "unchanged",
     "collision": "unchanged",
-    "headsetXR": "immersive-vr, local-floor, headset pose and return to desktop",
+    "headsetXR": "immersive-vr, local-floor, headset pose; gaze reticle with tap teleport and door/window taps for phone viewers; return to desktop, continuing from the last teleport",
     "supersedes": "Earlier same-day reverse-input setting.",
     "validation": [
       "tests/designer-walk-directions.mjs",

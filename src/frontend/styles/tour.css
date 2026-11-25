@@ -61,6 +61,8 @@
 .tour-touch-controls { display: none; position: absolute; z-index: 4; right: 12px; bottom: 112px; width: 300px; max-width: calc(100% - 24px); padding: 12px; background: var(--cl-bg); border: 1px solid var(--cl-border); border-radius: var(--cl-radius-md); }
 .tour-touch-buttons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--cl-space-lg); margin-top: var(--cl-space-lg); }
 .tour-touch-buttons button { width: 100%; min-height: 44px; touch-action: none; user-select: none; }
+[data-tool-node="tour-touch-gyro"] { margin-top: var(--cl-space-lg); }
+[data-tool-node="tour-touch-gyro"] button { width: 100%; min-height: 44px; }
 .tour-shell :is(button, input, [role="button"], [role="combobox"], [tabindex]):focus-visible { outline: 2px solid var(--cl-border-focus); outline-offset: 2px; }
 .tour-shell :is(button, [role="button"]):disabled, .tour-shell [aria-disabled="true"] { opacity: .55; cursor: not-allowed; }
 .tour-shell button, .tour-shell input, .tour-shell .dropdown__selector { min-height: 36px; }
