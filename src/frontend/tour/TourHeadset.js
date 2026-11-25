@@ -145,6 +145,7 @@ export class TourHeadset {
       this.gazeSeen = true;
       this.onSources();
     }
+    // With controllers present the reticle is off, and select() then ignores the tap.
     this.gaze?.select(event);
   }
 

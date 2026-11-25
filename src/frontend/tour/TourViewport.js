@@ -19,9 +19,13 @@ export class TourViewport extends DesignViewport{
   if(sensing&&this.orientation.moving(now))this.invalidate();
  }
  // 頭顯以自己的相機繪製場景；在 VR 中開關門或換樓層後，仍需桌面畫格才會執行的幾何重建。
+ // 頭顯中一律載入完整場景：自動細節是依桌面相機位置篩選家具，而頭顯畫格不會隨頭部位置重新篩選；
+ // 頁面在 VR 中重設細節模式（例如開關門後的 syncViews）也不影響這裡。
  syncHeadsetScene(){
   const project=this.preview||this.project;if(!this.rebuild||!this.renderer||!project)return false;
-  this.syncDesign(project);return true;
+  const interior=this.interiorMode,street=this.streetMode;this.interiorMode=this.streetMode='full';
+  try{this.syncDesign(project);}finally{this.interiorMode=interior;this.streetMode=street;}
+  return true;
  }
  // 觸控裝置的提示不提滾輪、滑鼠按鍵或鍵盤。
  setInputMode(touch){

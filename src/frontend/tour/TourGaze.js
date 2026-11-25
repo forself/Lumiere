@@ -194,9 +194,9 @@ export class TourGaze {
     this.reticle.scale.setScalar(this.depth * RING * (acting ? 1.3 : 1));
   }
 
-  // A tap while looking at something.
+  // A tap while looking at something. Without the reticle there is nothing to aim with.
   select(event) {
-    if (this.disposed || this.transition || !this.view.building) return;
+    if (this.disposed || !this.enabled || this.transition || !this.view.building) return;
     const target = gazeTarget(this.view, ...(this.eventRay(event) || this.ray()));
     this.show(target);
     if (target.kind === 'floor') {

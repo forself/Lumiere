@@ -184,10 +184,18 @@ const input = (type, targetRayMode) => Object.assign(new Event(type), {inputSour
   for (const time of [160, 260, 400, 500]) view.renderer.loop(time, {});
   assert.equal(gaze.transition, null);
 
-  // Controllers arriving switch the reticle off; without them it returns.
+  // Controllers arriving switch the reticle off; without them it returns. While
+  // it is off, a gaze tap over standable floor must not move the viewer unseen.
+  rig.position.set(-1, 0, -.5);
+  rig.updateMatrixWorld(true);
+  view.renderer.loop(600, {});
+  assert.equal(gaze.target.kind, 'floor');
   session.inputSources = [{targetRayMode: 'gaze'}, {targetRayMode: 'tracked-pointer'}];
   session.dispatchEvent(new Event('inputsourceschange'));
   assert.equal(gaze.enabled, false);
+  session.dispatchEvent(input('select', 'gaze'));
+  assert.equal(gaze.transition, null, 'with controllers present a gaze tap does not act unseen');
+  assert.equal(calls.length, 1);
   session.inputSources = [{targetRayMode: 'gaze'}];
   session.dispatchEvent(new Event('inputsourceschange'));
   assert.equal(gaze.enabled, true);

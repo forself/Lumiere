@@ -190,8 +190,10 @@ function fixture() {
 // A tap on a door or window operates it at once; a tap on anything else does nothing.
 {
   const {rig, gaze, calls, stand} = fixture();
-  gaze.setEnabled(true);
   stand(-1.5, 0, [-1.5, 1, -2]);
+  gaze.select({});
+  assert.equal(calls.length, 0, 'without the reticle a tap has nothing to aim with');
+  gaze.setEnabled(true);
   gaze.update(0);
   gaze.select({});
   assert.deepEqual(calls, [['toggle', 'floor-1', 'door-1']]);

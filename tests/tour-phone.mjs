@@ -90,6 +90,18 @@ import {GYRO_HINTS, TOUCH_QUERY, TOUR_HINTS, tourHints, touchPrimary} from '../s
   assert.equal(vr.syncHeadsetScene(), true);
   assert.equal(vr.syncHeadsetScene(), false);
   assert.equal(synced, 1);
+
+  // Automatic detail keeps only the furniture near the desktop camera. A door
+  // toggled in VR makes the page restore that setting; the headset rebuild must
+  // still load every room, because it is not rebuilt as the head moves.
+  const modes = [];
+  Object.assign(vr, {interiorMode: 'auto', streetMode: 'auto', rebuild: true, syncDesign() {modes.push([this.interiorMode, this.streetMode]); this.rebuild = false;}});
+  vr.syncHeadsetScene();
+  assert.deepEqual(modes, [['full', 'full']]);
+  assert.deepEqual([vr.interiorMode, vr.streetMode], ['auto', 'auto'], 'the desktop setting is left for after the session');
+  Object.assign(vr, {rebuild: true, syncDesign() {throw Error('asset budget');}});
+  assert.throws(() => vr.syncHeadsetScene(), /asset budget/);
+  assert.deepEqual([vr.interiorMode, vr.streetMode], ['auto', 'auto']);
 }
 
 // Status messages use the wording for the device in hand.

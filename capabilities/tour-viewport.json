@@ -116,7 +116,7 @@
   "lifecycle": {
     "mount": "Fetch fixed local definition, instantiate trusted B4A renderer, mount scene/map, consume one pending viewer handoff.",
     "update": "Load requests supersede and abort earlier requests. Whitelisted TourEditor commands validate the entire candidate before replacing the tour building and one undo step. Map position/facing uses the existing 2D overlay. While walking, a changed observer floor switches only map floor/underlay/fit without stopping the walker or adding edit history; source replacement associates history only after successful load.",
-    "destroy": "Idempotently cancel loads, release held touch/keyboard movement, cancel turn RAF and activation pulses, remove page listeners, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, release prepared GLB/material/underlay/IFC resources and destroy both viewports including RAF, blink timer, WebGL resources and observers."
+    "destroy": "Idempotently cancel loads, release held touch/keyboard movement, cancel turn RAF and activation pulses, remove page listeners, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, stop the orientation sensor, release prepared GLB/material/underlay/IFC resources and destroy both viewports including RAF, blink timer, WebGL resources and observers."
   },
   "limitations": [
     "Responsive browser navigation with touch movement controls; the tour supports a user-initiated immersive-vr session with local-floor tracking. Emulated narrow-screen checks do not certify physical phones.",
@@ -160,7 +160,7 @@
   "verificationScope": "Tests cover strict import, cancellation/disposal, original and edited handoff, cross-source history/asset separation, non-editing navigation gestures, explicit object commands, floor provenance/follow, initial sizing, heading projection and touch movement/collision/input-release cleanup. Browser visual checks and real-device/headset validation are separate. Phone additions cover device-orientation poses and permission paths, gaze targets under the walk rule, fade teleport, door taps, deferred post-session sizing and touch wording; they are exercised with simulated sensors and sessions.",
   "rollback": "Remove the #/tour route and its explicit navigation entry to disable the additive viewer; retained designer controls and existing residence route remain independent. Imported source files are never overwritten.",
   "implementationHashes": {
-    "src/frontend/tour/TourViewport.js": "68e19091f88f69e33edc819311f0fb45a2fa24bf2d844a934f1c1e8411d7e5da",
+    "src/frontend/tour/TourViewport.js": "b1e6db0652910c0419bac66e95fa8a224d8f841cbb4beb915b7696f9048630bc",
     "src/frontend/tour/TourPage.js": "809628919e2152eac996f30a7cd25be2e5609b6047336452377e8ef43b8d34c1",
     "src/frontend/tour/tour-input.js": "f730e25e0d4f65c8f0dd76a2b5940aca0157f23c4bdf776428d65acebd3c2363",
     "src/frontend/tour/tour-handoff.js": "af3178b11bb6d9b24450b5a8923bafd8d24e869dc45d5c595aa69f367a7a587c",
@@ -183,9 +183,9 @@
     "src/frontend/styles/designer-workbench.css": "67adcb3531339ecd9551d54baeee2c2fcedcbc35c97b8f228caa7ea7198d3a61",
     "src/frontend/tour/standalone-export.js": "2b089c95ed6a5f726294b765947b0660ae75b43af9e58e330704875e39988e2b",
     "src/frontend/tour/standalone-entry.js": "ae68367a559cb6527c12929c8b099f3e9996025ec74f630da8c7a9a48237e3f7",
-    "src/frontend/tour/TourHeadset.js": "a6c13e6ebbec733dd161d979a88db24e69239e358303c9549798ccd72de46a36",
+    "src/frontend/tour/TourHeadset.js": "04a0648cf54b755907492b2df87d530c43b1469147ef4a011a1425f9aaf01f0d",
     "src/frontend/public-app.js": "7f10273fb9067785dd0e1ab09ee38c7f659a46336f9bf96ad270579af286fa65",
-    "src/frontend/tour/TourGaze.js": "b0ba29f58d62af8f0f312e3636c733f1cfc2213095e65604de505c62d01e3125",
+    "src/frontend/tour/TourGaze.js": "2a25917ce16284253fea9de7fb1e3ae31b0fb364ade760e5c3fe22daf0c5cbb5",
     "src/frontend/tour/TourOrientation.js": "4b8f536c3a3f80d798ce6737c18c2c4f0363555d0434c545b287e3e85cb49014",
     "src/frontend/tour/tour-hints.js": "bca4a585989f8ce7e79dd764ba2702bed0703f929ca15b42db8c94a4642351b9",
     "src/frontend/tour/TourFrameHold.js": "9a815ef39ea2ce8aa35c0edb0af49b2dbd4cd241f17f3f1139a0572581ae34fb"
