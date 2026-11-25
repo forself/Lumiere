@@ -1,0 +1,25 @@
+{
+  "buildings": 1505,
+  "footChecks": 19816,
+  "maxGap": 2.3778027369303345e-07,
+  "maxHeightError": 5.162048353213322e-06,
+  "maxXY": 6.093749993851816e-05,
+  "drapeChecks": 209589,
+  "triangles": 69863,
+  "maxDrapeError": 1.694183355382961e-06,
+  "walkStart": [
+    1.9070999999999998,
+    5.926859623000001,
+    468.30806666666666
+  ],
+  "walkEnd": [
+    1.9070999999999998,
+    5.948201017000002,
+    472.91246666666683
+  ],
+  "cameraRigTerrainErrorM": 8.881784197001252e-16,
+  "webxr": "IWER Quest 3, stereo and exit",
+  "physicalHeadset": false,
+  "errors": [],
+  "htmlSha256": "d27df58da0ca6af7eb912d080713abb35453c8f7a0b7549c719c3d107228e6fd"
+}

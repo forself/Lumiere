@@ -1,0 +1,69 @@
+{
+  "utc": "2026-11-23T11:44:28.133407+00:00",
+  "referencePhoto": "https://commons.wikimedia.org/wiki/File:Exit_14,_East_Metro_Mall_20120830b.jpg",
+  "referenceObservation": "The pre-renovation photo shows the stone stairs meeting the plaza paving. It also shows a turn in the tread edges; the straight-sided mesh is a local approximation. The below-grade depth is a modeling value.",
+  "geometrySamples": {
+    "outdoorStairCounts": [
+      2,
+      4,
+      8
+    ],
+    "fractionsAlongEveryTread": [
+      0.001,
+      0.01,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      0.99,
+      0.999
+    ],
+    "fractionsOfExposedSideHeight": [
+      0.001,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      0.999
+    ],
+    "sideBandsMetres": [
+      0.002,
+      -0.002
+    ],
+    "flooringToleranceIncludingPaintedEdgeMetres": 0.012,
+    "baseBelowSidewalkMetres": 0.18
+  },
+  "pageErrors": [],
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "httpDocumentSHA256": "44a887d4559745a0fed8b64ae6c6a01f05be7324bf42116f38a9cd75de031bde",
+  "releaseRayChecks": {
+    "sideRays": 2520,
+    "verticalRays": 720
+  },
+  "realBrowserWalk": {
+    "toTreeWellMetres": 4.884,
+    "treeWellToArcadeMetres": 8.566,
+    "continuedStrafeStoppedAtTreeWellAndColumn": true,
+    "stayedOnSidewalk": true
+  },
+  "obliqueStreetImage": {
+    "viewport": [
+      1280,
+      800
+    ],
+    "roiXYXY": [
+      323,
+      421,
+      426,
+      527
+    ],
+    "RGBCondition": "188 <= red <= 214, green > red + 8, blue > green + 5",
+    "prior": "exit14-curb-before.jpg",
+    "priorSkyColorPixels": 746,
+    "current": "exit14-curb-seam-check.jpg",
+    "currentSkyColorPixels": 0
+  },
+  "status": "passed"
+}

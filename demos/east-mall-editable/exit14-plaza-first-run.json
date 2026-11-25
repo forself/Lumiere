@@ -1,0 +1,7 @@
+{
+  "utc": "2026-11-23T11:57:23.816098+00:00",
+  "pageErrors": [],
+  "sha256": "44a887d4559745a0fed8b64ae6c6a01f05be7324bf42116f38a9cd75de031bde",
+  "status": "failed",
+  "error": "Locator.evaluate: Error: Target [4.05,1.05] blocked at [3.9351599999999998,-16.07448,4.3500,landing]\n    at frame (eval at evaluate (:302:30), <anonymous>:6:56)"
+}

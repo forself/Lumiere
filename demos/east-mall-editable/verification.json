@@ -1,0 +1,31 @@
+{
+  "buildings": 1505,
+  "sidewalks": 129,
+  "triangles": 74208,
+  "editedFeature": "364574",
+  "originalRoof": 9.9398,
+  "reopenedRoof": 13.9398,
+  "originalEast": -70.6457,
+  "reopenedEast": -70.6307,
+  "otherFeaturesUnchanged": true,
+  "undo": true,
+  "walkStart": "-15.4696,0,486.8376666666666",
+  "walkEnd": "-15.4696,0,488.3391666666663",
+  "webXR": "IWER Quest 3, two eyes, exited",
+  "physicalHeadset": false,
+  "errors": [],
+  "hostedEntry": true,
+  "hostedExportReopenedOffline": true,
+  "offlineReexportReopened": true,
+  "editedHTMLWebXR": "two eyes and exit",
+  "editedSidewalk": "SW-DA4145017-392-1",
+  "editedSidewalkEast": -18.9924,
+  "nativePlaza": {
+    "originalWorkshopImport": true,
+    "calibratedUnderlayRestored": true,
+    "floorDimensionsMetres": [
+      13.6,
+      17.7
+    ]
+  }
+}

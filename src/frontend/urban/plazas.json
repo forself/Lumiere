@@ -1,0 +1,49 @@
+{
+  "format": "lumiere-public-plazas",
+  "version": 1,
+  "sources": {
+    "plans": "https://www.metro.taipei/News_Content.aspx?n=320CF0D294FF9489&s=3613243DDE849631",
+    "usableAreas": "https://service.taipei/WebFile/Public/CaseSet/0a7333cc-9280-47a4-9a5d-7e5769990fc0/BH013/Other/d620acd6-2267-41bf-a056-c4a6c94f2626.pdf",
+    "usableAreasNote": "面積核對自台北服務通「捷運地下人行廣場出借」案號 BH013 所附北捷《地下人行廣場管理費價目表》第 1 頁。",
+    "renovationNotice": "https://www.tcooc.gov.taipei/News_Content.aspx?n=E5927B93F41F8DD4&s=09F9BEB89B559353&sms=72544237BBE4C5F6"
+  },
+  "editionNote": "採用北捷公布的改造前租借平面圖。臺北市商業處於 2026 年 11 月 2 日公布兩廣場預計於該年底起動工。各廣場使用獨立的平面座標，零高程供地坪編輯使用。",
+  "plazas": [
+    {
+      "id": "dinghao",
+      "name": "頂好廣場",
+      "description": "戶外廣場的三角形租借地坪。",
+      "sourceUrl": "https://www-ws.gov.taipei/001/Upload/405/ckfile/4d08c96c-8817-45a2-b941-aa36c4352e51.pdf",
+      "units": "m",
+      "walkable": true,
+      "parts": [
+        {
+          "id": "dinghao-lease",
+          "name": "三角形租借地坪",
+          "footprint": [[0, -19], [40, 0], [0, 0]]
+        }
+      ],
+      "measurementNote": "原圖分別標示底邊 40 m 與直角側邊 19 m。兩邊圍出的三角形面積為 380 m²，與北捷公布的可使用面積相符。可在模型紅線範圍內試走；鋪面材質、坡度與現場設施位置尚待實測。",
+      "publishedUsableAreaM2": 380
+    },
+    {
+      "id": "longmen",
+      "name": "龍門廣場",
+      "description": "戶外廣場的凹六邊形租借外框推估，可逐點編輯。",
+      "sourceUrl": "https://www-ws.gov.taipei/001/Upload/405/ckfile/8f2a14dd-3d6b-413f-a797-c2fa12da0219.pdf",
+      "units": "m",
+      "walkable": false,
+      "parts": [
+        {
+          "id": "longmen-lease",
+          "name": "租借外框推估",
+          "footprint": [[0, 0], [25.042, 0.007], [40.225, 13.331], [35.729, 18.565], [23.815, 8.429], [17.721, 15.586]]
+        }
+      ],
+      "measurementNote": "從圖面左上頂點順時針，第二、三、五、六邊標示 20.2、6.9、9.4、23.6 m。以六段紅線方向和四個標長閉合，第一、四邊推估約 25.0 與 15.6 m。推估外框約 342 m²，北捷列出的可使用面積為 283 m²。固定設施、可用區內界、坡度及鋪面材質尚待核實，僅供外框編輯。",
+      "publishedUsableAreaM2": 283,
+      "sourceVerticesPdfPoints": [[264.43, 70.35], [391.36, 70.39], [478.18, 146.58], [457.21, 171.00], [396.49, 119.34], [363.79, 157.74]],
+      "sourceEdgeLengthsM": [null, 20.2, 6.9, null, 9.4, 23.6]
+    }
+  ]
+}

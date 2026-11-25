@@ -1,1 +1,6 @@
 * text=auto eol=lf
+
+# Preserve the exact standalone bundles used in the browser verification reports.
+demos/east-mall-editable/street-workshop.html binary
+demos/east-mall-editable/station-underground.html binary
+demos/east-mall-editable/plaza-2-floor-study.html binary

@@ -1,0 +1,32 @@
+{
+  "utc": "2026-11-23T12:12:22.918810+00:00",
+  "checks": {
+    "rightThumbstickOnPlaza": {
+      "eyes": [
+        0,
+        2,
+        0
+      ],
+      "beforeMetres": [
+        12.142,
+        -2.171
+      ],
+      "afterForward": [
+        9.89,
+        -1.342
+      ],
+      "afterReverse": [
+        12.367,
+        -2.254
+      ],
+      "driftOnExitMetres": 0.0,
+      "springReturnedToNeutral": true
+    }
+  },
+  "physicalHeadset": false,
+  "pageErrors": [],
+  "mode": "Packaged single HTML via HTTP",
+  "httpDocumentSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "status": "failed",
+  "error": "([0.568, 1.897], [0.65, 1.2])"
+}

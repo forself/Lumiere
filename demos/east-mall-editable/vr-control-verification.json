@@ -1,0 +1,15 @@
+{
+  "ordinaryEdge": {
+    "immersiveAvailable": false,
+    "inlineFeedbackVisible": true,
+    "desktopWalkAvailable": true
+  },
+  "simulatedQuest3": {
+    "denialVisible": true,
+    "retryGranted": true,
+    "twoEyesRendered": true,
+    "exitReturnedToWalk": true
+  },
+  "physicalHeadset": false,
+  "htmlSHA256": "d27df58da0ca6af7eb912d080713abb35453c8f7a0b7549c719c3d107228e6fd"
+}

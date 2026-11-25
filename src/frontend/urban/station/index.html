@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>忠孝復興站地下層 · Lumière</title>
+<link rel="stylesheet" href="station.css">
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/"}}</script>
+</head><body><main>
+<aside><p class="brand">LUMIÈRE　空間設計工坊</p><h1 id="study-title">忠孝復興站<br>地下層</h1>
+<p id="study-caption">板南線旅客區 · 地坪與局部淨高</p>
+<label>樓層<select id="level"></select></label>
+<label>構件<select id="piece"></select></label>
+<fieldset id="atrium-entries"><legend>挑空區樓梯起步位置</legend>
+<div class="actions"><button id="stairs-bottom" type="button">月台端起步</button><button id="stairs-top" type="button">大廳端起步</button></div>
+<button id="ride-b4-up" type="button">從月台搭上行電扶梯</button>
+<small>同一段可上下步行的局部樓梯。高度與梯級配置依影像推定。</small>
+<details id="stair-settings"><summary>編輯樓梯尺寸</summary>
+<label>總級數<input id="stair-steps" type="number" step="1" min="6" max="128"></label>
+<label>踏深（m）<input id="stair-treadDepth" type="number" step="any" min=".15" max=".55"></label>
+<label>中間平台長（m）<input id="stair-middleLength" type="number" step="any" min=".3" max="4"></label>
+<label>梯寬（m）<input id="stair-width" type="number" step="any" min=".6" max="5"></label>
+<div class="actions"><button id="stair-apply" type="button">套用樓梯尺寸</button><button id="stair-undo" type="button" disabled>復原尺寸</button></div>
+</details></fieldset>
+<fieldset id="entry-entries"><legend>頂好廣場 14 號出口</legend>
+<button id="entry-plaza" type="button">從地下街第二廣場起步</button>
+<div class="actions"><button id="entry-bottom" type="button">從地下街上樓</button><button id="entry-top" type="button">從街面下樓</button></div>
+<div class="actions"><button id="ride-exit-up" type="button">搭上行電扶梯</button><button id="ride-exit-down" type="button">搭下行電扶梯</button></div>
+<small>改造前的局部外觀。級數、尺寸及高差為影像估值。</small>
+<details id="entry-settings" hidden><summary>編輯出口樓梯尺寸</summary><div id="entry-fields"></div>
+<div class="actions"><button id="entry-apply" type="button">套用出口尺寸</button><button id="entry-undo" type="button">復原尺寸</button></div></details>
+</fieldset>
+<div id="walk-appearance" hidden>
+<label>步行畫面<select id="walk-style"><option value="appearance">影像推定外觀</option><option value="drawing">圖面格線</option></select></label>
+<fieldset id="appearance-editor"><legend>局部外觀構件</legend>
+<label>群組<select id="appearance-group"></select></label>
+<label>構件<select id="appearance-object"></select></label>
+<div id="appearance-fields" hidden>
+<label>右向 X<input id="appearance-x" type="number" step="any" min="-1000" max="1000"></label>
+<label>高度 Y<input id="appearance-y" type="number" step="any" min="-1000" max="1000"></label>
+<label>後向 Z<input id="appearance-z" type="number" step="any" min="-1000" max="1000"></label>
+<label>等比縮放<input id="appearance-scale" type="number" step="any" min="0.05" max="12"></label>
+<button id="appearance-apply" type="button">套用位置與縮放</button>
+</div>
+<div id="lease-fields" hidden><small id="lease-outline"></small><button id="edit-lease" type="button" hidden>編輯租借地坪頂點</button></div>
+<button id="appearance-undo" type="button" disabled>復原外觀修改</button>
+<small>點畫面選構件。位置以局部模型公尺表示，影像推定的構件位置與材質尚無現場測量對位。</small>
+<small id="appearance-source"></small></fieldset>
+</div>
+<fieldset class="station-plan"><legend>影像估高（公尺）</legend>
+<label>B3 局部淨高<input id="clear" type="number" min="0.1" max="20" step="0.1"></label>
+<label>B3 至 B4 高差<input id="rise" type="number" min="0.1" max="30" step="0.1"></label>
+<button id="height-apply">套用高度</button>
+<small id="height-basis"></small></fieldset>
+<fieldset class="station-plan"><legend>輪廓編輯</legend>
+<label>節點<select id="point"></select></label>
+<label>圖面 X<input id="x" type="number" step="any"></label>
+<label>圖面 Y<input id="y" type="number" step="any"></label>
+<div class="actions"><button id="apply">套用座標</button><button id="undo" disabled>復原</button></div></fieldset>
+<p class="note station-plan">座標沿用北捷 PDF 的圖面點。樓層各自置中，水平比例尺及跨層對位待核實。虛線標出以局部淨高推算的高度包絡。垂直方向按 1:20 顯示。</p>
+<div class="actions"><button id="save">儲存模型</button><label class="file" id="open-study">開啟模型<input type="file" id="file" accept=".json"></label><button id="open-project" hidden>開啟完整專案</button><button id="export-project" hidden>匯出完整 HTML</button></div>
+<p id="status" role="status"></p>
+<p class="links station-plan"><a href="https://web.metro.taipei/img/ALL/INFOPDF/010.pdf#page=2" target="_blank" rel="noopener">北捷原圖，第 2 頁 ↗</a> · <a href="https://www.youtube.com/watch?v=r0jNAF10UWU&amp;t=20s" target="_blank" rel="noopener">B3 實拍 00:20</a> · <a href="https://commons.wikimedia.org/wiki/File:Bannan_Line_platforms_of_Zhongxiao_Fuxing_Station_20250207_T1504.jpg" target="_blank" rel="noopener">挑空對照照片</a></p>
+<p class="links" id="entry-links" hidden><a href="https://www.nakutemo-hawaii.com/taiwan/souvenir-supermarket/" target="_blank" rel="noopener">地下梯腳實拍</a> · <a href="https://commons.wikimedia.org/wiki/File:Exit_14,_East_Metro_Mall_20110102.jpg" target="_blank" rel="noopener">街面與雨棚實拍</a></p>
+</aside>
+<section><canvas tabindex="0" aria-label="B3 大廳與 B4 月台可編輯地坪"></canvas>
+<nav><button id="return-street" hidden>← 返回街區</button><button id="both" aria-pressed="true">分層總覽</button><button id="single" aria-pressed="false">單層俯視</button><button id="walk-floor" aria-pressed="false">地坪步行</button><button id="vr" disabled>偵測 VR…</button></nav>
+<div id="walk-map" hidden><img alt="所選地坪輪廓，箭頭表示目前位置和朝向"><span aria-hidden="true">▲</span></div>
+<footer><div id="orbit-help"><span class="dot b3"></span>B3 大廳　<span class="dot b4"></span>B4 月台　<span class="tip">拖曳旋轉 · 滾輪縮放</span></div>
+<div id="walk-help" hidden><strong id="walk-readout"></strong><span>WASD 或方向鍵移動，拖曳轉頭。Esc 返回編輯。</span>
+<span id="walk-scale">地坪格線每格 10 圖點。水平比例待核實，步速及視點高度採相對顯示值。</span>
+<div class="walk-pad" aria-label="移動方向"><button data-key="a" aria-label="向左移動">←</button><button data-key="w" aria-label="向前移動">↑</button><button data-key="s" aria-label="向後移動">↓</button><button data-key="d" aria-label="向右移動">→</button></div></div></footer></section>
+</main><script type="module" src="station.js"></script></body></html>

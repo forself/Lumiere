@@ -1,0 +1,116 @@
+{
+  "testedUTC": "2026-11-23T12:11:27.288332+00:00",
+  "browserEntry": "HTTP localhost /street-workshop.html",
+  "physicalHeadset": false,
+  "checks": {
+    "unchangedDownloadableModel": {
+      "bytes": 1815661,
+      "SHA256": "30cb4a3267e465f64d495653f3c432cc7d402ed1a2c2d3b594f26e6acc5567c3",
+      "equalsSourceAndInline": true
+    },
+    "streetWalkDisplacementMetres": 0.45,
+    "plazaWalkDisplacementMetres": 0.5,
+    "streetAndPlazaObjectEdits": {
+      "streetRoofMetres": [
+        9.9398,
+        10.1398
+      ],
+      "plazaRoofMetres": [
+        1.62,
+        1.82
+      ]
+    },
+    "stationEditsAndContourUndo": {
+      "B4PointXDrawingUnits": [
+        125.975,
+        126.075
+      ],
+      "B3ClearanceMetres": 3.3,
+      "B3B4DifferenceMetres": 5.5
+    },
+    "stationSaveIncludesEntireProject": true,
+    "roundTripBetweenStreetPlazaAndStationPreservesEdits": true,
+    "fullJSONContainsAllEdits": {
+      "buildings": 1505,
+      "plazaObjects": 302,
+      "stationPiecesByLevel": {
+        "B3": 3,
+        "B4": 1
+      }
+    },
+    "freshPageFullJSONReload": true,
+    "staticShellExcludesRuntimeDOM": {
+      "transientDOMAbsent": true,
+      "packerShellPresent": true
+    },
+    "stationExportDownloadsEditedWholeWorkshop": true,
+    "offlineStandaloneFullReopen": {
+      "fileScheme": true,
+      "networkOffline": true,
+      "httpRequests": [],
+      "resavedJSONEqualsOriginal": true
+    },
+    "legacyStreetJSONGetsBuiltInStationDefaults": true,
+    "stationSideOpenCombinedProject": true,
+    "http_streetWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    },
+    "http_plazaWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    },
+    "http_stationWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    },
+    "offlineExport_streetWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    },
+    "offlineExport_plazaWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    },
+    "offlineExport_stationWebXR": {
+      "device": "IWER simulated Quest 3",
+      "requestedSession": "immersive-vr",
+      "userActivated": true,
+      "stereoViews": 2,
+      "sessionEnded": true
+    }
+  },
+  "pageErrors": [],
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "servedHTML_SHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "priorRun": {
+    "servedHTML_SHA256": "2253a623bb774effce54b95763771186dcffb8610c9d0e4913a065f3c223c71a",
+    "result": "Old street workshop navigated away to the station page. No shared editor frame was available; combined persistence and export were unreachable from that workflow.",
+    "retest": "Verified via the round-trip, station-side project save, reload and offline export checks above."
+  },
+  "priorAudit": {
+    "result": "An earlier exporter captured the running document markup and the designer launcher needed review.",
+    "correction": "Replaced live markup serialization with a static shell from the packer and confirmed the designer launcher opens the fixed same-origin workshop path.",
+    "retest": "Dynamic marker excluded from user export, edited JSON retained, exported file reopened offline and six simulated XR sessions passed."
+  },
+  "repositoryGates": {
+    "npm run check": "passed (static source, imports and local library integrity)",
+    "npm run check:standalone": "passed"
+  },
+  "status": "passed"
+}

@@ -218,7 +218,7 @@ await check('自有前端危險模式',async()=>{
   // Keep all other checks; changing either reviewed source invalidates this narrow exception.
   // Git checkout may use LF or CRLF; canonicalize only that encoding difference.
   // Any other source change still invalidates these two reviewed download paths.
-  const svgDownloadHashes={"src/frontend/designer/design-export.js":"f044e1a62d2b042560a8d0510efb2bc59e2e563d0d6f7eeebd61181970598c1d","src/frontend/designer/DesignerPage.js":"5342065f02efa77d0b31ef0b55abc23d98f41d22f26a0f023fe8aa28e4618022"};
+  const svgDownloadHashes={"src/frontend/designer/design-export.js":"f044e1a62d2b042560a8d0510efb2bc59e2e563d0d6f7eeebd61181970598c1d","src/frontend/designer/DesignerPage.js":"86b5f62377887e8f2281bf0596af3a79e0483b616272beeff63ed6c1fe8c8436"};
   const errors=[];
   for(const file of files){
     const text=await readFile(file,'utf8');

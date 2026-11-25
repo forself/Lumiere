@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>街區模型工坊 · Lumière</title>
+<link rel="stylesheet" href="urban.css">
+<script type="importmap">{"imports":{"three":"/node_modules/three/build/three.module.js","three/addons/":"/node_modules/three/examples/jsm/","three/examples/":"/node_modules/three/examples/","three-mesh-bvh":"/node_modules/three-mesh-bvh/src/index.js"}}</script>
+</head><body><main id="street-editor"><aside>
+<p class="brand">LUMIÈRE　空間設計工坊</p><h1 id="place-title">忠孝東路與復興南北路</h1><p id="place-caption">街面與地下層 · 東區地下街第二廣場</p>
+<p><button id="station-link" type="button" disabled>檢視 B3 大廳與 B4 月台圖面</button><small class="study-caption">北捷圖面各層獨立置中，與街區的實地對位待核實。</small></p>
+<p><a href="#mall-stairs">頂好廣場 14 號出口 · 地下街上樓</a>　<a href="#street-stairs">街面下樓</a></p>
+<p><a href="#plaza-walk">從第二廣場走到 14 號出口及街面</a></p>
+<p>14 號出口電扶梯　<a href="#exit14-up">搭乘上行</a>　<a href="#exit14-down">搭乘下行</a></p>
+<label>前往街段 <select id="road" aria-label="前往街段"></select></label>
+<label>戶外租借範圍 <select id="public-plaza" aria-label="戶外租借範圍"></select></label>
+<p class="source" id="venue-source" hidden><a id="venue-plan" target="_blank" rel="noopener">北捷租借範圍圖 ↗</a></p>
+<label>場景構件 <select id="building"></select></label>
+<p id="feature-info"></p><fieldset><legend>垂直尺寸（公尺）</legend><label><span id="base-label">基底標高</span> <input type="number" step="any" id="base"></label><label><span id="roof-label">屋頂標高</span> <input type="number" step="any" id="roof"></label></fieldset>
+<fieldset><legend>輪廓轉折點（公尺）</legend><select aria-label="輪廓轉折點" id="corner"></select><label><span id="x-label">向東 X</span> <input type="number" step="any" id="east"></label><label><span id="z-label">向南 Z</span> <input type="number" step="any" id="south"></label></fieldset>
+<div class="actions"><button id="apply">套用尺寸</button><button id="undo" disabled>復原</button></div>
+<div class="actions"><button id="save">儲存可編輯專案</button><label class="file">開啟專案<input type="file" id="load" accept=".json"></label></div>
+<button id="export">匯出目前 VR 網頁</button><label class="review-layer"><input id="solid-overlaps" type="checkbox">以實體檢視路面重疊外殼</label><p id="status" aria-live="polite"></p><p class="source">圖資　<a href="https://uddtp.gitbook.io/tpgis/ch2-1/2.4" target="_blank" rel="noopener">臺北市都發局</a> · <a href="https://data.taipei/dataset/detail?id=715d3a83-8445-4496-b6bf-b0900538b7e7" target="_blank" rel="noopener">人行道</a> · <a href="https://data.taipei/dataset/detail?id=98b1b6a8-a092-423c-aab0-7dcb981d2a58" target="_blank" rel="noopener">道路鋪面</a> · <a href="https://data.taipei/dataset/detail?id=4d6bd0c6-9f56-408b-bb96-ac41134a95d5" target="_blank" rel="noopener">行穿線</a> · <a href="https://data.gov.tw/dataset/178729" target="_blank" rel="noopener">20 m 地形</a></p></aside><section><canvas tabindex="0" aria-label="可編輯的三維街區"></canvas><nav><button id="level" hidden>下到第二廣場</button><button id="section-view" hidden>地上地下剖視</button><button id="all">街區全覽</button><button id="focus">定位構件</button><button id="walk">步行視角</button><button id="vr" disabled>偵測 VR…</button><span id="vr-status" role="status" aria-live="polite">正在檢查沉浸式 VR。</span></nav><footer id="help">點選路面、人行道、行穿線或建物可編輯。拖曳旋轉，滾輪縮放。</footer></section></main><script type="module" src="urban.js"></script></body></html>

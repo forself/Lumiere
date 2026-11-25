@@ -1,0 +1,15 @@
+{
+  "url": "http://127.0.0.1:58874/street-workshop.html",
+  "checks": {
+    "outOfRangeRejected": true,
+    "upperFloorRebuilt": 4.92,
+    "undoRestoresSidewalk": 4.35,
+    "editedJSONReopened": true,
+    "editedSingleFileOpenedOffline": true
+  },
+  "physicalHeadset": false,
+  "utc": "2026-11-23T11:43:28.585004+00:00",
+  "sha256": "44a887d4559745a0fed8b64ae6c6a01f05be7324bf42116f38a9cd75de031bde",
+  "status": "passed",
+  "pageErrors": []
+}

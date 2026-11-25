@@ -1,0 +1,42 @@
+{
+  "utc": "2026-11-23T12:10:48.883955+00:00",
+  "pageErrors": [],
+  "physicalHeadset": false,
+  "httpDocumentSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "uphill": {
+    "direction": "up",
+    "framesWithoutInput": 386,
+    "startMetres": 0.0663,
+    "arrivalMetres": 4.95,
+    "stoppedOnLanding": true
+  },
+  "downhillInSameVisit": {
+    "direction": "down",
+    "framesWithoutInput": 437,
+    "startMetres": 4.66,
+    "arrivalMetres": 0,
+    "stoppedOnLanding": true
+  },
+  "canonicalLeaseAreaEdit": {
+    "beforeSqM": 380,
+    "afterSqM": 361,
+    "savedVertex": [
+      38,
+      0
+    ]
+  },
+  "canonicalIndoorColumnEdit": {
+    "object": "plaza-object-7",
+    "beforeMetres": 1.62,
+    "afterMetres": 1.87
+  },
+  "offlineSingleEscalator": {
+    "direction": "up",
+    "framesWithoutInput": 482,
+    "startMetres": 0.0459,
+    "arrivalMetres": 5.2,
+    "stoppedOnLanding": true
+  },
+  "offlineNetworkRequests": 0,
+  "status": "passed"
+}

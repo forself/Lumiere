@@ -1,0 +1,104 @@
+{
+  "utc": "2026-11-23T11:58:38.726166+00:00",
+  "physicalHeadset": false,
+  "checks": {
+    "mallToStreet": {
+      "sampleCount": 110,
+      "startHeightMetres": 0,
+      "porchHeightMetres": 4.95,
+      "endHeightMetres": 4.35,
+      "maximumSampleDeltaMetres": 0.132,
+      "surfaceOrder": [
+        "floor",
+        "stairs",
+        "landing"
+      ]
+    },
+    "sameVisitStreetBackToMall": {
+      "sampleCount": 98,
+      "startHeightMetres": 4.35,
+      "porchHeightMetres": 4.95,
+      "endHeightMetres": 0,
+      "maximumSampleDeltaMetres": 0.132,
+      "surfaceOrder": [
+        "landing",
+        "stairs",
+        "floor"
+      ]
+    },
+    "centreRailCollision": {
+      "blockedUnderContinuedInput": true,
+      "couldBackAway": true,
+      "lateralTravelBeforeStopMetres": 0.507
+    },
+    "streetEntryToMall": {
+      "sampleCount": 100,
+      "startHeightMetres": 4.35,
+      "porchHeightMetres": 4.95,
+      "endHeightMetres": 0,
+      "maximumSampleDeltaMetres": 0.11,
+      "surfaceOrder": [
+        "landing",
+        "stairs",
+        "floor"
+      ]
+    },
+    "streetSidewalkAndTreeWell": {
+      "toTreeWellMetres": 4.871,
+      "treeWellToArcadeMetres": 8.484,
+      "continuedStrafeStoppedAtTreeWellAndColumn": true,
+      "stayedOnSidewalk": true
+    },
+    "servedImmersive": {
+      "simulator": "IWER Meta Quest 3",
+      "eyeViewCounts": [
+        0,
+        2,
+        0
+      ],
+      "controllerInputs": 50,
+      "peakHeightMetres": 4.95,
+      "finalHeightMetres": 4.35
+    },
+    "editUndoJSONImport": {
+      "id": "exit14-canopy-sign",
+      "initialX": 0.0,
+      "restoredX": 0.23
+    },
+    "editedOfflineStreetToMall": {
+      "sampleCount": 111,
+      "startHeightMetres": 4.35,
+      "porchHeightMetres": 4.95,
+      "endHeightMetres": 0,
+      "maximumSampleDeltaMetres": 0.11,
+      "surfaceOrder": [
+        "landing",
+        "stairs",
+        "floor"
+      ]
+    },
+    "offlineImmersive": {
+      "simulator": "IWER Meta Quest 3",
+      "eyeViewCounts": [
+        0,
+        2,
+        0
+      ],
+      "controllerInputs": 50,
+      "peakHeightMetres": 4.95,
+      "finalHeightMetres": 4.35
+    },
+    "offlineHTTPRequestCount": 0
+  },
+  "pageErrors": [],
+  "earlierFailedAttempts": {},
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "previousRelease": {
+    "sha256": "facea33c02a02036e0b215f62af6203fcd06b6312965dd9dff9630169fe4daf8",
+    "enteredStreetEntryWalk": false,
+    "stationFrameVisible": false,
+    "canvasMode": null
+  },
+  "httpDocumentSHA256": "95ef06a56fed00865eec922c6f8da1cb6b8a47dc5d9d3c86dfff32aff0cadb20",
+  "status": "passed"
+}

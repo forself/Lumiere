@@ -1,0 +1,112 @@
+{
+  "utc": "2026-11-23T12:14:24.999553+00:00",
+  "checks": {
+    "rightThumbstickOnPlaza": {
+      "eyes": [
+        0,
+        2,
+        0
+      ],
+      "beforeMetres": [
+        12.142,
+        -2.171
+      ],
+      "afterForward": [
+        9.89,
+        -1.342
+      ],
+      "afterReverse": [
+        12.367,
+        -2.254
+      ],
+      "driftOnExitMetres": 0.0,
+      "springReturnedToNeutral": true
+    },
+    "stepFreePlazaToStairFootAndReturn": [
+      [
+        [
+          6.991,
+          -2.158
+        ],
+        "plaza-interior"
+      ],
+      [
+        [
+          7.002,
+          3.247
+        ],
+        "plaza-interior"
+      ],
+      [
+        [
+          0.595,
+          3.201
+        ],
+        "plaza-apron"
+      ],
+      [
+        [
+          0.65,
+          1.121
+        ],
+        "floor"
+      ],
+      [
+        [
+          0.651,
+          3.163
+        ],
+        "plaza-apron"
+      ],
+      [
+        [
+          7.11,
+          3.2
+        ],
+        "plaza-interior"
+      ],
+      [
+        [
+          7.007,
+          -2.32
+        ],
+        "plaza-interior"
+      ],
+      [
+        [
+          12.077,
+          -2.164
+        ],
+        "plaza-interior"
+      ]
+    ],
+    "editedGap-z": {
+      "deltaMetres": 0.09,
+      "blockedAt": [
+        0.65,
+        1.897
+      ],
+      "crossedAfterUndo": [
+        0.651,
+        2.604
+      ]
+    },
+    "editedGap-y": {
+      "deltaMetres": 0.55,
+      "blockedAt": [
+        0.65,
+        1.883
+      ],
+      "crossedAfterUndo": [
+        0.651,
+        2.618
+      ]
+    }
+  },
+  "physicalHeadset": false,
+  "pageErrors": [],
+  "mode": "Packaged single HTML via HTTP",
+  "httpDocumentSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "status": "passed",
+  "browser": "158.0.4370.33"
+}

@@ -1,0 +1,185 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mxfile host="app.diagrams.net" compressed="false">
+  <diagram id="public-platform-reading" name="候車區俯視">
+    <mxGraphModel page="1" pageScale="1" pageWidth="1440" pageHeight="880" grid="0" background="#F7F6F0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=46;fontColor=#183331;fontStyle=1;" value="忠孝復興站　板南線候車區" vertex="1">
+          <mxGeometry as="geometry" x="56" y="36" width="564" height="55" />
+        </mxCell>
+        <mxCell id="3" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=26;fontColor=#1F635C;fontStyle=1;" value="影片判讀平面圖" vertex="1">
+          <mxGeometry as="geometry" x="58" y="107" width="194" height="35" />
+        </mxCell>
+        <mxCell id="4" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#50635F;fontStyle=0;" value="局部俯視　／　非比例　／　圖面以月台門列為橫向，未指定方位" vertex="1">
+          <mxGeometry as="geometry" x="328" y="110" width="650" height="31" />
+        </mxCell>
+        <mxCell id="5" parent="1" style="endArrow=none;startArrow=none;strokeColor=#B5C4B9;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="58" y="157" />
+            <mxPoint as="targetPoint" x="1382" y="157" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="6" parent="1" style="rounded=0;fillColor=#DCE7EB;strokeColor=none;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry as="geometry" x="60" y="192" width="885" height="88" />
+        </mxCell>
+        <mxCell id="7" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=30;fontColor=#285C78;fontStyle=1;" value="列車側" vertex="1">
+          <mxGeometry as="geometry" x="98" y="212" width="102" height="39" />
+        </mxCell>
+        <mxCell id="8" parent="1" style="rounded=0;fillColor=#E7ECE3;strokeColor=none;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry as="geometry" x="60" y="282" width="885" height="283" />
+        </mxCell>
+        <mxCell id="9" parent="1" style="endArrow=none;startArrow=none;strokeColor=#1F635C;strokeWidth=8;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="98" y="281" />
+            <mxPoint as="targetPoint" x="905" y="281" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="10" parent="1" style="endArrow=none;startArrow=none;strokeColor=#A65D27;strokeWidth=4;dashed=1;dashPattern=5 5;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="60" y="281" />
+            <mxPoint as="targetPoint" x="94" y="281" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="11" parent="1" style="endArrow=none;startArrow=none;strokeColor=#A65D27;strokeWidth=4;dashed=1;dashPattern=5 5;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="911" y="281" />
+            <mxPoint as="targetPoint" x="945" y="281" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="12" parent="1" style="rounded=0;fillColor=#F7F6F0;strokeColor=#1F635C;strokeWidth=1;" value="" vertex="1">
+          <mxGeometry as="geometry" x="503" y="258" width="300" height="43" />
+        </mxCell>
+        <mxCell id="13" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#1F635C;fontStyle=1;" value="月台門列　沿月台延伸" vertex="1">
+          <mxGeometry as="geometry" x="522" y="264" width="232" height="31" />
+        </mxCell>
+        <mxCell id="14" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=30;fontColor=#1F635C;fontStyle=1;" value="乘客側" vertex="1">
+          <mxGeometry as="geometry" x="98" y="319" width="102" height="39" />
+        </mxCell>
+        <mxCell id="15" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=24;fontColor=#50635F;fontStyle=0;" value="候車地坪" vertex="1">
+          <mxGeometry as="geometry" x="98" y="369" width="108" height="33" />
+        </mxCell>
+        <mxCell id="16" parent="1" style="endArrow=none;startArrow=none;strokeColor=#FAFBF6;strokeWidth=7;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="512" y="367" />
+            <mxPoint as="targetPoint" x="576" y="306" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="17" parent="1" style="endArrow=none;startArrow=none;strokeColor=#FAFBF6;strokeWidth=7;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="538" y="367" />
+            <mxPoint as="targetPoint" x="602" y="306" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="18" parent="1" style="endArrow=none;startArrow=none;strokeColor=#50635F;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="510" y="374" />
+            <mxPoint as="targetPoint" x="491" y="410" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="19" parent="1" style="endArrow=none;startArrow=none;strokeColor=#50635F;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="491" y="410" />
+            <mxPoint as="targetPoint" x="456" y="410" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="20" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=23;fontColor=#183331;fontStyle=0;" value="排隊導引線" vertex="1">
+          <mxGeometry as="geometry" x="277" y="394" width="127" height="32" />
+        </mxCell>
+        <mxCell id="21" parent="1" style="ellipse;fillColor=#1F635C;strokeColor=none;" value="" vertex="1">
+          <mxGeometry as="geometry" x="708" y="431" width="26" height="26" />
+        </mxCell>
+        <mxCell id="22" parent="1" style="endArrow=none;startArrow=none;strokeColor=#1F635C;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="740" y="444" />
+            <mxPoint as="targetPoint" x="773" y="444" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="23" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="可見柱體" vertex="1">
+          <mxGeometry as="geometry" x="784" y="426" width="100" height="31" />
+        </mxCell>
+        <mxCell id="24" parent="1" style="endArrow=none;startArrow=none;strokeColor=#A65D27;strokeWidth=2;dashed=1;dashPattern=5 5;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="64" y="561" />
+            <mxPoint as="targetPoint" x="941" y="561" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="25" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#50635F;fontStyle=0;" value="圖幅在此截斷；門列、柱體與標線之間的距離未量測。" vertex="1">
+          <mxGeometry as="geometry" x="83" y="586" width="540" height="31" />
+        </mxCell>
+        <mxCell id="26" parent="1" style="endArrow=none;startArrow=none;strokeColor=#B5C4B9;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="978" y="193" />
+            <mxPoint as="targetPoint" x="978" y="633" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=26;fontColor=#183331;fontStyle=1;" value="如何讀這張圖" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="192" width="168" height="35" />
+        </mxCell>
+        <mxCell id="28" parent="1" style="endArrow=none;startArrow=none;strokeColor=#1F635C;strokeWidth=6;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1012" y="258" />
+            <mxPoint as="targetPoint" x="1065" y="258" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="29" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#1F635C;fontStyle=1;" value="影格中可辨識" vertex="1">
+          <mxGeometry as="geometry" x="1085" y="240" width="144" height="31" />
+        </mxCell>
+        <mxCell id="30" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="門列分隔列車側與乘客側。" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="288" width="276" height="31" />
+        </mxCell>
+        <mxCell id="31" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="地坪上可見排隊標線，" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="329" width="232" height="31" />
+        </mxCell>
+        <mxCell id="32" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="門列內側可見柱體。" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="363" width="210" height="31" />
+        </mxCell>
+        <mxCell id="33" parent="1" style="endArrow=none;startArrow=none;strokeColor=#A65D27;strokeWidth=3;dashed=1;dashPattern=5 5;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="1012" y="451" />
+            <mxPoint as="targetPoint" x="1066" y="451" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="34" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=21;fontColor=#A65D27;fontStyle=1;" value="推測延伸或圖幅截斷" vertex="1">
+          <mxGeometry as="geometry" x="1085" y="434" width="201" height="30" />
+        </mxCell>
+        <mxCell id="35" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="柱子以點標位置關係。" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="483" width="232" height="31" />
+        </mxCell>
+        <mxCell id="36" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="柱形、柱距與月台寬度" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="522" width="232" height="31" />
+        </mxCell>
+        <mxCell id="37" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="無法從這兩個視角量出。" vertex="1">
+          <mxGeometry as="geometry" x="1012" y="558" width="254" height="31" />
+        </mxCell>
+        <mxCell id="38" parent="1" style="endArrow=none;startArrow=none;strokeColor=#B5C4B9;strokeWidth=2;" value="" edge="1">
+          <mxGeometry as="geometry" relative="1">
+            <mxPoint as="sourcePoint" x="58" y="656" />
+            <mxPoint as="targetPoint" x="1382" y="656" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="39" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=25;fontColor=#183331;fontStyle=1;" value="影格依據" vertex="1">
+          <mxGeometry as="geometry" x="58" y="684" width="112" height="34" />
+        </mxCell>
+        <mxCell id="40" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#1F635C;fontStyle=1;" value="《月台列車進出站》" vertex="1">
+          <mxGeometry as="geometry" x="241" y="687" width="210" height="31" />
+        </mxCell>
+        <mxCell id="41" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="00:10、01:10" vertex="1">
+          <mxGeometry as="geometry" x="241" y="730" width="148" height="31" />
+        </mxCell>
+        <mxCell id="42" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=20;fontColor=#50635F;fontStyle=0;" value="從較高視角辨識門列走向與候車地坪。" vertex="1">
+          <mxGeometry as="geometry" x="241" y="771" width="352" height="29" />
+        </mxCell>
+        <mxCell id="43" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#1F635C;fontStyle=1;" value="《月台列車進站》" vertex="1">
+          <mxGeometry as="geometry" x="823" y="687" width="188" height="31" />
+        </mxCell>
+        <mxCell id="44" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=22;fontColor=#183331;fontStyle=0;" value="00:09、00:24、00:30" vertex="1">
+          <mxGeometry as="geometry" x="823" y="730" width="227" height="31" />
+        </mxCell>
+        <mxCell id="45" parent="1" style="text;html=0;align=left;verticalAlign=middle;spacing=0;whiteSpace=nowrap;overflow=visible;fontFamily=Microsoft JhengHei;fontSize=20;fontColor=#50635F;fontStyle=0;" value="從乘客視角核對門列、地坪標線與柱體。" vertex="1">
+          <mxGeometry as="geometry" x="823" y="771" width="372" height="29" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

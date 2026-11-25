@@ -1,0 +1,22 @@
+{
+  "utc": "2026-11-23T11:33:53.380701+00:00",
+  "physicalHeadset": false,
+  "checks": {
+    "platformToLanding": {
+      "sampledFrames": 82,
+      "startHeightMetres": 0,
+      "endHeightMetres": 5.2,
+      "maxSingleFrameRiseOrDropMetres": 0.146,
+      "surfaces": [
+        "floor",
+        "stairs",
+        "landing"
+      ]
+    }
+  },
+  "pageErrors": [],
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "httpDocumentSHA256": "a41113612e28e76a4d65add7aecc7cb45f431986e82628846d5d215dac58c6dd",
+  "status": "failed",
+  "error": "('Missed waypoint', [324.4121, 611.89304], [324.5268, 608.5312, -6.3158])"
+}

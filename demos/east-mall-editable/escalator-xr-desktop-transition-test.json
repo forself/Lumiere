@@ -1,0 +1,24 @@
+{
+  "utc": "2026-11-23T12:11:41.878171+00:00",
+  "mode": "Release HTML via loopback HTTP; IWER Quest 3; passenger switches from XR to desktop while riding the downward escalator",
+  "physicalHeadset": false,
+  "checks": {
+    "XRToDesktopWithoutReboarding": {
+      "viewCount": [
+        0,
+        2,
+        0
+      ],
+      "forwardInputsToBoard": 2,
+      "xrBoardingHeightMetres": 4.1148,
+      "xrRidingNoFurtherInputMetres": 2.7108,
+      "immediateDesktopHeightMetres": 1.3296,
+      "desktopRidingWithoutInputMetres": 0.7703,
+      "automaticDisembarkHeightMetres": 0.0
+    }
+  },
+  "pageErrors": [],
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "httpDocumentSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "status": "passed"
+}

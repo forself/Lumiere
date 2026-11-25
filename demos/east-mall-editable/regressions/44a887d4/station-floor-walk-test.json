@@ -1,0 +1,53 @@
+{
+  "utc": "2026-11-23T11:44:35.085796+00:00",
+  "checks": {
+    "publishedConcourseOpening": {
+      "sustainedForwardInputStoppedAtCutout": true,
+      "savedCurveContainmentVerified": true
+    },
+    "B3_p2-area-646": {
+      "maxTravelDrawingPoints": 8.069,
+      "samplesInsideSelectedPolygon": 34
+    },
+    "B3_p2-area-455": {
+      "maxTravelDrawingPoints": 8.07,
+      "samplesInsideSelectedPolygon": 40
+    },
+    "B3_p2-area-647": {
+      "maxTravelDrawingPoints": 5.352,
+      "samplesInsideSelectedPolygon": 26
+    },
+    "httpWalkXR": {
+      "device": "IWER Quest 3",
+      "stereoViews": 2,
+      "exitsToFloorWalk": true
+    },
+    "B4_p2-area-94": {
+      "maxTravelDrawingPoints": 8.775,
+      "samplesInsideSelectedPolygon": 37
+    },
+    "desktopEditAndUndoAfterWalking": true,
+    "navigationPreservesAllSourceStationGeometry": true,
+    "floorCollisionFixture": {
+      "centralHoleBlocked": true,
+      "outerEdgeBlocked": true,
+      "syntheticFixtureOnly": true
+    },
+    "directWalkLinksAndInWalkFloorSelection": true,
+    "offlinePlatformWalk": {
+      "maxTravelDrawingPoints": 8.542,
+      "samplesInsideSelectedPolygon": 40
+    },
+    "offlineWalkXR": {
+      "device": "IWER Quest 3",
+      "stereoViews": 2,
+      "exitsToFloorWalk": true
+    },
+    "offlineHTTPRequests": 0
+  },
+  "pageErrors": [],
+  "physicalHeadset": false,
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "httpDocumentSHA256": "44a887d4559745a0fed8b64ae6c6a01f05be7324bf42116f38a9cd75de031bde",
+  "status": "passed"
+}

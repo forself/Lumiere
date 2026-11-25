@@ -77,6 +77,13 @@
               },
               {
                 "type": "component",
+                "id": "urban-workshop",
+                "component": "BasicButton",
+                "options": {"type":"custom","customLabel":"街區模型","showIcon":false,"size":"small","variant":"plain"},
+                "events": {"onClick":"go.urban"}
+              },
+              {
+                "type": "component",
                 "id": "workbench-controls-toggle",
                 "component": "BasicButton",
                 "options": {

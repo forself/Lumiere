@@ -1,0 +1,209 @@
+{
+  "utc": "2026-11-23T12:10:49.571330+00:00",
+  "checks": {
+    "carrierGeometry": {
+      "poses": 18338,
+      "phaseSamples": 371,
+      "triangleRays": 159,
+      "carriers": [
+        {
+          "case": "B4",
+          "id": "b4-escalator",
+          "direction": 1,
+          "run": 9.95,
+          "rise": 5.2,
+          "horizontalSpeed": 0.4328119934243229,
+          "nominalRideSeconds": 22.989196582279448,
+          "treadInstances": 28,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 2240,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": -0.005929470062255859,
+            "verticalTravelMetres": 0.003429889678955078
+          }
+        },
+        {
+          "case": "exit-default",
+          "id": "exit14-escalator-left",
+          "direction": 1,
+          "run": 10.2,
+          "rise": 4.95,
+          "horizontalSpeed": 0.44073998501439104,
+          "nominalRideSeconds": 23.1428968253628,
+          "treadInstances": 29,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 2204,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": -0.006038188934326172,
+            "verticalTravelMetres": 0.0032346248626708984
+          }
+        },
+        {
+          "case": "exit-default",
+          "id": "exit14-escalator-right",
+          "direction": -1,
+          "run": 10.2,
+          "rise": 4.95,
+          "horizontalSpeed": 0.44073998501439104,
+          "nominalRideSeconds": 23.1428968253628,
+          "treadInstances": 29,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 2204,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": 0.006038188934326172,
+            "verticalTravelMetres": -0.00323486328125
+          }
+        },
+        {
+          "case": "exit-short-steep",
+          "id": "exit14-escalator-left",
+          "direction": 1,
+          "run": 2.8,
+          "rise": 8,
+          "horizontalSpeed": 0.12536349025704593,
+          "nominalRideSeconds": 22.33505141137077,
+          "treadInstances": 9,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 684,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": -0.0017174482345581055,
+            "verticalTravelMetres": 0.006631135940551758
+          }
+        },
+        {
+          "case": "exit-short-steep",
+          "id": "exit14-escalator-right",
+          "direction": -1,
+          "run": 2.8,
+          "rise": 8,
+          "horizontalSpeed": 0.12536349025704593,
+          "nominalRideSeconds": 22.33505141137077,
+          "treadInstances": 9,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 684,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": 0.0017174482345581055,
+            "verticalTravelMetres": -0.006631374359130859
+          }
+        },
+        {
+          "case": "exit-long-shallow",
+          "id": "exit14-escalator-left",
+          "direction": 1,
+          "run": 44.400000000000006,
+          "rise": 2.4,
+          "horizontalSpeed": 0.49923864007483354,
+          "nominalRideSeconds": 88.93542373511924,
+          "treadInstances": 121,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 9196,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": -0.006839752197265625,
+            "verticalTravelMetres": 0.00037789344787597656
+          }
+        },
+        {
+          "case": "exit-long-shallow",
+          "id": "exit14-escalator-right",
+          "direction": -1,
+          "run": 44.400000000000006,
+          "rise": 2.4,
+          "horizontalSpeed": 0.49923864007483354,
+          "nominalRideSeconds": 88.93542373511924,
+          "treadInstances": 121,
+          "movingTreadDrawCalls": 1,
+          "trianglesRendered": 9196,
+          "trackedStep": {
+            "intervalSeconds": 0.0137,
+            "localZTravelMetres": 0.006839752197265625,
+            "verticalTravelMetres": -0.00037789344787597656
+          }
+        }
+      ],
+      "closedTreadJoint": {
+        "case": "exit-long-shallow",
+        "id": "exit14-escalator-left",
+        "firstObserved": "An earlier development run missed the downward ray where the tread base covered 99% of the step pitch.",
+        "fix": "Extend the metal base across the full pitch; retain the dark separation in the top finish.",
+        "distanceFromLowerCombMetres": 5.911099999999999,
+        "phaseMetres": 0.3624971765583372,
+        "verticalRayHit": true,
+        "actualMetalHeightMetres": 0.2859169631265104,
+        "riderHeightMetres": 0.28991697108057113
+      }
+    },
+    "stationaryCamera": {
+      "stationaryPose": [
+        "3.2500",
+        "6.7500",
+        "0.00000",
+        "0.0000"
+      ],
+      "changedPixelsLeft": 4615,
+      "changedPixelsRight": 13490,
+      "thresholdPerChannel": 12,
+      "viewportPixels": [
+        1140,
+        820
+      ],
+      "cropLeft": [
+        22,
+        287,
+        456,
+        754
+      ],
+      "cropRight": [
+        684,
+        287,
+        1117,
+        754
+      ]
+    },
+    "recordedMotion": {
+      "file": "escalator-moving-treads.webm",
+      "bytes": 109230,
+      "captureSeconds": 3.407,
+      "codec": "video/webm;codecs=vp8"
+    }
+  },
+  "pageErrors": [],
+  "priorStaticRelease": {
+    "sha256": "44a887d4559745a0fed8b64ae6c6a01f05be7324bf42116f38a9cd75de031bde",
+    "stationaryCamera": {
+      "stationaryPose": [
+        "3.2500",
+        "6.7500",
+        "0.00000",
+        "0.0000"
+      ],
+      "changedPixelsLeft": 0,
+      "changedPixelsRight": 0,
+      "thresholdPerChannel": 12,
+      "viewportPixels": [
+        1140,
+        820
+      ],
+      "cropLeft": [
+        22,
+        287,
+        456,
+        754
+      ],
+      "cropRight": [
+        684,
+        287,
+        1117,
+        754
+      ]
+    }
+  },
+  "httpDocumentSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "browser": "Microsoft Edge 158.0.4370.33",
+  "status": "passed"
+}

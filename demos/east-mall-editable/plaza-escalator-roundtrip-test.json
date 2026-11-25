@@ -1,0 +1,229 @@
+{
+  "utc": "2026-11-23T12:10:42.731533+00:00",
+  "pageErrors": [],
+  "sha256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "waypoints": [
+    {
+      "section": "第二廣場經柱列前通行帶到出口14左梯腳",
+      "reached": [
+        [
+          7.102,
+          -2.182,
+          0.0,
+          "plaza-interior"
+        ],
+        [
+          7.008,
+          3.048,
+          0.0,
+          "plaza-interior"
+        ],
+        [
+          0.766,
+          3.19,
+          0.0,
+          "plaza-apron"
+        ],
+        [
+          0.654,
+          1.273,
+          0.0,
+          "floor"
+        ],
+        [
+          -2.082,
+          1.199,
+          0.0,
+          "floor"
+        ],
+        [
+          -2.164,
+          -1.68,
+          0.0,
+          "floor"
+        ]
+      ]
+    },
+    {
+      "section": "雨棚下上平台",
+      "reached": [
+        [
+          -2.162,
+          -13.355,
+          4.95,
+          "stairs"
+        ],
+        [
+          0.477,
+          -13.419,
+          4.95,
+          "stairs"
+        ]
+      ]
+    },
+    {
+      "section": "短梯下到人行道並從出口側邊走入頂好廣場",
+      "reached": [
+        [
+          0.646,
+          -17.059,
+          4.35,
+          "landing"
+        ],
+        [
+          4.005,
+          -17.141,
+          4.35,
+          "sidewalk"
+        ],
+        [
+          4.009,
+          0.894,
+          4.35,
+          "sidewalk"
+        ],
+        [
+          8.967,
+          1.046,
+          4.35,
+          "plaza-lease"
+        ],
+        [
+          18.867,
+          1.051,
+          4.35,
+          "plaza-lease"
+        ]
+      ]
+    },
+    {
+      "section": "沿頂好廣場及人行道返回地面梯口",
+      "reached": [
+        [
+          4.14,
+          1.019,
+          4.35,
+          "sidewalk"
+        ],
+        [
+          4.075,
+          -17.039,
+          4.35,
+          "sidewalk"
+        ],
+        [
+          0.807,
+          -17.144,
+          4.35,
+          "landing"
+        ]
+      ]
+    },
+    {
+      "section": "上短梯後橫過雨棚平台到右側下行梯",
+      "reached": [
+        [
+          0.652,
+          -13.547,
+          4.95,
+          "stairs"
+        ],
+        [
+          2.087,
+          -13.427,
+          4.95,
+          "stairs"
+        ],
+        [
+          2.153,
+          -12.71,
+          4.95,
+          "stairs"
+        ]
+      ]
+    },
+    {
+      "section": "從右梯腳經通行帶返回第二廣場原位",
+      "reached": [
+        [
+          2.161,
+          1.024,
+          0.0,
+          "floor"
+        ],
+        [
+          2.155,
+          3.065,
+          0.0,
+          "plaza-apron"
+        ],
+        [
+          6.997,
+          3.204,
+          0.0,
+          "plaza-interior"
+        ],
+        [
+          6.994,
+          -2.036,
+          0.0,
+          "plaza-interior"
+        ],
+        [
+          12.035,
+          -2.168,
+          0.0,
+          "plaza-interior"
+        ]
+      ]
+    }
+  ],
+  "start": [
+    12.142,
+    -2.171,
+    0.0,
+    "plaza-interior"
+  ],
+  "outboundEscalator": {
+    "direction": "up",
+    "framesWithoutInput": 299,
+    "startMetres": 0,
+    "arrivalMetres": 4.95,
+    "stoppedOnLanding": true
+  },
+  "returnEscalator": {
+    "direction": "down",
+    "framesWithoutInput": 399,
+    "startMetres": 4.95,
+    "arrivalMetres": 0,
+    "stoppedOnLanding": true
+  },
+  "end": [
+    12.035,
+    -2.168,
+    0.0,
+    "plaza-interior"
+  ],
+  "sameDocument": true,
+  "pathMetres": 153.69,
+  "poseSamples": 1583,
+  "surfaceOrder": [
+    "plaza-interior",
+    "plaza-apron",
+    "floor",
+    "escalator",
+    "stairs",
+    "landing",
+    "sidewalk",
+    "plaza-lease",
+    "sidewalk",
+    "landing",
+    "stairs",
+    "escalator",
+    "floor",
+    "plaza-apron",
+    "plaza-interior"
+  ],
+  "largestSinglePoseChangeMetres": 0.277,
+  "status": "passed"
+}

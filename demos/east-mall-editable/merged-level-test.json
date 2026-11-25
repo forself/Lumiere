@@ -1,0 +1,32 @@
+{
+  "physicalHeadset": false,
+  "servedHTML_SHA256": "34f461cd1d7fcdb8f51ff29ce27796cd20e87861b5061a44c6b5a685a2098ee6",
+  "browser": "Edge 158.0.4370.33",
+  "editableUndergroundObjects": 299,
+  "walkMetres": 2.852,
+  "streetPosition": [
+    1.9070999999999998,
+    5.926859623000001,
+    468.30806666666666
+  ],
+  "plazaStart": [
+    252.24,
+    -0.1171287999999997,
+    478.28
+  ],
+  "plazaEnd": [
+    249.79489755293514,
+    -0.1171287999999997,
+    476.81168517226126
+  ],
+  "editSaveUndo": true,
+  "exportReopened": true,
+  "returnedDirectlyAbovePlaza": true,
+  "streetAndPlazaSection": true,
+  "oldUrlOpensCombinedPlaza": true,
+  "simulatedXR": {
+    "stereoEyes": 2,
+    "exitedToSameLevel": true
+  },
+  "pageErrors": []
+}

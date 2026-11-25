@@ -1,0 +1,21 @@
+{
+  "roadCount": 204,
+  "crosswalkCount": 148,
+  "physicalHeadset": false,
+  "edge": "158.0.4370.33",
+  "sourceRoad": "復興南路一段-09-路口",
+  "savedEditedOnlyRequestedFeatures": true,
+  "undo": true,
+  "previousProjectLoaded": true,
+  "jsonAndStandaloneRoundTrip": true,
+  "originalX": 27.8458,
+  "editedX": 27.8658,
+  "walkDisplacementMetres": 1.751,
+  "webxr": "IWER Quest 3 two eyes, returned to desktop",
+  "offlineNetworkBlocked": true,
+  "pageErrors": [],
+  "htmlSHA256": "d27df58da0ca6af7eb912d080713abb35453c8f7a0b7549c719c3d107228e6fd",
+  "allRoadAndCrosswalkAreasVerified": true,
+  "renderedRoadAndCrosswalkTriangles": 4653,
+  "maxAreaDifferenceSquareMetres": 1.6370904631912708e-11
+}

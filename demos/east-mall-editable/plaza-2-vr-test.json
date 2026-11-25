@@ -1,0 +1,32 @@
+{
+  "scope": "第二廣場租借地坪",
+  "checkedLocal": "2026-11-23",
+  "floorSizeMetres": [
+    13.6,
+    17.7
+  ],
+  "areaSquareMetres": 240.72,
+  "modelSHA256": "b5da92f4d8a48960a805227cf22afef0f55e5971da04748a988a8ebd97d23723",
+  "htmlSHA256": "416865a8003c81a6073ecad8bf997ea0b85b56540396b11060f344781f056e5e",
+  "client": "Edge 158.0.4370.33",
+  "network": "HTTP/HTTPS blocked",
+  "desktopWalk": {
+    "startXZ": [
+      -6.3,
+      -8.35
+    ],
+    "endXZ": [
+      -6.3,
+      -7.2241
+    ],
+    "displacementMetres": 1.126
+  },
+  "webXR": {
+    "device": "IWER Meta Quest 3",
+    "stereoViews": 2,
+    "framesAdvanced": true,
+    "exitButtonReturnedIdle": true,
+    "physicalHeadset": false
+  },
+  "browserErrors": []
+}

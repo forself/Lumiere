@@ -1,0 +1,58 @@
+{
+  "testedAt": "2026-11-23T15:53:46.318846+08:00",
+  "physicalHeadsetTested": false,
+  "pages": {
+    "street-workshop.html": {
+      "url": "http://127.0.0.1:58874/street-workshop.html",
+      "httpStatus": 200,
+      "sha256": "d27df58da0ca6af7eb912d080713abb35453c8f7a0b7549c719c3d107228e6fd",
+      "secureContext": true,
+      "headsetUnavailableMessage": "已重新偵測。目前無法啟動頭顯 VR。可用「步行視角」，或連接頭顯後重新偵測。",
+      "walk": {
+        "start": [
+          1.9070999999999998,
+          5.926859623000001,
+          468.30806666666666
+        ],
+        "end": [
+          1.9070999999999998,
+          5.941009351,
+          471.3608666666664
+        ],
+        "displacement": 3.053
+      },
+      "desktopPageErrors": [],
+      "simulatedXR": {
+        "permissionDenialThenRetry": true,
+        "stereoViews": 2,
+        "exitConfirmed": true
+      },
+      "simulatedPageErrors": []
+    },
+    "plaza-2-vr.html": {
+      "url": "http://127.0.0.1:58874/plaza-2-vr.html",
+      "httpStatus": 200,
+      "sha256": "416865a8003c81a6073ecad8bf997ea0b85b56540396b11060f344781f056e5e",
+      "secureContext": true,
+      "walk": {
+        "start": [
+          -6.3,
+          -8.35
+        ],
+        "end": [
+          -6.3,
+          -6.99895
+        ],
+        "displacement": 1.351
+      },
+      "desktopPageErrors": [],
+      "simulatedXR": {
+        "stereoViews": 2,
+        "framesAdvanced": true,
+        "exitConfirmed": true
+      },
+      "simulatedPageErrors": []
+    }
+  },
+  "browser": "Edge 158.0.4370.33"
+}

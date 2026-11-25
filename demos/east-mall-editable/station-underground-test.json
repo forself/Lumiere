@@ -1,0 +1,12 @@
+{
+  "fromWorkshop": true,
+  "editUndoSaveReopen": true,
+  "stereoSimulated": true,
+  "physicalHeadset": false,
+  "sourcePieces": [
+    3,
+    1
+  ],
+  "errors": [],
+  "htmlSHA256": "399ea89cc4e8f4f9290d31521caf827d599db5683cc652fe74b8dcae6e524ba1"
+}

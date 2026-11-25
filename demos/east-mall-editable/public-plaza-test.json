@@ -1,0 +1,23 @@
+{
+  "entry": "http://127.0.0.1:58874/street-workshop.html",
+  "userAgent": "Mozilla/5.0 (X11; Linux x86_64; Quest 3) AppleWebKit/537.36 (KHTML, like Gecko) OculusBrowser/33.0.0.x.x.x Chrome/126.0.6478.122 VR Safari/537.36",
+  "testedAt": "2026-11-23T12:10:48.849951+00:00",
+  "checks": {
+    "sourceDataDeepEquality": true,
+    "measuredEditUndoAcrossVenues": true,
+    "dinghaoWalkMetres": 14.843,
+    "dinghaoSimulatedXR": {
+      "eyeCount": 2,
+      "afterExit": 0
+    },
+    "returnFromVenueRestoresSecondPlaza": true,
+    "invalidOutlineLeavesEditedProjectUntouched": true,
+    "editedOfflineJSONExactAndNetworkRequests": {
+      "exactMatch": true,
+      "httpRequests": []
+    }
+  },
+  "pageErrors": [],
+  "releaseSHA256": "07cd5dc667c880f9a1908c2028efab52620f3ca8ccde146bcb3ba5586b292ba4",
+  "status": "passed"
+}
